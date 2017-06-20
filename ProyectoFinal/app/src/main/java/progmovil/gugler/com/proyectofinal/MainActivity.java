@@ -1,22 +1,22 @@
 package progmovil.gugler.com.proyectofinal;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import static android.R.attr.path;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,15 +27,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onButtonTestClick(View view) {
-        Toast.makeText(this, "Puto el que lee", Toast.LENGTH_LONG);
+
+        TextView tv = (TextView) findViewById(R.id.textViewRes);
         try {
-            FileOutputStream file = new FileOutputStream("Script.sql");
-            TextView tv = (TextView) findViewById(R.id.textViewRes);
-            //tv.setText(file.toString());
-            Toast.makeText(this, "Contenido: " + file.toString(), Toast.LENGTH_LONG);
-        } catch (FileNotFoundException e) {
-            //e.printStackTrace();
-            Toast.makeText(this, "Archivo no encontrado: " + e.getMessage(), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Entro en el try", Toast.LENGTH_SHORT);
+            toast.show();
+
+            StringBuffer cadena = new StringBuffer();
+            InputStream inputStream = getResources().openRawResource(R.raw.script);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            for (String linea; (linea=reader.readLine())!=null;){
+                cadena.append(linea);
+            }
+
+            tv.setText(cadena);
+        } catch (Exception e) {
+            //tv.setText(e.getMessage() );
+            Toast toast = Toast.makeText(this, "Problemas al intentar leer el archivo.", Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 }
