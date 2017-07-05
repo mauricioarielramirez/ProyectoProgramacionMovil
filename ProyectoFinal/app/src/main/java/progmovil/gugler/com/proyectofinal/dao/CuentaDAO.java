@@ -11,7 +11,7 @@ import progmovil.gugler.com.proyectofinal.modelo.Cuenta;
  * Created by ericd on 13/6/2017.
  */
 
-public class CuentaDAO{
+public class CuentaDAO {
 
     private Dao baseDeDatos;
     private SQLiteDatabase db;
@@ -31,7 +31,8 @@ public class CuentaDAO{
             long res = db.insert("db_cuenta",null,registro);
             return (res == -1 ? false : true);
         }catch (Exception ex){
-            return false;
+            throw  ex;
+            //return false;
         }
     }
 

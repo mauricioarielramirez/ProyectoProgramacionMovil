@@ -16,17 +16,39 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import progmovil.gugler.com.proyectofinal.dao.CuentaDAO;
+import progmovil.gugler.com.proyectofinal.modelo.Cuenta;
+
 import static android.R.attr.path;
 
 public class MainActivity extends AppCompatActivity {
+    private CuentaDAO cuentaDao;
+    private StringBuffer cadena;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cadena = new StringBuffer();
+        leerScript();
+        cuentaDao = new CuentaDAO(this,cadena.toString());
     }
 
-    public void onButtonTestClick(View view) {
+    private void leerScript(){
+        try {
+            InputStream inputStream = getResources().openRawResource(R.raw.script);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            for (String linea; (linea=reader.readLine())!=null;){
+                cadena.append(linea);
+            }
+        } catch (Exception e) {
+            Toast toast = Toast.makeText(this, "Problemas al intentar leer el archivo.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+/*    public void onButtonTestClick(View view) {
 
         TextView tv = (TextView) findViewById(R.id.textViewRes);
         try {
@@ -46,5 +68,30 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Problemas al intentar leer el archivo.", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }*/
+
+    public void onBtnGuardarClick(View view){
+        Cuenta cuenta = new Cuenta();
+        cuenta.setDenominacion(((TextView)findViewById(R.id.txtDenominacion)).getText().toString());
+        cuenta.setDescripcion(((TextView)findViewById(R.id.txtDescripcion)).getText().toString());
+        Float saldo =  Float.parseFloat (((TextView)findViewById(R.id.txtSaldo)).getText().toString());
+        cuenta.setSaldo(saldo);
+        Boolean resultado = false;
+        try {
+            resultado = cuentaDao.agregar(cuenta);
+        } catch (Exception e) {
+            Toast toast = Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT);
+            toast.show();
+            e.printStackTrace();
+        }
+
+        if (resultado == true){
+            Toast toast = Toast.makeText(this, "Se agregó la cuenta correctamente.", Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            Toast toast = Toast.makeText(this, "Falló al intentar agregar la cuenta.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
     }
 }

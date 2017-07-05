@@ -1,41 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="progmovil.gugler.com.proyectofinal.MainActivity">
 
-    <Button
-        android:id="@+id/buttonTest"
+    <TextView
+        android:id="@+id/txvSaldo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="148dp"
-        android:onClick="onButtonTestClick"
-        android:text="Boton"
+        android:text="Saldo"
+        app:layout_constraintRight_toLeftOf="@+id/txtSaldo"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/txvDescripcion"
+        app:layout_constraintBottom_toTopOf="@+id/btnGuardar"
+        app:layout_constraintVertical_bias="0.005"
+        android:layout_alignBaseline="@+id/txtSaldo"
+        android:layout_alignBottom="@+id/txtSaldo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/txvDescripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/txtDescripcion"
+        app:layout_constraintHorizontal_bias="0.232"
+        app:layout_constraintTop_toBottomOf="@+id/txvDenominacion"
+        android:layout_alignBaseline="@+id/txtDescripcion"
+        android:layout_alignBottom="@+id/txtDescripcion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onBtnGuardarClick"
+        android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="30dp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/txvDenominacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Denominación"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="62dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/txtDenominacion"
+        app:layout_constraintHorizontal_bias="0.428"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/textViewRes"
-        android:layout_width="262dp"
-        android:layout_height="386dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/txtDenominacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType=""
-        app:layout_constraintBottom_toTopOf="@+id/buttonTest"
-        app:layout_constraintHorizontal_bias="0.607"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:inputType="textPersonName"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.366" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtDescripcion"
+        android:layout_alignBaseline="@+id/txvDenominacion"
+        android:layout_alignBottom="@+id/txvDenominacion"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:id="@+id/txtDescripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/txtSaldo"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/txtDenominacion"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:id="@+id/txtSaldo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnGuardar"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/txtDescripcion"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
