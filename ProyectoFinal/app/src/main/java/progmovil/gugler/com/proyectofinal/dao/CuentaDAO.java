@@ -24,12 +24,14 @@ public class CuentaDAO {
     public Boolean agregar(Cuenta cuenta) throws Exception {
         try {
             ContentValues registro = new ContentValues();
+            registro.put("ct_id", 1);  //VALOR QUEMADO, REVENTARÁ A LA SEGUNDA INSERCIÓN
             registro.put("ct_denominacion", cuenta.getDenominacion());
             registro.put("ct_descripcion", cuenta.getDescripcion());
             registro.put("ct_saldo", cuenta.getSaldo());
-            // SQLiteDatabase db = baseDeDatos.getWritableDatabase();
             long res = db.insert("db_cuenta",null,registro);
+
             return (res == -1 ? false : true);
+
         }catch (Exception ex){
             throw  ex;
             //return false;

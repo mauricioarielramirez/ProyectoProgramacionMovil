@@ -34,7 +34,14 @@ public class Dao extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(sql);
+        String cadenaAuxiliar = sql;
+        Integer posicionFinal;
+        posicionFinal = cadenaAuxiliar.indexOf(";");
+        while (posicionFinal!= -1){
+            db.execSQL(cadenaAuxiliar.substring(0,posicionFinal));
+            cadenaAuxiliar = cadenaAuxiliar.substring(posicionFinal+1);
+            posicionFinal = cadenaAuxiliar.indexOf(";");
+        }
     }
 
     @Override
