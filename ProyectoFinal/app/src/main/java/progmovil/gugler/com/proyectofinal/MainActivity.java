@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import progmovil.gugler.com.proyectofinal.dao.CuentaDAO;
+import progmovil.gugler.com.proyectofinal.exception.ValidacionException;
 import progmovil.gugler.com.proyectofinal.modelo.Cuenta;
 
 import static android.R.attr.path;
@@ -79,19 +80,17 @@ public class MainActivity extends AppCompatActivity {
         Boolean resultado = false;
         try {
             resultado = cuentaDao.agregar(cuenta);
+        }catch (ValidacionException ex){
+            Toast toast = Toast.makeText(this, ex.getMensaje(), Toast.LENGTH_SHORT);
+            toast.show();
         } catch (Exception e) {
-            Toast toast = Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT);
-            toast.show();
-            e.printStackTrace();
-        }
-
-        if (resultado == true){
-            Toast toast = Toast.makeText(this, "Se agregó la cuenta correctamente.", Toast.LENGTH_SHORT);
-            toast.show();
-        }else{
             Toast toast = Toast.makeText(this, "Falló al intentar agregar la cuenta.", Toast.LENGTH_SHORT);
             toast.show();
         }
 
+        if (resultado == true) {
+            Toast toast = Toast.makeText(this, "Se agregó la cuenta correctamente.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }
