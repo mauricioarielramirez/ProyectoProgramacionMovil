@@ -1,27 +1,21 @@
 package progmovil.gugler.com.proyectofinal;
 
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import progmovil.gugler.com.proyectofinal.dao.CuentaDAO;
 import progmovil.gugler.com.proyectofinal.exception.ValidacionException;
 import progmovil.gugler.com.proyectofinal.modelo.Cuenta;
-
-import static android.R.attr.path;
 
 public class MainActivity extends AppCompatActivity {
     private CuentaDAO cuentaDao;
@@ -34,6 +28,21 @@ public class MainActivity extends AppCompatActivity {
         cadena = new StringBuffer();
         leerScript();
         cuentaDao = new CuentaDAO(this,cadena.toString());
+
+        //Mirar aca http://elbauldeandroid.blogspot.com.ar/2013/10/actionbar-android-en-construccion.html
+
+        ActionBar actionBar = getSupportActionBar(); // Permite personalizar el action bar
+        actionBar.setTitle("Main activity");
+        actionBar.setSubtitle("Bienvenido");
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher); //ícono de la izquierda
+
+    }
+    /*PROBANDO UN MENU*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu); //En menu.xml se definen
+        return true;
     }
 
     private void leerScript(){

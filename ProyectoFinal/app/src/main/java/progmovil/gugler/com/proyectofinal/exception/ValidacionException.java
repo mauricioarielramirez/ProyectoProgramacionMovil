@@ -6,6 +6,7 @@ package progmovil.gugler.com.proyectofinal.exception;
 
 public class ValidacionException extends Exception {
     public static final String EXISTE_EN_BASE = "El elemento que se intenta agregar ya existe";
+    public static final String NO_EXISTE_EN_BASE = "El elemento referenciado no existe";
 
     private String mensaje;
     private String stackTraceOriginal;

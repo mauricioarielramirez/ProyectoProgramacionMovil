@@ -1,5 +1,9 @@
 package progmovil.gugler.com.proyectofinal.servicio;
 
+import android.content.Context;
+
+import progmovil.gugler.com.proyectofinal.dao.CuentaDAO;
+import progmovil.gugler.com.proyectofinal.exception.ValidacionException;
 import progmovil.gugler.com.proyectofinal.modelo.Cuenta;
 
 /**
@@ -7,14 +11,17 @@ import progmovil.gugler.com.proyectofinal.modelo.Cuenta;
  */
 
 public class ServicioCuentas extends Servicio {
+    private CuentaDAO cuentaDao;
 
-    public Boolean agregarCuenta(Cuenta cuenta) {
-        /*
-        * Agregar cuenta al DAO
-        * */
+    public ServicioCuentas(Context contexto, String cadena){
+        if (cuentaDao == null){
+            cuentaDao = new CuentaDAO(contexto,cadena);
+        }
+    };
 
-
-        return false;
+    public Boolean agregarCuenta(Cuenta cuenta) throws ValidacionException, Exception {
+        cuentaDao.agregar(cuenta);
+        return true;
     }
 
 }

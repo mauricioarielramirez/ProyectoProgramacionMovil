@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progmovil.gugler.com.proyectofinal="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/item1"
+        android:title="Alfa"
+        android:icon="@mipmap/ic_launcher_round"
+        progmovil.gugler.com.proyectofinal:showAsAction="ifRoom">
+    </item>
+    <item android:id="@+id/item2"
+        android:title="Beta"
+        android:icon="@mipmap/ic_launcher_round"
+        progmovil.gugler.com.proyectofinal:showAsAction="ifRoom">
+
+    </item>
+    <item android:id="@+id/item3" android:title="Gamma"
+        android:icon="@mipmap/ic_launcher_round"
+        progmovil.gugler.com.proyectofinal:showAsAction="ifRoom">
+    </item>
+</menu>

@@ -60,8 +60,8 @@ public class CuentaDAO {
     public Cuenta obtenerPorDenominacion(String denominacion){
         Cuenta cuenta = new Cuenta();
         String[] campos = new String[]{CT_DENOMINACION,CT_DESCRIPCION,CT_SALDO}; //Campos a devolver
-        String[] filtro = new String[]{denominacion};   //Filtro
-        Cursor cursor = db.query("db_cuenta",campos,CT_DENOMINACION + "=?",filtro,null,null,null);
+        String[] filtro = new String[]{denominacion.toUpperCase()};   //Filtro
+        Cursor cursor = db.query("db_cuenta",campos,"upper("+CT_DENOMINACION+")" + "=?",filtro,null,null,null);
         if (cursor.moveToFirst()){
             do{
                 if (cursor.getCount() == 1){
@@ -87,4 +87,35 @@ public class CuentaDAO {
         return true;
     }
 
+    /**
+     * Intenta modificar un objeto cuenta.
+     * @param cuentaModificada
+     * @param denominacion
+     * @return Devuelve true si la modificación se llevó con éxito, sino false.
+     * @throws ValidacionException Devolución en caso de que no exista el elemento a modificar.
+     * @throws Exception
+     */
+    public boolean modificar(Cuenta cuentaModificada, String denominacion) throws ValidacionException,Exception{
+        Cuenta cuentaOriginal = obtenerPorDenominacion(denominacion); //Comprobar si existe elemento
+        if (cuentaOriginal == null){
+            ValidacionException ex = new ValidacionException(ValidacionException.NO_EXISTE_EN_BASE);
+            throw  ex;
+        }else{
+            if (!cuentaModificada.equals(cuentaOriginal)){ //Hubo modificaciones
+                try{
+                    String[] valores = {denominacion};
+                    ContentValues registro = new ContentValues();
+                    registro.put(CT_DENOMINACION, cuentaModificada.getDenominacion());
+                    registro.put(CT_DESCRIPCION, cuentaModificada.getDescripcion());
+                    registro.put(CT_SALDO, cuentaModificada.getSaldo());
+                    long res = db.update("db_cuenta",registro,"ct_denominacion =?",valores);
+                    return (res == -1 ? false : true);
+                }catch (Exception ex){
+                    throw  ex;
+                }
+            }else{
+                return false; //No hay nada que modificar
+            }
+        }
+    }
 }
