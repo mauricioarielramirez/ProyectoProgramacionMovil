@@ -9,19 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"> <!-- Por defecto para todas las activity que no se configure con otra cosa -->
-
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> <!-- Permite usar el action bar para personalizarlo -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
             <activity
                 android:name="layout.cuenta.ConfigurarCuenta"
                 android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> <!-- Permite usar el action bar para personalizarlo -->
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
         </activity>
 
     </application>

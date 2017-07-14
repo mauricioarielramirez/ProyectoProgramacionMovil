@@ -2,19 +2,20 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:progmovil.gugler.com.proyectofinal="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/item1"
+    <item
+        android:id="@+id/item1"
+        android:icon="@drawable/ic_action_photo"
         android:title="Alfa"
+        progmovil.gugler.com.proyectofinal:showAsAction="never"></item>
+    <item
+        android:id="@+id/item2"
         android:icon="@mipmap/ic_launcher_round"
-        progmovil.gugler.com.proyectofinal:showAsAction="ifRoom">
-    </item>
-    <item android:id="@+id/item2"
         android:title="Beta"
+        progmovil.gugler.com.proyectofinal:showAsAction="never"></item>
+    <item android:id="@+id/item3"
+        android:title="Gamma"
         android:icon="@mipmap/ic_launcher_round"
-        progmovil.gugler.com.proyectofinal:showAsAction="ifRoom">
 
-    </item>
-    <item android:id="@+id/item3" android:title="Gamma"
-        android:icon="@mipmap/ic_launcher_round"
-        progmovil.gugler.com.proyectofinal:showAsAction="ifRoom">
+        progmovil.gugler.com.proyectofinal:showAsAction="never">
     </item>
 </menu>

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setTitle("Main activity");
         actionBar.setSubtitle("Bienvenido");
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher); //ícono de la izquierda
+        actionBar.setIcon(R.drawable.ic_back); //ícono de la izquierda
 
     }
     /*PROBANDO UN MENU*/
