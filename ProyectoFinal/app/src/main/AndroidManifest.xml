@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="progmovil.gugler.com.proyectofinal">
+    package="progmovil.gugler.com.pf">
 
     <application
         android:allowBackup="true"
@@ -10,18 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"> <!-- Por defecto para todas las activity que no se configure con otra cosa -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.gugler.progmovil.proyectofinal.activity.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> <!-- Permite usar el action bar para personalizarlo -->
-
         </activity>
-            <activity
-                android:name="layout.cuenta.ConfigurarCuenta"
-                android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> <!-- Permite usar el action bar para personalizarlo -->
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
+        <activity
+            android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuenta"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> <!-- Permite usar el action bar para personalizarlo -->
         </activity>
+        <activity
+            android:name="com.gugler.progmovil.proyectofinal.activity.InicioActivity"
+            android:label="@string/title_activity_inicio"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
+
 </manifest>
