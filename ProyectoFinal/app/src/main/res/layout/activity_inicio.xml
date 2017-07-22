@@ -30,6 +30,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@android:color/holo_green_dark"
         app:rippleColor="@android:color/background_light"
-        app:srcCompat="@drawable/ic_agregar" />
+        app:srcCompat="@drawable/ic_agregar"
+        app:fabSize="normal"/>
 
 </android.support.design.widget.CoordinatorLayout>

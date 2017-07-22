@@ -15,8 +15,8 @@
         </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuenta"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> <!-- Permite usar el action bar para personalizarlo -->
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.InicioActivity"
             android:label="@string/title_activity_inicio"
@@ -26,6 +26,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="com.gugler.progmovil.proyectofinal.activity.ElegirDebitoActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         </activity>
     </application>
 

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.gugler.progmovil.proyectofinal.dao.CuentaDAO;
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
+import com.gugler.progmovil.proyectofinal.servicio.ServicioCuentas;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -21,15 +22,17 @@ import progmovil.gugler.com.pf.R;
 
 public class MainActivity extends AppCompatActivity {
     private CuentaDAO cuentaDao;
-    private StringBuffer cadena;
+    private ServicioCuentas sCuentas;
+    public static StringBuffer CADENA_SQL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        cadena = new StringBuffer();
-        leerScript();
-        cuentaDao = new CuentaDAO(this,cadena.toString());
+        CADENA_SQL = new StringBuffer();
+        //leerScript();
+//        cuentaDao = new CuentaDAO(this,cadena.toString());
+        sCuentas = new ServicioCuentas(this, CADENA_SQL.toString());
 
         //Mirar aca http://elbauldeandroid.blogspot.com.ar/2013/10/actionbar-android-en-construccion.html
 
@@ -40,47 +43,6 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setIcon(R.drawable.ic_back); //ícono de la izquierda
 
     }
-    /*PROBANDO UN MENU*/
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu); //En menu.xml se definen
-        return true;
-    }
-
-    private void leerScript(){
-        try {
-            InputStream inputStream = getResources().openRawResource(R.raw.script);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            for (String linea; (linea=reader.readLine())!=null;){
-                cadena.append(linea);
-            }
-        } catch (Exception e) {
-            Toast toast = Toast.makeText(this, "Problemas al intentar leer el archivo.", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
-
-/*    public void onButtonTestClick(View view) {
-
-        TextView tv = (TextView) findViewById(R.id.textViewRes);
-        try {
-            Toast toast = Toast.makeText(this, "Entro en el try", Toast.LENGTH_SHORT);
-            toast.show();
-
-            StringBuffer cadena = new StringBuffer();
-            InputStream inputStream = getResources().openRawResource(R.raw.script);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            for (String linea; (linea=reader.readLine())!=null;){
-                cadena.append(linea);
-            }
-
-            tv.setText(cadena);
-        } catch (Exception e) {
-            //tv.setText(e.getMessage() );
-            Toast toast = Toast.makeText(this, "Problemas al intentar leer el archivo.", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }*/
 
     public void onBtnGuardarClick(View view){
         Cuenta cuenta = new Cuenta();

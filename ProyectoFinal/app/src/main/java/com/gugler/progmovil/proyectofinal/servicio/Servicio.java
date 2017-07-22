@@ -5,4 +5,7 @@ package com.gugler.progmovil.proyectofinal.servicio;
  */
 
 public abstract class Servicio {
+
+
+
 }

@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gugler.progmovil.proyectofinal.activity.MainActivity">
+    tools:context="com.gugler.progmovil.proyectofinal.activity.ElegirDebitoActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
+
+    </ScrollView>
 
 </RelativeLayout>
