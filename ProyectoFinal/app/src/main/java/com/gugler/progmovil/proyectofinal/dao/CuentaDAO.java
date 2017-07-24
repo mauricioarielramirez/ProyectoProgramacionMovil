@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
 
+import java.util.ArrayList;
+
 /**
  * Created by ericd on 13/6/2017.
  */
@@ -117,5 +119,16 @@ public class CuentaDAO {
                 return false; //No hay nada que modificar
             }
         }
+    }
+
+    public ArrayList<Cuenta> listarTodo(){
+        ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
+        Cursor cursor = db.rawQuery("SELECT "+CT_DENOMINACION+", "+CT_DESCRIPCION+", "+CT_SALDO+" FROM db_cuenta",null);
+        if (cursor.moveToFirst()){
+            do{
+                cuentas.add(new Cuenta(null,cursor.getString(0),cursor.getString(1),cursor.getFloat(2)));
+            }while(cursor.moveToNext());
+        }
+        return cuentas;
     }
 }

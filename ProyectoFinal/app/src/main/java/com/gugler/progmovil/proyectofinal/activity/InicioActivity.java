@@ -3,7 +3,6 @@ package com.gugler.progmovil.proyectofinal.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +19,6 @@ import java.io.InputStreamReader;
 import progmovil.gugler.com.pf.R;
 
 public class InicioActivity extends AppCompatActivity {
-    private ServicioCuentas sCuentas;
     public static StringBuffer CADENA_SQL;
 
     @Override
@@ -30,6 +28,18 @@ public class InicioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         leerScript();
+        inicializarActivity();
+        configurarVisualActivity(null);
+    }
+
+    /**
+     * Determina Titulo, subtítulo, llama a la carga de menues, y toda acción requerida que sea propio del aspacto visual
+     * @param modo Bandera para indicar la modificación de algún comportamiento en el aspecto visual (utilizar constantes)
+     */
+    private void configurarVisualActivity(String modo){
+        ActionBar actionBar = getSupportActionBar(); // Permite personalizar el action bar
+        actionBar.setTitle("Seguimiento del efectivo");
+        actionBar.setSubtitle("Bienvenido");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -39,10 +49,29 @@ public class InicioActivity extends AppCompatActivity {
                 startActivity(intentoConfigCuenta);
             }
         });
+    }
 
-        ActionBar actionBar = getSupportActionBar(); // Permite personalizar el action bar
-        actionBar.setTitle("Seguimiento del efectivo");
-        actionBar.setSubtitle("Bienvenido");
+    /**
+     * Determina que activity presentar, dependiendo si no existen cuentas (primer ingreso) o sí las hay (siguientes ingresos)
+     */
+    private void inicializarActivity() {
+        if (existenCuentas()){
+            Intent intentoElegirDebito = new Intent(this, ElegirDebitoActivity.class);
+            startActivity(intentoElegirDebito);
+        }
+    }
+
+    /**
+     * Comprueba si existen cuentas haciendo la llamada al servicio
+     * @return true si existen, false si no
+     */
+    private Boolean existenCuentas() {
+        ServicioCuentas sCuentas = new ServicioCuentas(this,this.CADENA_SQL.toString());
+        if (sCuentas.listarTodo().isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /*Botón de ayuda*/
@@ -52,6 +81,9 @@ public class InicioActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Carga las sentencias SQL necesarias para la creación de la BD
+     */
     private void leerScript() {
         CADENA_SQL = new StringBuffer();
         try {
@@ -66,4 +98,12 @@ public class InicioActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Si se ejecuta OnResume es porque se ejecutó una activity desde aquí. En este caso llama a inicializarActivity para determinar si se redirecciona o no.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        inicializarActivity();
+    }
 }

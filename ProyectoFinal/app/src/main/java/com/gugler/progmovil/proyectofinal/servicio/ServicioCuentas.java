@@ -6,6 +6,8 @@ import com.gugler.progmovil.proyectofinal.dao.CuentaDAO;
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
 
+import java.util.ArrayList;
+
 /**
  * Created by ericd on 13/6/2017.
  */
@@ -22,6 +24,12 @@ public class ServicioCuentas extends Servicio {
     public Boolean agregarCuenta(Cuenta cuenta) throws ValidacionException, Exception {
         cuentaDao.agregar(cuenta);
         return true;
+    }
+
+    public ArrayList<Cuenta> listarTodo(){
+        ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
+        cuentas = cuentaDao.listarTodo();
+        return cuentas;
     }
 
 }
