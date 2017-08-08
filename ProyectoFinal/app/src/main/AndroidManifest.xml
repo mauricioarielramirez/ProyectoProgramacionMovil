@@ -16,21 +16,27 @@
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuenta"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.InicioActivity"
             android:label="@string/title_activity_inicio"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name="com.gugler.progmovil.proyectofinal.activity.ElegirDebitoActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:windowSoftInputMode="adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.gugler.progmovil.proyectofinal.activity.ElegirDebitoActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        </activity>
+        <activity android:name="com.gugler.progmovil.proyectofinal.activity.MenuPrincipalActivity"></activity>
     </application>
 
 </manifest>

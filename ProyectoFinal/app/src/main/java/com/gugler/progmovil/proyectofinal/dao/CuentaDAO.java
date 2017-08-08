@@ -22,7 +22,12 @@ public class CuentaDAO {
     private Dao baseDeDatos;
     private SQLiteDatabase db;
 
-    public CuentaDAO(Context context, String cadena) {
+    public CuentaDAO(/*Context context, String cadena*/) {
+        //baseDeDatos = new Dao(context,"db_proyecto",null,1,cadena);
+        //db = baseDeDatos.getWritableDatabase();
+    }
+
+    public void crearBase(Context context, String cadena) {
         baseDeDatos = new Dao(context,"db_proyecto",null,1,cadena);
         db = baseDeDatos.getWritableDatabase();
     }
@@ -37,8 +42,7 @@ public class CuentaDAO {
         try {
             Cuenta cuentaRec = obtenerPorDenominacion(cuenta.getDenominacion());
             if (cuentaRec.getDenominacion() != null){
-                ValidacionException ex = new ValidacionException(ValidacionException.EXISTE_EN_BASE);
-                throw ex;
+                throw new ValidacionException(ValidacionException.EXISTE_EN_BASE);
             }
 
             ContentValues registro = new ContentValues();
@@ -74,6 +78,7 @@ public class CuentaDAO {
                     break;
                 }
             }while(cursor.moveToNext());
+            cursor.close();
         }
 
         return cuenta;
@@ -129,6 +134,7 @@ public class CuentaDAO {
                 cuentas.add(new Cuenta(null,cursor.getString(0),cursor.getString(1),cursor.getFloat(2)));
             }while(cursor.moveToNext());
         }
+        cursor.close();
         return cuentas;
     }
 }

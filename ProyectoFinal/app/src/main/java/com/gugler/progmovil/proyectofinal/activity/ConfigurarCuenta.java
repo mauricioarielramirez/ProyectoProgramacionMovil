@@ -1,13 +1,9 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,27 +13,29 @@ import com.gugler.progmovil.proyectofinal.servicio.ServicioCuentas;
 
 import progmovil.gugler.com.pf.R;
 
-public class ConfigurarCuenta extends AppCompatActivity {
+public class ConfigurarCuenta extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configurar_cuenta);
+        prepararStringSql();
+        configurarInterface("");
+    }
 
-        ActionBar actionBar = getSupportActionBar(); // Permite personalizar el action bar
-        actionBar.setTitle("Configurar Cuenta");
-        actionBar.setSubtitle("Nueva cuenta");
+    private void configurarInterface(String modo) {
+        switch (modo) {
+            default:
+                ActionBar actionBar = getSupportActionBar();
+                actionBar.setTitle("Configurar Cuenta");
+                actionBar.setSubtitle("Nueva cuenta");
+        }
+    }
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int width = metrics.widthPixels; // ancho absoluto en pixels
-        int height = metrics.heightPixels; // alto absoluto en pixels
-
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        linearLayout.setLeft(12);
-        linearLayout.setRight(width-12);
-        linearLayout.setTop(24);
-        linearLayout.setBottom(height-24);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        prepararStringSql();
     }
 
     /*Botón de ayuda*/
@@ -48,7 +46,8 @@ public class ConfigurarCuenta extends AppCompatActivity {
     }
 
     public void onBtnGuardarClick(View view) {
-        ServicioCuentas sCuentas = new ServicioCuentas(this, InicioActivity.CADENA_SQL.toString());
+        ServicioCuentas sCuentas = new ServicioCuentas();
+        sCuentas.crearBase(this,super.CADENA_SQL);
 
         String denominacion = ((TextView) findViewById(R.id.txtDenominacion)).getText().toString();
         String descripcion = ((TextView) findViewById(R.id.txtDescripcion)).getText().toString();
@@ -68,8 +67,6 @@ public class ConfigurarCuenta extends AppCompatActivity {
             Toast t = Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG);
             t.show();
         }
-
     }
-
 
 }

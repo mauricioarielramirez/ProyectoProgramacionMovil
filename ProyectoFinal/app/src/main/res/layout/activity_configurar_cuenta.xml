@@ -9,10 +9,14 @@
     tools:layout_editor_absoluteX="0dp">
 
     <ScrollView
-        android:layout_width="365dp"
-        android:layout_height="499dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -136,8 +140,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="Guardar"
-                    android:onClick="onBtnGuardarClick"/>
+                    android:onClick="onBtnGuardarClick"
+                    android:text="Guardar" />
 
                 <Space
                     android:layout_width="wrap_content"

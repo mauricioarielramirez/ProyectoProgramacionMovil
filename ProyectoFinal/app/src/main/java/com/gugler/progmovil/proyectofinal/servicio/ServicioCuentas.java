@@ -15,11 +15,15 @@ import java.util.ArrayList;
 public class ServicioCuentas extends Servicio {
     private CuentaDAO cuentaDao;
 
-    public ServicioCuentas(Context contexto, String cadena){
+    public ServicioCuentas(){
         if (cuentaDao == null){
-            cuentaDao = new CuentaDAO(contexto,cadena);
+            cuentaDao = new CuentaDAO();
         }
     };
+
+    public void crearBase(Context contexto, String cadena){
+        cuentaDao.crearBase(contexto, cadena);
+    }
 
     public Boolean agregarCuenta(Cuenta cuenta) throws ValidacionException, Exception {
         cuentaDao.agregar(cuenta);

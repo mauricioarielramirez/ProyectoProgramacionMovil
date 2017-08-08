@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gugler.progmovil.proyectofinal.activity.MenuPrincipalActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/lstMenuPrincipal"
+                style="@android:style/Widget.DeviceDefault.ExpandableListView"
+                android:layout_width="match_parent"
+                android:layout_height="222dp"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="true" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

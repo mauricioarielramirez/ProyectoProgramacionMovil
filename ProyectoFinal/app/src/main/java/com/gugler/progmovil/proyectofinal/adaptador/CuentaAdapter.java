@@ -20,13 +20,36 @@ import progmovil.gugler.com.pf.R;
  */
 
 public class CuentaAdapter extends ArrayAdapter<Cuenta> {
+//    private static final int TYPE_ITEM = 0;
+//    private static final int TYPE_SEPARATOR = 1;
+//
+//    private ArrayList<String> mData = new ArrayList<String>();
+//    private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
+//
+//    private LayoutInflater mInflater;
+//
     public CuentaAdapter(Context context, ArrayList<Cuenta> items) {
         super(context, R.layout.cuenta_item,items);
+//        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+//
+//    public void addItem(String item) {
+//        mData.add(item);
+//        notifyDataSetChanged();
+//    }
+//
+//    public void addSectionHeaderItem(String item) {
+//        mData.add(item);
+//        sectionHeader.add(mData.size() - 1);
+//        notifyDataSetChanged();
+//    }
+
+
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         //Obtener el elemento de la posición
         Cuenta cuenta = getItem(position);
         //Verificar si la vista existe para reutilizar
@@ -45,4 +68,8 @@ public class CuentaAdapter extends ArrayAdapter<Cuenta> {
         return convertView;
 
     }
+
+//    public static class ViewHolder {
+//        public TextView textView;
+//    }
 }
