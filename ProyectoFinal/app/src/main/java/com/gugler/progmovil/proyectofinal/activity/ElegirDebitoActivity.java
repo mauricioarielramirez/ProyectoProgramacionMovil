@@ -17,7 +17,7 @@ public class ElegirDebitoActivity extends BaseActivity {
 //    private String CADENA_SQL;
 //    private Inicializador inicializador;
 
-    private ArrayList<Cuenta> listaCuentas;
+    private ArrayList<Object> listaCuentas;
     private CuentaAdapter adapter;
 
     @Override
@@ -33,8 +33,8 @@ public class ElegirDebitoActivity extends BaseActivity {
         switch (modo) {
             default:
                 ActionBar actionBar = getSupportActionBar();
-                actionBar.setTitle("Configurar Cuenta");
-                actionBar.setSubtitle("Nueva cuenta");
+                actionBar.setTitle("Elegir débito");
+                actionBar.setSubtitle("Seleccione una cuenta");
         }
     }
 
@@ -42,17 +42,16 @@ public class ElegirDebitoActivity extends BaseActivity {
      * Instancia el adaptador de cuenta e interactúa con el componente listview
      */
     private void inicializarListView(){
-        listaCuentas = new ArrayList<Cuenta>();
-        adapter = new CuentaAdapter(this,listaCuentas);
+        listaCuentas = new ArrayList<Object>();
         ListView lstCuentas = (ListView)findViewById(R.id.lstCuentas);
+        llenarListView();
         try{
+            adapter = new CuentaAdapter(this,listaCuentas);
             lstCuentas.setAdapter(adapter);
         }catch(Exception ex){
             throw  ex;
         }
-        llenarListView();
         adapter.notifyDataSetChanged();
-        lstCuentas.addHeaderView(findViewById(R.id.txvHeaderListView),null,false);
     }
 
     /**
@@ -63,6 +62,7 @@ public class ElegirDebitoActivity extends BaseActivity {
         sCuentas.crearBase(this,CADENA_SQL);
         ArrayList<Cuenta> cuentas;
         cuentas = sCuentas.listarTodo();
+        listaCuentas.add(" Cuentas");
         listaCuentas.addAll(cuentas);
     }
 
