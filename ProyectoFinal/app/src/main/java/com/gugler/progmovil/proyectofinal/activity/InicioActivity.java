@@ -17,9 +17,12 @@ public class InicioActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
-
         prepararStringSql();
-        configurarInterface(null);
+        if (existenCuentas() == true) {
+            Intent intento = new Intent(this, ElegirDebitoActivity.class);
+            startActivity(intento);
+        }
+        configurarInterface("");
     }
 
     /**
@@ -72,5 +75,9 @@ public class InicioActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         prepararStringSql();
+        if (existenCuentas() == true) {
+            Intent intento = new Intent(this, ElegirDebitoActivity.class);
+            startActivity(intento);
+        }
     }
 }

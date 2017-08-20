@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,8 +74,8 @@ public class CuentaAdapter extends BaseAdapter {
 
                 txvDenominacion.setText(cuenta.getDenominacion());
                 txvDescripcion.setText(cuenta.getDescripcion());
-                txvSaldo.setText("$ " + cuenta.getSaldo().toString());
-                break;
+                txvSaldo.setText("$ " + new DecimalFormat("#.##").format(cuenta.getSaldo())+ " ");
+                        break;
             case TYPE_SEPARATOR:
                 TextView textView = (TextView)convertView.findViewById(R.id.txvHeaderListView);
                 String cadenaString = (String)getItem(position);
