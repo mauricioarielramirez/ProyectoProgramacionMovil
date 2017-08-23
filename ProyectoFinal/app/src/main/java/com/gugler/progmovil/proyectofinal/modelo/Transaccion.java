@@ -8,12 +8,12 @@ public class Transaccion {
     private Long id;
     private String nombre;
     private String tipo;
-    private String monto;
+    private Float monto;
 
     public Transaccion() {
     }
 
-    public Transaccion(Long id, String nombre, String tipo, String monto) {
+    public Transaccion(Long id, String nombre, String tipo, Float monto) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
@@ -44,11 +44,11 @@ public class Transaccion {
         this.tipo = tipo;
     }
 
-    public String getMonto() {
+    public Float getMonto() {
         return monto;
     }
 
-    public void setMonto(String monto) {
+    public void setMonto(Float monto) {
         this.monto = monto;
     }
 }
