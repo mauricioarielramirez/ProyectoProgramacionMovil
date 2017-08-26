@@ -151,15 +151,9 @@
             </LinearLayout>
 
         </ScrollView>
-
     </FrameLayout>
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation" />
+    <include android:id="@+id/appbar"
+        layout="@layout/custom_toolbar"
+        />
 
 </LinearLayout>
