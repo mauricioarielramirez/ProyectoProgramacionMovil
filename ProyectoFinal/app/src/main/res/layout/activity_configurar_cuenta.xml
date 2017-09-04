@@ -1,163 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuenta"
+    tools:context="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuentaActivity"
     tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    android:orientation="vertical">
 
-    <ScrollView
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="26dp"
-            android:orientation="vertical"
-            android:weightSum="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre de la cuenta"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textSize="18sp"
-                android:visibility="visible" />
-
-            <EditText
-                android:id="@+id/txtDenominacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Descripción"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/txtDescripcion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Saldo"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/txtSaldo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="29dp" />
-
-            <Switch
-                android:id="@+id/swtAlertaEvento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05"
-                android:switchTextAppearance="@android:style/TextAppearance"
-                android:text="Alertas por eventos"
-                android:textAppearance="@android:style/TextAppearance" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.05" />
-
-            <Button
-                android:id="@+id/btnConfigurarAlerta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Configurar alertas"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="53dp" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="59dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="26dp"
+                android:orientation="vertical"
+                android:weightSum="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.15" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05" />
 
-                <Button
-                    android:id="@+id/btnGuardar"
+                <TextView
+                    android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.14"
-                    android:onClick="onBtnGuardarClick"
-                    android:text="Guardar" />
+                    android:text="Nombre de la cuenta"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/txtDenominacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
 
                 <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/txtDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Saldo"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/txtSaldo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="29dp" />
+
+                <Switch
+                    android:id="@+id/swtAlertaEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:switchTextAppearance="@android:style/TextAppearance"
+                    android:text="Alertas por eventos"
+                    android:textAppearance="@android:style/TextAppearance" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05" />
+
+                <Button
+                    android:id="@+id/btnConfigurarAlerta"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.15" />
+                    android:layout_height="wrap_content"
+                    android:text="Configurar alertas"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="53dp" />
+
             </LinearLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:layout_weight="0.05" />
+        </ScrollView>
+    </FrameLayout>
 
-        </LinearLayout>
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/custom_toolbar" />
 
-    </ScrollView>
-
-
-
-</RelativeLayout>
+</LinearLayout>

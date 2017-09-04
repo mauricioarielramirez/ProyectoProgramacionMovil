@@ -40,7 +40,7 @@ public class InicioActivity extends BaseActivity {
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intentoConfigCuenta = new Intent(view.getContext(), ConfigurarCuenta.class);
+                        Intent intentoConfigCuenta = new Intent(view.getContext(), ConfigurarCuentaActivity.class);
                         startActivity(intentoConfigCuenta);
                     }
                 });

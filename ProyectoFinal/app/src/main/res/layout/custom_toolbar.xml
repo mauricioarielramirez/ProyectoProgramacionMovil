@@ -27,7 +27,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnToolbarGuardar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -45,7 +45,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnToolbarCancelar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

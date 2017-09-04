@@ -14,7 +14,7 @@
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> <!-- Permite usar el action bar para personalizarlo -->
         </activity>
         <activity
-            android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuenta"
+            android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuentaActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize">
 

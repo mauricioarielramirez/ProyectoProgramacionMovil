@@ -51,4 +51,9 @@ public class Cuenta {
     public void setSaldo(Float saldo) {
         this.saldo = saldo;
     }
+
+    @Override
+    public String toString() {
+        return this.getDenominacion().concat(" ");
+    }
 }
