@@ -76,7 +76,7 @@ public class InicioActivity extends BaseActivity {
         super.onResume();
         prepararStringSql();
         if (existenCuentas() == true) {
-            Intent intento = new Intent(this, ElegirDebitoActivity.class);
+            Intent intento = new Intent(this, NormalActivity.class);
             startActivity(intento);
         }
     }
