@@ -152,8 +152,9 @@
 
         </ScrollView>
     </FrameLayout>
-    <include android:id="@+id/appbar"
-        layout="@layout/custom_toolbar"
-        />
+
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/custom_toolbar" />
 
 </LinearLayout>

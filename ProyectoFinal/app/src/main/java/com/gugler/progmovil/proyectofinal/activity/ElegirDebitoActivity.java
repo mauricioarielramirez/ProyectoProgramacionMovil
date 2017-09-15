@@ -34,13 +34,13 @@ public class ElegirDebitoActivity extends BaseActivity {
 
         ListView listView = (ListView)findViewById(R.id.lstCuentas);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView txvNombreCuenta = (TextView) view.findViewById(R.id.txvDenominacionCuenta);
-                TextView txvSaldo = (TextView) view.findViewById(R.id.txvSaldo);
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TextView txvNombreCuenta = (TextView) view.findViewById(R.id.txvDenominacionCuenta);
+                    TextView txvSaldo = (TextView) view.findViewById(R.id.txvSaldo);
 
-                Toast.makeText(getApplicationContext(), txvNombreCuenta.getText(), Toast.LENGTH_LONG).show();
-            }
+                    Toast.makeText(getApplicationContext(), txvNombreCuenta.getText(), Toast.LENGTH_LONG).show();
+                }
         });
     }
 

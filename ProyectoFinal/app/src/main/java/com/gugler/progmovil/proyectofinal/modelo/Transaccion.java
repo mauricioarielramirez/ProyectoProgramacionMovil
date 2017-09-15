@@ -9,15 +9,17 @@ public class Transaccion {
     private String nombre;
     private String tipo;
     private Float monto;
+    private Boolean favorito;
 
     public Transaccion() {
     }
 
-    public Transaccion(Long id, String nombre, String tipo, Float monto) {
+    public Transaccion(Long id, String nombre, String tipo, Float monto, Boolean favorito) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
         this.monto = monto;
+        this.favorito = favorito;
     }
 
     public Long getId() {
@@ -50,5 +52,13 @@ public class Transaccion {
 
     public void setMonto(Float monto) {
         this.monto = monto;
+    }
+
+    public Boolean getFavorito() {
+        return favorito;
+    }
+
+    public void setFavorito(Boolean favorito) {
+        this.favorito = favorito;
     }
 }

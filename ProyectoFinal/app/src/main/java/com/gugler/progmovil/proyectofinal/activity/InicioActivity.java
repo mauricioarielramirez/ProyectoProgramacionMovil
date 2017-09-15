@@ -19,7 +19,7 @@ public class InicioActivity extends BaseActivity {
         setContentView(R.layout.activity_inicio);
         prepararStringSql();
         if (existenCuentas() == true) {
-            Intent intento = new Intent(this, ElegirDebitoActivity.class);
+            Intent intento = new Intent(this, NormalActivity.class);
             startActivity(intento);
         }
         configurarInterface("");

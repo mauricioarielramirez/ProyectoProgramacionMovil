@@ -21,6 +21,7 @@ public class TransaccionDAO {
     private static final String TR_NOMBRE = "tr_nombre";
     private static final String TR_TIPO = "tr_tipo";
     private static final String TR_MONTO = "tr_monto";
+    private static final String TR_FAVORITO = "tr_favorito";
 
     private Dao baseDeDatos;
     private SQLiteDatabase db;
@@ -43,6 +44,7 @@ public class TransaccionDAO {
             registro.put(TR_NOMBRE, transaccion.getNombre());
             registro.put(TR_TIPO, transaccion.getTipo());
             registro.put(TR_MONTO, transaccion.getMonto());
+            registro.put(TR_FAVORITO, transaccion.getFavorito());
             long res = db.insert("db_transaccion",null,registro);
 
             return (res == -1 ? false : true);
@@ -72,7 +74,7 @@ public class TransaccionDAO {
     public List<Transaccion> obtenerPorNombre(String nombre){
         List<Transaccion> transaccion = new ArrayList<Transaccion>();
         Transaccion tAux = new Transaccion();
-        String[] campos = new String[]{TR_ID ,TR_NOMBRE, TR_TIPO, TR_MONTO}; //Campos a devolver
+        String[] campos = new String[]{TR_ID ,TR_NOMBRE, TR_TIPO, TR_MONTO, TR_FAVORITO}; //Campos a devolver
         String[] filtro = new String[]{nombre.toUpperCase()};   //Filtro
         Cursor cursor = db.query("db_transaccion",campos,"upper("+TR_NOMBRE+")" + "=?",filtro,null,null,null);
         if (cursor.moveToFirst()){
@@ -81,6 +83,7 @@ public class TransaccionDAO {
                 tAux.setNombre(cursor.getString(1));
                 tAux.setTipo(cursor.getString(2));
                 tAux.setMonto(cursor.getFloat(3));
+                tAux.setFavorito(Boolean.parseBoolean(cursor.getString(4)));
                 transaccion.add(tAux);
             }while(cursor.moveToNext());
             cursor.close();
@@ -95,7 +98,7 @@ public class TransaccionDAO {
      */
     public Transaccion obtenerPorId(Integer id){
         Transaccion transaccion = new Transaccion();
-        String[] campos = new String[]{TR_ID ,TR_NOMBRE, TR_TIPO, TR_MONTO}; //Campos a devolver
+        String[] campos = new String[]{TR_ID ,TR_NOMBRE, TR_TIPO, TR_MONTO, TR_FAVORITO}; //Campos a devolver
         String[] filtro = new String[]{id.toString()};
         Cursor cursor = db.query("db_transaccion",campos,TR_ID+"=?",filtro,null,null,null);
         if (cursor.moveToFirst()) {
@@ -104,6 +107,7 @@ public class TransaccionDAO {
                 transaccion.setNombre(cursor.getString(1));
                 transaccion.setTipo(cursor.getString(2));
                 transaccion.setMonto(cursor.getFloat(3));
+                transaccion.setFavorito(Boolean.parseBoolean(cursor.getString(4)));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -136,6 +140,7 @@ public class TransaccionDAO {
             registro.put(TR_NOMBRE, transaccion.getNombre());
             registro.put(TR_TIPO, transaccion.getTipo());
             registro.put(TR_MONTO, transaccion.getMonto());
+            registro.put(TR_FAVORITO, transaccion.getFavorito());
             long res = db.update("db_transaccion",registro,"tr_id =?",valores);
             return (res == -1 ? false : true);
         } catch (Exception ex){
@@ -153,7 +158,7 @@ public class TransaccionDAO {
         Cursor cursor = db.rawQuery("SELECT "+TR_ID+", "+TR_NOMBRE+", "+TR_TIPO+", "+TR_MONTO+" FROM db_transaccion",null);
         if (cursor.moveToFirst()){
             do{
-                transacciones.add(new Transaccion(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getFloat(3)));
+                transacciones.add(new Transaccion(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getFloat(3),Boolean.parseBoolean(cursor.getString(4))));
             }while(cursor.moveToNext());
         }
         cursor.close();
