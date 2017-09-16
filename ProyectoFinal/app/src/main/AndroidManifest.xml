@@ -23,11 +23,7 @@
             android:name="com.gugler.progmovil.proyectofinal.activity.InicioActivity"
             android:label="@string/title_activity_inicio"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.ElegirDebitoActivity"
@@ -46,12 +42,18 @@
             android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarTransaccionActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.NormalActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize">
+
 
         </activity>
     </application>

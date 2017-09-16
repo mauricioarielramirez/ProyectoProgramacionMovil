@@ -37,18 +37,17 @@ public class TransaccionDAO {
      * @return Devuelve True si la operación se realiza con éxito
      * @throws Exception
      */
-    public Boolean agregar(Transaccion transaccion) throws ValidacionException, Exception {
+    public Long agregar(Transaccion transaccion) throws ValidacionException, Exception {
         try {
             ContentValues registro = new ContentValues();
-            registro.put(TR_ID, obtenerUltimoId());
+            registro.put(TR_ID, (obtenerUltimoId() + 1));
             registro.put(TR_NOMBRE, transaccion.getNombre());
             registro.put(TR_TIPO, transaccion.getTipo());
             registro.put(TR_MONTO, transaccion.getMonto());
             registro.put(TR_FAVORITO, transaccion.getFavorito());
             long res = db.insert("db_transaccion",null,registro);
 
-            return (res == -1 ? false : true);
-
+            return (res == -1 ? -1 : obtenerUltimoId());
         } catch (Exception ex) {
             throw  ex;
         }
@@ -96,7 +95,7 @@ public class TransaccionDAO {
      * @param id
      * @return
      */
-    public Transaccion obtenerPorId(Integer id){
+    public Transaccion obtenerPorId(Long id){
         Transaccion transaccion = new Transaccion();
         String[] campos = new String[]{TR_ID ,TR_NOMBRE, TR_TIPO, TR_MONTO, TR_FAVORITO}; //Campos a devolver
         String[] filtro = new String[]{id.toString()};

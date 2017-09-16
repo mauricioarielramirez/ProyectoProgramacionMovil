@@ -8,6 +8,8 @@ public class ValidacionException extends Exception {
     public static final String EXISTE_EN_BASE = "El elemento que se intenta agregar ya existe";
     public static final String NO_EXISTE_EN_BASE = "El elemento referenciado no existe";
     public static final String PROBLEMAS_ARCHIVO = "Ocurrió un problema al intentar leer el archivo";
+    public static final String PROBLEMAS_ALTA_TRANSACCION = "Ocurrió un problema al dar de alta la transacción";
+    public static final String PROBLEMAS_ALTA_CUENTA = "Ocurrió un problema al dar de alta la cuenta";
 
     private String mensaje;
     private String stackTraceOriginal;

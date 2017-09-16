@@ -36,4 +36,7 @@ public class ServicioCuentas extends Servicio {
         return cuentas;
     }
 
+    public Boolean asociarTransaccion (String denominacionCuenta, Long ultimoIdTransaccion){
+        return cuentaDao.agregarCuentaTransaccion(denominacionCuenta, ultimoIdTransaccion);
+    }
 }

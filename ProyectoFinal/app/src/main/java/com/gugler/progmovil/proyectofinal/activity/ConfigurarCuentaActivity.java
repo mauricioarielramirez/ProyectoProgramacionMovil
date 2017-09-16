@@ -35,7 +35,7 @@ public class ConfigurarCuentaActivity extends BaseActivity{
                 String descripcion = ((TextView) findViewById(R.id.txtDescripcion)).getText().toString();
                 Float saldo = Float.parseFloat(((TextView) findViewById(R.id.txtSaldo)).getText().toString());
 
-                Cuenta cuentaAgregar = new Cuenta(null, denominacion, descripcion, saldo);
+                Cuenta cuentaAgregar = new Cuenta(denominacion, descripcion, saldo);
                 try {
                     Boolean res = sCuentas.agregarCuenta(cuentaAgregar);
                     if (res) {

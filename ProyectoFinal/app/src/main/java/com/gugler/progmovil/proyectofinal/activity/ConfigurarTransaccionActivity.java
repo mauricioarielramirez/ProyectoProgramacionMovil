@@ -9,13 +9,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.adaptador.CuentaAdapter;
+import com.gugler.progmovil.proyectofinal.adaptador.ListAdapter;
+import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
+import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioCuentas;
+import com.gugler.progmovil.proyectofinal.servicio.ServicioTransacciones;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,10 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
     private TextView mTextMessage;
     private List<String> listaCuentasAsociadas;
     private CuentaAdapter adapter;
+    private ServicioTransacciones sTransacciones;
+
+    private ArrayList<String> listaTipoTransaccion;
+    private ListAdapter adapterOperaciones;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -53,13 +62,43 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
 
         prepararStringSql();
         configurarInterface("");
+        inicializarSpinnerTipoTransaccion();
 
         Button btnGuardarToolbar = (Button) findViewById(R.id.btnToolbarGuardar);
         btnGuardarToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Btn guardar click", Toast.LENGTH_SHORT);
-                toast.show();
+                /*Toast toast = Toast.makeText(getApplicationContext(), "Btn guardar click", Toast.LENGTH_SHORT);
+                toast.show();*/
+                Transaccion transaccion = new Transaccion();
+                transaccion.setId(null);
+                transaccion.setNombre( ((EditText)findViewById(R.id.txtNombre)).getText().toString() );
+                transaccion.setMonto( Float.parseFloat(((EditText)findViewById(R.id.txtSaldo)).getText().toString()) );
+                transaccion.setFavorito(false);
+
+                String tipoTransaccion = ((Spinner) findViewById(R.id.spnTipoTransaccion)).getSelectedItem().toString();
+                String denominacionCuenta = ((Spinner) findViewById(R.id.spnCtasAsociadas)).getSelectedItem().toString();
+
+                switch (tipoTransaccion) {
+                    case "Débito":
+                        transaccion.setTipo("D");
+                        break;
+                    case "Crédito":
+                        transaccion.setTipo("C");
+                        break;
+                    default:
+                        transaccion.setTipo("D");
+                        break;
+                }
+
+                sTransacciones = new ServicioTransacciones();
+                sTransacciones.crearBase(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL);
+                try {
+                    sTransacciones.agregarTransaccion(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL,transaccion, denominacionCuenta);
+                } catch (Exception e) {
+                    Toast toastEx = Toast.makeText(getApplicationContext(), ValidacionException.PROBLEMAS_ALTA_TRANSACCION, Toast.LENGTH_SHORT);
+                    toastEx.show();
+                }
             }
         });
 
@@ -105,6 +144,24 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
         cuentas = sCuentas.listarTodo();
         for (Cuenta c: cuentas){
             listaCuentasAsociadas.add(c.toString());
+        }
+    }
+
+
+    /**
+     * Inicializa spinner de tipo de transacciones
+     */
+    private void inicializarSpinnerTipoTransaccion(){
+        listaTipoTransaccion = new ArrayList<String>();
+        listaTipoTransaccion.add("Débito");
+        listaTipoTransaccion.add("Crédito");
+        Spinner spn = (Spinner) findViewById(R.id.spnTipoTransaccion);
+
+        try {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, listaTipoTransaccion);
+            spn.setAdapter(adapter);
+        } catch(Exception ex) {
+            throw ex;
         }
     }
 }

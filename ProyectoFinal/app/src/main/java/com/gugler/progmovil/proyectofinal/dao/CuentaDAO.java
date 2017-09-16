@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
+import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,7 @@ public class CuentaDAO {
                     cuenta.setDenominacion(cursor.getString(0));
                     cuenta.setDescripcion(cursor.getString(1));
                     cuenta.setSaldo(cursor.getFloat(2));
+                    cuenta.setTransaccion(obtenerTransacciones(cursor.getString(0)));
                 }else{
                     break;
                 }
@@ -126,15 +128,57 @@ public class CuentaDAO {
         }
     }
 
+    /**
+     * Devuelve un listado con todas las cuentas (sin sus transacciones)
+     * @return Listado completo de cuentas
+     */
     public ArrayList<Cuenta> listarTodo(){
         ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
         Cursor cursor = db.rawQuery("SELECT "+CT_DENOMINACION+", "+CT_DESCRIPCION+", "+CT_SALDO+" FROM db_cuenta",null);
         if (cursor.moveToFirst()){
             do{
-                cuentas.add(new Cuenta(null,cursor.getString(0),cursor.getString(1),cursor.getFloat(2)));
+                cuentas.add(new Cuenta(cursor.getString(0),cursor.getString(1),cursor.getFloat(2)));
             }while(cursor.moveToNext());
         }
         cursor.close();
         return cuentas;
     }
+
+    /**
+     * Obtiene las transacciones de una cuenta
+     * @param denominacion Nombre de la cuenta de la que se quiere obtener las transacciones
+     * @return Listado de transacciones de la cuenta
+     */
+    public ArrayList<Transaccion> obtenerTransacciones(String denominacion){
+        ArrayList<Transaccion> transacciones = new ArrayList<Transaccion>();
+        TransaccionDAO transaccionDAO = new TransaccionDAO();
+
+        String[] campos = new String[]{"cutr_ct_denominacion", "cutr_tr_id"}; //Campos a devolver
+        String[] filtro = new String[]{denominacion};                         //Filtro
+
+        Cursor cursor = db.query("db_cuenta_transaccion",campos,"cutr_ct_denominacion" + "=?",filtro,null,null,null);
+        if (cursor.moveToFirst()){
+            do{
+                if (cursor.getCount() == 1) {
+                    transacciones.add(transaccionDAO.obtenerPorId(cursor.getLong(0)));
+                }else {
+                    break;
+                }
+            } while(cursor.moveToNext());
+            cursor.close();
+        }
+        return transacciones;
+    }
+
+    public Boolean agregarCuentaTransaccion(String denominacionCuenta, Long idTransaccion) {
+        ContentValues registro = new ContentValues();
+        registro.put("cutr_ct_denominacion", denominacionCuenta);
+        registro.put("cutr_tr_id", idTransaccion);
+        long res = db.insert("db_cuenta_transaccion",null,registro);
+
+        return (res == -1 ? false : true);
+    }
+
 }
+
+
