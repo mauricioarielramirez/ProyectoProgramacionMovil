@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.adaptador.ListAdapter;
 import com.gugler.progmovil.proyectofinal.modelo.dto.ListaItem;
+import com.gugler.progmovil.proyectofinal.servicio.ServicioCuentas;
 
 import java.util.ArrayList;
 
@@ -89,5 +90,31 @@ public class NormalActivity extends BaseActivity {
         listaOperaciones.add(new ListaItem(3,"Consultas"));
         listaOperaciones.add(new ListaItem(4,"Administrar"));
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        moveTaskToBack(true);
+    }
+
+    private Boolean existenCuentas() {
+        ServicioCuentas sCuentas = new ServicioCuentas();
+        sCuentas.crearBase(this,CADENA_SQL);
+        if (sCuentas.listarTodo().isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        prepararStringSql();
+        if (existenCuentas() == false) {
+            Intent intento = new Intent(this, InicioActivity.class);
+            startActivity(intento);
+        }
     }
 }
