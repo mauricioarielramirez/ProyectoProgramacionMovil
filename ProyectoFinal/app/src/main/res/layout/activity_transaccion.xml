@@ -7,7 +7,8 @@
     tools:context="com.gugler.progmovil.proyectofinal.activity.TransaccionActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/MainLayoutTransaccion">
 
     <FrameLayout
         android:id="@+id/content"
@@ -59,15 +60,14 @@
                     android:orientation="horizontal">
 
                     <Spinner
-                        android:id="@+id/spinner"
+                        android:id="@+id/spnTransaccion"
                         android:layout_width="297dp"
                         android:layout_height="match_parent" />
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/btnInfoTransaccion"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
 
@@ -89,13 +89,13 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editText2"
+                        android:id="@+id/txtImporte"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="textPersonName"
-                        android:text="$2,65" />
+                        android:text="$ 2,65" />
                 </LinearLayout>
 
                 <Space
@@ -116,7 +116,7 @@
                         android:textSize="18sp" />
 
                     <Spinner
-                        android:id="@+id/spinner2"
+                        android:id="@+id/spnTipoTransaccion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.28" />
@@ -136,9 +136,9 @@
                     android:textSize="18sp" />
 
                 <Spinner
-                    android:id="@+id/spinner3"
+                    android:id="@+id/spnCuentaAsociada"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
         </ScrollView>

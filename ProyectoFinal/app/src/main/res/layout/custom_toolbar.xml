@@ -17,6 +17,7 @@
         android:orientation="horizontal">
 
         <Space
+            android:id="@+id/spcLeft"
             android:layout_width="10dp"
             android:layout_height="match_parent" />
 
@@ -24,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/lytLeftToolbar">
 
             <Button
                 android:id="@+id/btnToolbarGuardar"
@@ -42,7 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/lytRightToolbar">
 
             <Button
                 android:id="@+id/btnToolbarCancelar"
@@ -57,6 +60,7 @@
         </LinearLayout>
 
         <Space
+            android:id="@+id/spcRight"
             android:layout_width="10dp"
             android:layout_height="match_parent" />
 
