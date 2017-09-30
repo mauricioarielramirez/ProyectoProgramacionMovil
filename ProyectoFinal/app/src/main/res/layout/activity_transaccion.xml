@@ -46,6 +46,7 @@
                     android:id="@+id/textView13"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:editable="false"
                     android:text="Nombre de la transacción"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textSize="18sp" />
@@ -54,22 +55,63 @@
                     android:layout_width="match_parent"
                     android:layout_height="12dp" />
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <Spinner
-                        android:id="@+id/spnTransaccion"
-                        android:layout_width="297dp"
-                        android:layout_height="match_parent" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/btnInfo"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="0dp">
+
+                        <EditText
+                            android:id="@+id/txtTransaccion"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:editable="false"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="Carga de crédito teléfono Claro de Eric Daniel Pennachini Corporativo" />
+
+                    </LinearLayout>
 
                     <Button
-                        android:id="@+id/btnInfoTransaccion"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:id="@+id/btnInfo"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:editable="false"
+                        android:fontFamily="serif"
+                        android:text="i"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="#6C6C6C"
+                        android:textStyle="bold|italic"
+                        android:typeface="serif"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
 
                 <Space
                     android:layout_width="match_parent"
@@ -84,8 +126,10 @@
                         android:id="@+id/textView15"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
+                        android:editable="false"
                         android:text="Importe"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+
                         android:textSize="18sp" />
 
                     <EditText
@@ -93,7 +137,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:editable="false"
                         android:ems="10"
+                        android:enabled="false"
                         android:inputType="textPersonName"
                         android:text="$ 2,65" />
                 </LinearLayout>
@@ -111,6 +157,7 @@
                         android:id="@+id/textView16"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
+                        android:editable="false"
                         android:text="Tipo"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         android:textSize="18sp" />
@@ -131,6 +178,7 @@
                     android:id="@+id/textView17"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:editable="false"
                     android:text="Cuenta asociada"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textSize="18sp" />
@@ -139,6 +187,10 @@
                     android:id="@+id/spnCuentaAsociada"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp" />
 
             </LinearLayout>
         </ScrollView>

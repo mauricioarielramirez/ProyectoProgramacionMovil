@@ -1,0 +1,9 @@
+<style name="rounded_button">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_alignParentBottom">true</item>
+    <item name="android:layout_alignParentRight">true</item>
+    <item name="android:layout_marginBottom">25dp</item>
+    <item name="android:layout_marginRight">25dp</item>
+    <item name="android:background">@layout/rounded_button</item>
+</style>
