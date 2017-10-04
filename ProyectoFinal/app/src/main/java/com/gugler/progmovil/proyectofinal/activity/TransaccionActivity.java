@@ -62,8 +62,13 @@ public class TransaccionActivity extends BaseActivity {
                 ViewGroup.LayoutParams paramsSpaceRight = spcRight.getLayoutParams();
                 paramsSpaceRight.width = 120;
 
+                /*DESHABILITAR COMPONENTES Y NO PERMITIR FOCUS*/
                 spnTipo.setEnabled(false);
                 spnCuenta.setEnabled(false);
+                txtImporte.setEnabled(false);
+                txtImporte.setFocusable(false);
+                txtTransaccion.setEnabled(false);
+                txtTransaccion.setFocusable(false);
 
 
                 actionBar.setTitle("Transacción");

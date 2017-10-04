@@ -49,6 +49,8 @@ public class NormalActivity extends BaseActivity {
                     case "Consultas":
                         break;
                     case "Administrar":
+                        Intent intentoAdmin = new Intent(getApplicationContext(), AdministracionActivity.class);
+                        startActivity(intentoAdmin);
                         break;
                     default:
                         break;
