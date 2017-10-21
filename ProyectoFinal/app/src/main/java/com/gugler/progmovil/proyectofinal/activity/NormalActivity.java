@@ -1,9 +1,12 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +24,8 @@ public class NormalActivity extends BaseActivity {
     private ArrayList<String> listaCtas;
     private ArrayList<Object> listaOperaciones;
     private ListAdapter adapterOperaciones;
+    private ArrayList<Object> listaFavoritos;
+    private ListAdapter adapterFavoritos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,8 @@ public class NormalActivity extends BaseActivity {
         prepararStringSql();
         configurarInterface("");
         inicializarListViewOperaciones();
+        inicializarListViewFavoritos();
+
 
         ListView lst = (ListView) findViewById(R.id.lstOperaciones);
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -57,7 +64,10 @@ public class NormalActivity extends BaseActivity {
                 }
             }
         });
+        llenarFavoritos(); //redimensión
     }
+
+
 
     private void configurarInterface(String modo) {
         switch (modo) {
@@ -68,9 +78,51 @@ public class NormalActivity extends BaseActivity {
         }
     }
 
-
+    /*
+    Lo usamos para redimensionar por ahora, pero se puede utilizar para acceder
+    a la base de datos a buscar los elementos.
+     */
     public void llenarFavoritos() {
+        final ListView lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
+        lstFavoritos.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            private Integer alto;
+            private ListView lstFavoritos;
+            private Integer items;
 
+            @Override
+            public void onGlobalLayout() {
+                lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    lstFavoritos.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+                alto = lstFavoritos.getHeight();
+                modificarAlto();
+            }
+            public void modificarAlto() {
+                try{
+                    lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
+                    ViewGroup.LayoutParams lstParams = lstFavoritos.getLayoutParams();
+                    items = lstFavoritos.getCount();
+                    lstParams.height = (alto / items)*3;
+                }catch (Exception ex){
+                    return;
+                }
+
+            }
+        });
+    }
+
+    private void inicializarListViewFavoritos(){
+        listaFavoritos = new ArrayList<Object>();
+        ListView lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
+        llenarListViewFavoritos();
+        try{
+            adapterFavoritos= new ListAdapter(this,listaFavoritos);
+            lstFavoritos.setAdapter(adapterFavoritos);
+        }catch(Exception ex){
+            throw  ex;
+        }
+        adapterFavoritos.notifyDataSetChanged();
     }
 
     private void inicializarListViewOperaciones(){
@@ -91,7 +143,17 @@ public class NormalActivity extends BaseActivity {
         listaOperaciones.add(new ListaItem(2,"Crédito"));
         listaOperaciones.add(new ListaItem(3,"Consultas"));
         listaOperaciones.add(new ListaItem(4,"Administrar"));
+    }
 
+    private void llenarListViewFavoritos() {
+        listaFavoritos.add(new ListaItem(1,"Pasaje diario"));
+        listaFavoritos.add(new ListaItem(2,"Compra comida"));
+        listaFavoritos.add(new ListaItem(3,"Carga de crédito"));
+        listaFavoritos.add(new ListaItem(4,"SUBE obrero"));
+        listaFavoritos.add(new ListaItem(5,"Pasaje diario"));
+        listaFavoritos.add(new ListaItem(6,"Compra comida"));
+        listaFavoritos.add(new ListaItem(7,"Carga de crédito"));
+        listaFavoritos.add(new ListaItem(8,"SUBE obrero"));
     }
 
     @Override
