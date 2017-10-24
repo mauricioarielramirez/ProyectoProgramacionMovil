@@ -27,6 +27,9 @@ public class NormalActivity extends BaseActivity {
     private ArrayList<Object> listaFavoritos;
     private ListAdapter adapterFavoritos;
 
+    private final String OPERACIONES = "Operaciones";
+    private final String FAVORITOS = "AHI VA";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +92,10 @@ public class NormalActivity extends BaseActivity {
             private ListView lstFavoritos;
             private Integer items;
 
+            /**
+             * Esta lógica ayuda a disparar rutinas luego de que se haya cargado efectivamente el activity en pantalla
+             * De no hacerlo, no es posible manipular los objetos visuales directamente desde OnCreate
+             */
             @Override
             public void onGlobalLayout() {
                 lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
@@ -98,6 +105,10 @@ public class NormalActivity extends BaseActivity {
                 alto = lstFavoritos.getHeight();
                 modificarAlto();
             }
+
+            /**
+             * Modifica el alto del listview de favoritos, teniendo como máximo tres elementos para mostrar (permite scroll)
+             */
             public void modificarAlto() {
                 try{
                     lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
@@ -112,10 +123,13 @@ public class NormalActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Método utilizado para llamar a la carga de elementos de listview de favoritos
+     */
     private void inicializarListViewFavoritos(){
         listaFavoritos = new ArrayList<Object>();
         ListView lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
-        llenarListViewFavoritos();
+        llenarListView(this.FAVORITOS);
         try{
             adapterFavoritos= new ListAdapter(this,listaFavoritos);
             lstFavoritos.setAdapter(adapterFavoritos);
@@ -125,10 +139,13 @@ public class NormalActivity extends BaseActivity {
         adapterFavoritos.notifyDataSetChanged();
     }
 
+    /**
+     * Carga el listview de operaciones con valores preestablecidos
+     */
     private void inicializarListViewOperaciones(){
         listaOperaciones = new ArrayList<Object>();
         ListView lstOperaciones = (ListView)findViewById(R.id.lstOperaciones);
-        llenarListView();
+        llenarListView(this.OPERACIONES);
         try{
             adapterOperaciones = new ListAdapter(this,listaOperaciones);
             lstOperaciones.setAdapter(adapterOperaciones);
@@ -138,22 +155,29 @@ public class NormalActivity extends BaseActivity {
         adapterOperaciones.notifyDataSetChanged();
     }
 
-    private void llenarListView(){
-        listaOperaciones.add(new ListaItem(1,"Débito"));
-        listaOperaciones.add(new ListaItem(2,"Crédito"));
-        listaOperaciones.add(new ListaItem(3,"Consultas"));
-        listaOperaciones.add(new ListaItem(4,"Administrar"));
-    }
-
-    private void llenarListViewFavoritos() {
-        listaFavoritos.add(new ListaItem(1,"Pasaje diario"));
-        listaFavoritos.add(new ListaItem(2,"Compra comida"));
-        listaFavoritos.add(new ListaItem(3,"Carga de crédito"));
-        listaFavoritos.add(new ListaItem(4,"SUBE obrero"));
-        listaFavoritos.add(new ListaItem(5,"Pasaje diario"));
-        listaFavoritos.add(new ListaItem(6,"Compra comida"));
-        listaFavoritos.add(new ListaItem(7,"Carga de crédito"));
-        listaFavoritos.add(new ListaItem(8,"SUBE obrero"));
+    /**
+     * Método encargado de llenar los listviews
+     * @param nombreListview
+     */
+    private void llenarListView(String nombreListview) {
+        switch (nombreListview) {
+            case OPERACIONES:
+                listaOperaciones.add(new ListaItem(1,"Débito"));
+                listaOperaciones.add(new ListaItem(2,"Crédito"));
+                listaOperaciones.add(new ListaItem(3,"Consultas"));
+                listaOperaciones.add(new ListaItem(4,"Administrar"));
+                break;
+            case FAVORITOS:
+                listaFavoritos.add(new ListaItem(1,"Pasaje diario"));
+                listaFavoritos.add(new ListaItem(2,"Compra comida"));
+                listaFavoritos.add(new ListaItem(3,"Carga de crédito"));
+                listaFavoritos.add(new ListaItem(4,"SUBE obrero"));
+                listaFavoritos.add(new ListaItem(5,"Pasaje diario"));
+                listaFavoritos.add(new ListaItem(6,"Compra comida"));
+                listaFavoritos.add(new ListaItem(7,"Carga de crédito"));
+                listaFavoritos.add(new ListaItem(8,"SUBE obrero"));
+                break;
+        }
     }
 
     @Override

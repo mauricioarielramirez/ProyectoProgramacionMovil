@@ -47,8 +47,9 @@ public class ServicioTransacciones extends Servicio {
         return transacciones;
     }
 
-    public ArrayList<Transaccion> listarPorCuenta(String denominacion){
+    public ArrayList<Transaccion> listarPorCuenta(Context contexto, String cadena, String denominacion){
         CuentaDAO cuentaDAO = new CuentaDAO();
-        return cuentaDAO.obtenerTransacciones(denominacion);
+        cuentaDAO.crearBase(contexto,cadena);
+        return cuentaDAO.obtenerTransacciones(contexto,cadena,denominacion);
     }
 }

@@ -23,6 +23,9 @@ public class CuentaDAO {
     private Dao baseDeDatos;
     private SQLiteDatabase db;
 
+    private Context contextoAux; // Atributo auxiliar
+    private String cadenaSql; // Atributo auxiliar
+
     public CuentaDAO(/*Context context, String cadena*/) {
         //baseDeDatos = new Dao(context,"db_proyecto",null,1,cadena);
         //db = baseDeDatos.getWritableDatabase();
@@ -31,6 +34,9 @@ public class CuentaDAO {
     public void crearBase(Context context, String cadena) {
         baseDeDatos = new Dao(context,"db_proyecto",null,1,cadena);
         db = baseDeDatos.getWritableDatabase();
+        contextoAux = context;
+        cadenaSql = cadena;
+
     }
 
     /**
@@ -47,7 +53,7 @@ public class CuentaDAO {
             }
 
             ContentValues registro = new ContentValues();
-            registro.put(CT_DENOMINACION, cuenta.getDenominacion());
+            registro.put(CT_DENOMINACION, cuenta.getDenominacion()); //Agregar trim
             registro.put(CT_DESCRIPCION, cuenta.getDescripcion());
             registro.put(CT_SALDO, cuenta.getSaldo());
             long res = db.insert("db_cuenta",null,registro);
@@ -75,7 +81,7 @@ public class CuentaDAO {
                     cuenta.setDenominacion(cursor.getString(0));
                     cuenta.setDescripcion(cursor.getString(1));
                     cuenta.setSaldo(cursor.getFloat(2));
-                    cuenta.setTransaccion(obtenerTransacciones(cursor.getString(0)));
+                    //cuenta.setTransaccion(obtenerTransacciones(contextoAux, cadenaSql, cursor.getString(0)));
                 }else{
                     break;
                 }
@@ -149,25 +155,32 @@ public class CuentaDAO {
      * @param denominacion Nombre de la cuenta de la que se quiere obtener las transacciones
      * @return Listado de transacciones de la cuenta
      */
-    public ArrayList<Transaccion> obtenerTransacciones(String denominacion){
+    public ArrayList<Transaccion> obtenerTransacciones(Context contexto, String cadena, String denominacion){
         ArrayList<Transaccion> transacciones = new ArrayList<Transaccion>();
         TransaccionDAO transaccionDAO = new TransaccionDAO();
+        transaccionDAO.crearBase(contexto,cadena);
 
         String[] campos = new String[]{"cutr_ct_denominacion", "cutr_tr_id"}; //Campos a devolver
         String[] filtro = new String[]{denominacion};                         //Filtro
 
-        Cursor cursor = db.query("db_cuenta_transaccion",campos,"cutr_ct_denominacion" + "=?",filtro,null,null,null);
-        if (cursor.moveToFirst()){
-            do{
-                if (cursor.getCount() == 1) {
-                    transacciones.add(transaccionDAO.obtenerPorId(cursor.getLong(0)));
-                }else {
-                    break;
-                }
-            } while(cursor.moveToNext());
-            cursor.close();
+        try{
+            Cursor cursor = db.query("db_cuenta_transaccion",campos,"cutr_ct_denominacion=?",filtro,null,null,null);
+            if (cursor.moveToFirst()) {
+                do{
+                    if (cursor.getCount() == 1) {
+                        transacciones.add(transaccionDAO.obtenerPorId(cursor.getLong(0)));
+                    }else {
+                        break;
+                    }
+                } while(cursor.moveToNext());
+                cursor.close();
+                return null;
+            } else {
+                return transacciones;
+            }
+        }catch (Exception ex){
+            return null;
         }
-        return transacciones;
     }
 
     public Boolean agregarCuentaTransaccion(String denominacionCuenta, Long idTransaccion) {

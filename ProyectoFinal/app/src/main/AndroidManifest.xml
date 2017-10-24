@@ -16,7 +16,9 @@
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuentaActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.InicioActivity"
             android:label="@string/title_activity_inicio"
@@ -39,7 +41,9 @@
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarTransaccionActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize" >
+
+        </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.NormalActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"

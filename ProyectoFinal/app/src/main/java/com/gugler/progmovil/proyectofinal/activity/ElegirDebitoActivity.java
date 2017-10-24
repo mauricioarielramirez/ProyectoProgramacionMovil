@@ -1,5 +1,6 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.View;
@@ -18,9 +19,6 @@ import progmovil.gugler.com.pf.R;
 
 public class ElegirDebitoActivity extends BaseActivity {
 
-//    private String CADENA_SQL;
-//    private Inicializador inicializador;
-
     private ArrayList<Object> listaCuentas;
     private CuentaAdapter adapter;
 
@@ -34,13 +32,28 @@ public class ElegirDebitoActivity extends BaseActivity {
 
         ListView listView = (ListView)findViewById(R.id.lstCuentas);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    TextView txvNombreCuenta = (TextView) view.findViewById(R.id.txvDenominacionCuenta);
-                    TextView txvSaldo = (TextView) view.findViewById(R.id.txvSaldo);
+            /**
+             * Listener para el evento onItemClic (navegación hacia la transacción de la cuenta)
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txvNombreCuenta = (TextView) view.findViewById(R.id.txvDenominacionCuenta);
+                TextView txvSaldo = (TextView) view.findViewById(R.id.txvSaldo);
 
-                    Toast.makeText(getApplicationContext(), txvNombreCuenta.getText(), Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(getApplicationContext(), txvNombreCuenta.getText(), Toast.LENGTH_LONG).show();
+
+                Intent intento = new Intent(getApplicationContext(),ElegirTransaccionActivity.class);
+                Bundle recurso = new Bundle();
+                recurso.putString("nombreCuenta", txvNombreCuenta.getText().toString());
+
+                intento.putExtras(recurso);
+
+                startActivity(intento);
+            }
         });
     }
 
