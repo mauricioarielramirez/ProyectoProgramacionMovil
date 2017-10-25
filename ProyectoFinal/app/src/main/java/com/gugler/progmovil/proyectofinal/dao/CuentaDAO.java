@@ -53,7 +53,7 @@ public class CuentaDAO {
             }
 
             ContentValues registro = new ContentValues();
-            registro.put(CT_DENOMINACION, cuenta.getDenominacion()); //Agregar trim
+            registro.put(CT_DENOMINACION, cuenta.getDenominacion().trim()); //Agregar trim
             registro.put(CT_DESCRIPCION, cuenta.getDescripcion());
             registro.put(CT_SALDO, cuenta.getSaldo());
             long res = db.insert("db_cuenta",null,registro);
@@ -166,17 +166,13 @@ public class CuentaDAO {
         try{
             Cursor cursor = db.query("db_cuenta_transaccion",campos,"cutr_ct_denominacion=?",filtro,null,null,null);
             if (cursor.moveToFirst()) {
-                do{
-                    if (cursor.getCount() == 1) {
-                        transacciones.add(transaccionDAO.obtenerPorId(cursor.getLong(0)));
-                    }else {
-                        break;
-                    }
+                do {
+                    transacciones.add(transaccionDAO.obtenerPorId(cursor.getLong(1)));
                 } while(cursor.moveToNext());
                 cursor.close();
-                return null;
-            } else {
                 return transacciones;
+            } else {
+                return null;
             }
         }catch (Exception ex){
             return null;
@@ -185,7 +181,7 @@ public class CuentaDAO {
 
     public Boolean agregarCuentaTransaccion(String denominacionCuenta, Long idTransaccion) {
         ContentValues registro = new ContentValues();
-        registro.put("cutr_ct_denominacion", denominacionCuenta);
+        registro.put("cutr_ct_denominacion", denominacionCuenta.trim());
         registro.put("cutr_tr_id", idTransaccion);
         long res = db.insert("db_cuenta_transaccion",null,registro);
 

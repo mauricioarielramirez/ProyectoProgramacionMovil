@@ -54,7 +54,7 @@ public class TransaccionAdapter extends BaseAdapter {
         if (convertView == null){
             switch (type) {
                 case TYPE_ITEM:
-                    convertView = mInflater.inflate(R.layout.cuenta_item,parent,false);
+                    convertView = mInflater.inflate(R.layout.transaccion_item,parent,false);
                     break;
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.header_item,parent,false);

@@ -40,15 +40,15 @@ public class ElegirTransaccionActivity extends BaseActivity {
      */
     private void inicializarListView(){
         listaTransacciones = new ArrayList<Object>();
-        ListView lstCuentas = (ListView)findViewById(R.id.lstTransacciones);
+        ListView lstTransacciones = (ListView)findViewById(R.id.lstTransacciones);
         obtenerTransacciones();
-        try{
+        try {
             adapter = new TransaccionAdapter(this,listaTransacciones);
-            lstCuentas.setAdapter(adapter);
-        }catch(Exception ex){
+            lstTransacciones.setAdapter(adapter);
+        } catch(Exception ex) {
             throw  ex;
         }
-        adapter.notifyDataSetChanged();
+        // adapter.notifyDataSetChanged();
     }
 
     /**
@@ -66,8 +66,6 @@ public class ElegirTransaccionActivity extends BaseActivity {
     private void obtenerTransacciones(){
         Bundle recurso = getIntent().getExtras();
         String nombreCuenta = recurso.getString("nombreCuenta");
-        ServicioTransacciones sTransacciones = new ServicioTransacciones();
-        sTransacciones.crearBase(this,CADENA_SQL);
         llenarListView(nombreCuenta);
     }
 
