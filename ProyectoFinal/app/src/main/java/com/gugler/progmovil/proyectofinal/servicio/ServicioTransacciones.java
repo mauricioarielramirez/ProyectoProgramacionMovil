@@ -47,7 +47,7 @@ public class ServicioTransacciones extends Servicio {
         return transacciones;
     }
 
-    public ArrayList<Transaccion> listarPorCuenta(Context contexto, String cadena, String denominacion){
+    public ArrayList<Transaccion> listarPorCuenta(Context contexto, String cadena, String denominacion) throws ValidacionException {
         CuentaDAO cuentaDAO = new CuentaDAO();
         cuentaDAO.crearBase(contexto,cadena);
         return cuentaDAO.obtenerTransacciones(contexto,cadena,denominacion);

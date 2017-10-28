@@ -54,7 +54,10 @@
             android:windowSoftInputMode="adjustResize">
 
         </activity>
-        <activity android:name="com.gugler.progmovil.proyectofinal.activity.AdministracionActivity"></activity>
+        <activity android:name="com.gugler.progmovil.proyectofinal.activity.AdministracionActivity">
+
+
+        </activity>
     </application>
 
 </manifest>

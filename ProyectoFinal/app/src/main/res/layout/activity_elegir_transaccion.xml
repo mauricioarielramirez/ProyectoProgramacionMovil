@@ -2,16 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lytRelativePadre"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.gugler.progmovil.proyectofinal.activity.ElegirTransaccionActivity">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
 
 
         <LinearLayout
@@ -22,13 +16,26 @@
             <ListView
                 android:id="@+id/lstTransacciones"
                 android:layout_width="match_parent"
-                android:layout_height="349dp" />
+                android:layout_height="wrap_content" />
 
             <Space
+                android:id="@+id/spcMensajeInformativo"
+                android:layout_width="match_parent"
+                android:layout_height="33dp" />
+
+            <TextView
+                android:id="@+id/txvMensajeInformativo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <Space
+                android:id="@+id/spcDivisor"
                 android:layout_width="match_parent"
                 android:layout_height="33dp" />
 
             <LinearLayout
+                android:id="@+id/lytDebitoUnico"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -62,6 +69,5 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
 
 </RelativeLayout>

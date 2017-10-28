@@ -155,7 +155,7 @@ public class CuentaDAO {
      * @param denominacion Nombre de la cuenta de la que se quiere obtener las transacciones
      * @return Listado de transacciones de la cuenta
      */
-    public ArrayList<Transaccion> obtenerTransacciones(Context contexto, String cadena, String denominacion){
+    public ArrayList<Transaccion> obtenerTransacciones(Context contexto, String cadena, String denominacion) throws ValidacionException {
         ArrayList<Transaccion> transacciones = new ArrayList<Transaccion>();
         TransaccionDAO transaccionDAO = new TransaccionDAO();
         transaccionDAO.crearBase(contexto,cadena);
@@ -170,12 +170,10 @@ public class CuentaDAO {
                     transacciones.add(transaccionDAO.obtenerPorId(cursor.getLong(1)));
                 } while(cursor.moveToNext());
                 cursor.close();
-                return transacciones;
-            } else {
-                return null;
             }
+            return transacciones;
         }catch (Exception ex){
-            return null;
+            throw new ValidacionException(ValidacionException.PROBLEMAS_LEER_TRANSACCION);
         }
     }
 
