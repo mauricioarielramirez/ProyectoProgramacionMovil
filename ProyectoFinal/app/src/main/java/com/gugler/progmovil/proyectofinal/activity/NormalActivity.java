@@ -27,7 +27,7 @@ public class NormalActivity extends BaseActivity {
     private ArrayList<Object> listaFavoritos;
     private ListAdapter adapterFavoritos;
 
-    private final String OPERACIONES = "Operaciones";
+    private final String OPERACIONES = " Operaciones";
     private final String FAVORITOS = "AHI VA";
 
     @Override

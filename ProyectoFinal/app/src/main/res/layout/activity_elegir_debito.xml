@@ -6,31 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.gugler.progmovil.proyectofinal.activity.ElegirDebitoActivity">
 
-    <ScrollView
+    <ListView
+        android:id="@+id/lstCuentas"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="wrap_content" />
+
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true">-->
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/lstCuentas"
-                android:layout_width="match_parent"
-                android:layout_height="349dp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="33dp" />
-
-
-
-        </LinearLayout>
-    </ScrollView>
+        <!---->
+    <!--</ScrollView>-->
 
 </RelativeLayout>

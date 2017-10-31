@@ -46,7 +46,7 @@ public class ElegirDebitoActivity extends BaseActivity {
 
                 Toast.makeText(getApplicationContext(), txvNombreCuenta.getText(), Toast.LENGTH_LONG).show();
 
-                Intent intento = new Intent(getApplicationContext(),ElegirTransaccionActivity.class);
+                Intent intento = new Intent(getApplicationContext(),FabElegirTransaccionActivity.class);
                 Bundle recurso = new Bundle();
                 recurso.putString("nombreCuenta", txvNombreCuenta.getText().toString());
 

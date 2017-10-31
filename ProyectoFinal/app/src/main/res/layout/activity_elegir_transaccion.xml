@@ -7,6 +7,10 @@
     android:layout_height="match_parent"
     tools:context="com.gugler.progmovil.proyectofinal.activity.ElegirTransaccionActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,40 +38,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="33dp" />
 
-            <LinearLayout
-                android:id="@+id/lytDebitoUnico"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+        </LinearLayout>
 
-                <Space
-                    android:layout_width="20dp"
-                    android:layout_height="33dp" />
+        <LinearLayout
+            android:id="@+id/lytDebitoUnico"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="136dp"
-                    android:layout_height="wrap_content"
-                    android:pointerIcon="arrow"
-                    android:text="Débito único" />
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="33dp" />
 
-                <Space
-                    android:layout_width="20dp"
-                    android:layout_height="33dp" />
+            <Button
+                android:id="@+id/button"
+                android:layout_width="136dp"
+                android:layout_height="wrap_content"
+                android:pointerIcon="arrow"
+                android:text="Débito único" />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Realizar débito por única vez" />
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="33dp" />
 
-                <Space
-                    android:layout_width="22dp"
-                    android:layout_height="33dp" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-            </LinearLayout>
+                android:text="Realizar débito por única vez" />
+
+            <Space
+                android:layout_width="22dp"
+                android:layout_height="33dp" />
 
         </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

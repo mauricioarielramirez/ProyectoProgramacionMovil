@@ -13,9 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.01" />
+
         <TextView
             android:id="@+id/txvId"
-            android:layout_width="match_parent"
+            android:layout_width="15dp"
             android:layout_height="match_parent"
             android:layout_weight="0.01"
             android:text="000000"
@@ -23,7 +28,7 @@
 
         <TextView
             android:id="@+id/txvDescripcion"
-            android:layout_width="371dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Descripción del contenido" />
 

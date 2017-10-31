@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#D8D8D8"
-            android:text="Favoritos"
+            android:text=" Favoritos"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <ListView
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#D8D8D8"
-            android:text="Operaciones"
+            android:text=" Operaciones"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <ListView
