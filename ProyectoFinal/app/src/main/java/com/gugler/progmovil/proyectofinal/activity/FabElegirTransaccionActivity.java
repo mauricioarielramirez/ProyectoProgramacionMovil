@@ -3,7 +3,6 @@ package com.gugler.progmovil.proyectofinal.activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -42,8 +41,7 @@ public class FabElegirTransaccionActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // definir comportamiento para debito unico
             }
         });
     }
@@ -147,8 +145,11 @@ public class FabElegirTransaccionActivity extends BaseActivity {
                         }
                     }else {
                         lstParams.height = 0;
-                        txvMensajeInformativo.setVisibility(ViewGroup.VISIBLE);
+                        ViewGroup.LayoutParams txvParams = txvMensajeInformativo.getLayoutParams();
                         txvMensajeInformativo.setText(" No existen transacciones definidas para esta cuenta");
+                        txvParams.height = 200;
+                        txvParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                        txvMensajeInformativo.setVisibility(ViewGroup.VISIBLE);
                     }
                 }catch (Exception ex){
                     return;

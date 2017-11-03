@@ -52,7 +52,7 @@
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.FabElegirTransaccionActivity"
             android:label="@string/title_activity_fab_elegir_transaccion"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
     </application>
 
 </manifest>

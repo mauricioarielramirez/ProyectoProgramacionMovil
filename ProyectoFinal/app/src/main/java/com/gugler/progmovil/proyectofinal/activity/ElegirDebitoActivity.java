@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.adaptador.CuentaAdapter;
 import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
@@ -44,7 +43,7 @@ public class ElegirDebitoActivity extends BaseActivity {
                 TextView txvNombreCuenta = (TextView) view.findViewById(R.id.txvDenominacionCuenta);
                 TextView txvSaldo = (TextView) view.findViewById(R.id.txvSaldo);
 
-                Toast.makeText(getApplicationContext(), txvNombreCuenta.getText(), Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), txvNombreCuenta.getText(), Toast.LENGTH_LONG).show();
 
                 Intent intento = new Intent(getApplicationContext(),FabElegirTransaccionActivity.class);
                 Bundle recurso = new Bundle();
