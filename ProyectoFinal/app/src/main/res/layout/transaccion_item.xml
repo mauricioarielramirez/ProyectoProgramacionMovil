@@ -23,6 +23,13 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/txvIdtr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <TextView
             android:id="@+id/txvNombreTransaccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -69,6 +69,8 @@ public class TransaccionAdapter extends BaseAdapter {
                 // Obtenemos los componentes y le establecemos los valores
                 TextView txvTransaccion = (TextView) convertView.findViewById(R.id.txvNombreTransaccion);
                 txvTransaccion.setText(transaccion.getNombre());
+                TextView txvIdtr = (TextView) convertView.findViewById(R.id.txvIdtr);
+                txvIdtr.setText(transaccion.getId().toString());
                 break;
             case TYPE_SEPARATOR:
                 TextView textView = (TextView)convertView.findViewById(R.id.txvHeaderListView);

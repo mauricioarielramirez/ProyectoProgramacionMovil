@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.Spinner;
 
+import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
+import com.gugler.progmovil.proyectofinal.servicio.ServicioTransacciones;
+
 import java.util.ArrayList;
 
 import progmovil.gugler.com.pf.R;
@@ -22,13 +25,20 @@ public class TransaccionActivity extends BaseActivity {
     public final String TRANSACCION_NO_EDITABLE = "SoloConfirmarTransaccion";
     public final String TRANSACCION_EDITABLE = "EditarTransaccion";
     private ArrayList<String> listaTipoTransaccion;
+    private String denominacionCuenta;
+    private String nombreTransaccion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaccion);
         prepararStringSql();
-        configurarInterface(TRANSACCION_NO_EDITABLE);
+        leerBundle();
+        if (nombreTransaccion.equals("")) {
+            configurarInterface(TRANSACCION_EDITABLE);
+        } else {
+            configurarInterface(TRANSACCION_NO_EDITABLE);
+        }
         inicializarSpinnerTipoTransaccion();
     }
 
@@ -49,7 +59,9 @@ public class TransaccionActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         switch (modo) {
             case TRANSACCION_NO_EDITABLE:
-                cargarDatosTransaccion();
+                //ESTABLECER LOS DATOS DE TRANSACCION
+                txtTransaccion.setText(nombreTransaccion);
+                //txtImporte.setText();
 
                //MODIFICAR EL TOOLBAR
                 btnGuardar.setText("Confirmar");
@@ -84,16 +96,16 @@ public class TransaccionActivity extends BaseActivity {
                 HABILITAR SPINNERS Y EDITTEXT
                 CAMBIAR TITULOS
                 */
+                txtTransaccion.setText("Transacción genérica");
+                txtImporte.setEnabled(true);
+                txtImporte.setFocusable(true);
+
                 actionBar.setTitle("Transacción");
                 actionBar.setSubtitle("Editar transacción");
                 break;
         }
     }
 
-
-    private void cargarDatosTransaccion(){
-
-    }
 
     /**
      * TEMPORALMENTE PARA PROBAR EL SPINNER DE CUENTAS
@@ -116,5 +128,11 @@ public class TransaccionActivity extends BaseActivity {
         } catch(Exception ex) {
             throw ex;
         }
+    }
+
+    private void leerBundle() {
+        Bundle recurso = getIntent().getExtras();
+        this.denominacionCuenta = recurso.getString("denominacionCuenta");
+        this.nombreTransaccion = recurso.getString("nombreTransaccion");
     }
 }

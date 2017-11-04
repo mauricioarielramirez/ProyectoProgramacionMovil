@@ -1,5 +1,6 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,11 +9,13 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.adaptador.TransaccionAdapter;
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
@@ -27,6 +30,7 @@ public class FabElegirTransaccionActivity extends BaseActivity {
 
     private ArrayList<Object> listaTransacciones;
     private TransaccionAdapter adapter;
+    private String denominacionCuenta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,33 @@ public class FabElegirTransaccionActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("denominacionCuenta",denominacionCuenta);
+                bundle.putString("nombreTransaccion","");
                 // definir comportamiento para debito unico
+                Intent intento = new Intent(getApplicationContext(), TransaccionActivity.class);
+                intento.putExtras(bundle);
+                startActivity(intento);
+            }
+        });
+
+        ListView lstTransacciones = (ListView) findViewById(R.id.lstTransacciones);
+        lstTransacciones.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putString("denominacionCuenta",denominacionCuenta);
+                TextView txvNombreTransaccion = (TextView) view.findViewById(R.id.txvNombreTransaccion);
+                //TextView txvIdtr = (TextView) view.findViewById(R.id.txvIdtr);
+                //bundle.putInt("idTransaccion",Integer.parseInt(txvIdtr.getText().toString()));
+                bundle.putString("nombreTransaccion",txvNombreTransaccion.getText().toString());
+
+                Intent intento = new Intent(getApplicationContext(), TransaccionActivity.class);
+                intento.putExtras(bundle);
+                startActivity(intento);
+
+                Toast toast = Toast.makeText (getApplicationContext(),txvNombreTransaccion.getText().toString(),Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }
@@ -91,9 +121,13 @@ public class FabElegirTransaccionActivity extends BaseActivity {
         listaTransacciones.addAll(transacciones);
     }
 
+    /**
+     * Leer el bundle con el nombre de cuenta
+     */
     private void obtenerTransacciones(){
         Bundle recurso = getIntent().getExtras();
         String nombreCuenta = recurso.getString("nombreCuenta");
+        denominacionCuenta = nombreCuenta;
         llenarListView(nombreCuenta);
     }
 
