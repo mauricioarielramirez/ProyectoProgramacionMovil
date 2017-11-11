@@ -16,17 +16,19 @@ import java.util.ArrayList;
 
 import progmovil.gugler.com.pf.R;
 
-public class ElegirDebitoActivity extends BaseActivity {
+public class ElegirCuentaActivity extends BaseActivity {
 
     private ArrayList<Object> listaCuentas;
     private CuentaAdapter adapter;
+    private String tipoTransaccion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elegir_debito);
         prepararStringSql();
-        configurarInterface("");
+        leerBundle();
+        configurarInterface(tipoTransaccion);
         inicializarListView();
 
         ListView listView = (ListView)findViewById(R.id.lstCuentas);
@@ -48,6 +50,7 @@ public class ElegirDebitoActivity extends BaseActivity {
                 Intent intento = new Intent(getApplicationContext(),FabElegirTransaccionActivity.class);
                 Bundle recurso = new Bundle();
                 recurso.putString("nombreCuenta", txvNombreCuenta.getText().toString());
+                recurso.putString("tipoTransaccion",tipoTransaccion);
 
                 intento.putExtras(recurso);
 
@@ -57,9 +60,20 @@ public class ElegirDebitoActivity extends BaseActivity {
     }
 
     private void configurarInterface(String modo) {
+        ActionBar actionBar;
         switch (modo) {
+            case "D":
+                actionBar = getSupportActionBar();
+                actionBar.setTitle("Elegir débito");
+                actionBar.setSubtitle("Seleccione una cuenta");
+                break;
+            case "C":
+                actionBar = getSupportActionBar();
+                actionBar.setTitle("Elegir Crédito");
+                actionBar.setSubtitle("Seleccione una cuenta");
+                break;
             default:
-                ActionBar actionBar = getSupportActionBar();
+                actionBar = getSupportActionBar();
                 actionBar.setTitle("Elegir débito");
                 actionBar.setSubtitle("Seleccione una cuenta");
         }
@@ -91,6 +105,11 @@ public class ElegirDebitoActivity extends BaseActivity {
         cuentas = sCuentas.listarTodo();
         listaCuentas.add(" Cuentas");
         listaCuentas.addAll(cuentas);
+    }
+
+    private void leerBundle() {
+        Bundle recurso = getIntent().getExtras();
+        this.tipoTransaccion = recurso.getString("tipoTransaccion");
     }
 
 }

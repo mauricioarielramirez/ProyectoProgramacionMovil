@@ -1,8 +1,12 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gugler.progmovil.proyectofinal.adaptador.ListAdapter;
 import com.gugler.progmovil.proyectofinal.modelo.dto.ListaItem;
@@ -18,6 +22,13 @@ public class AdministracionActivity extends BaseActivity {
     private ListAdapter adapterAdminCrear;
     private ListAdapter adapterAdminModificar;
 
+    private final String NUEVA_CUENTA = "1";
+    private final String NUEVA_TRANSACCION = "2";
+    private final String MODIFICAR_CUENTA = "3";
+    private final String MODIFICAR_TRANSACCION = "4";
+    private final String MODIFICAR_MOVIMIENTO = "5";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +36,32 @@ public class AdministracionActivity extends BaseActivity {
         prepararStringSql();
         configurarInterface("");
         inicializarListViews();
+
+        ListView lstAdministrarNuevo = (ListView) findViewById(R.id.lstAdminNuevo);
+        lstAdministrarNuevo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txtIdOpcion = (TextView) view.findViewById(R.id.txvId);
+                Intent intento;
+                switch (txtIdOpcion.getText().toString().trim()){
+                    case NUEVA_CUENTA:
+                        intento = new Intent(getApplicationContext(),ConfigurarCuentaActivity.class);
+                        startActivity(intento);
+                        break;
+                    case NUEVA_TRANSACCION:
+                        intento = new Intent(getApplicationContext(),ConfigurarTransaccionActivity.class);
+                        startActivity(intento);
+                        break;
+                    case MODIFICAR_CUENTA:
+                        break;
+                    case MODIFICAR_TRANSACCION:
+                        break;
+                    case MODIFICAR_MOVIMIENTO:
+                        break;
+                }
+
+            }
+        });
     }
 
     public void configurarInterface(String modo) {

@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gugler.progmovil.proyectofinal.activity.ElegirDebitoActivity"
+            android:name="com.gugler.progmovil.proyectofinal.activity.ElegirCuentaActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name="com.gugler.progmovil.proyectofinal.activity.MenuPrincipalActivity" />
@@ -48,7 +48,10 @@
             android:name="com.gugler.progmovil.proyectofinal.activity.TransaccionActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.gugler.progmovil.proyectofinal.activity.AdministracionActivity" />
+        <activity
+            android:name="com.gugler.progmovil.proyectofinal.activity.AdministracionActivity">
+
+        </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.FabElegirTransaccionActivity"
             android:label="@string/title_activity_fab_elegir_transaccion"

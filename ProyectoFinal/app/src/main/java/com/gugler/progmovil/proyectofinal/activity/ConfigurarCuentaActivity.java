@@ -41,6 +41,7 @@ public class ConfigurarCuentaActivity extends BaseActivity{
                     if (res) {
                         Toast t = Toast.makeText(getApplicationContext(), "Cuenta agregada exitosamente", Toast.LENGTH_SHORT);
                         t.show();
+                        onBackPressed();
                     }
                 } catch (ValidacionException vEx) {
                     Toast t = Toast.makeText(getApplicationContext(), vEx.getMensaje(), Toast.LENGTH_LONG);

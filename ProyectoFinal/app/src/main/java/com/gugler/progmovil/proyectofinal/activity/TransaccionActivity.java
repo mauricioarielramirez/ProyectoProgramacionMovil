@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Space;
-import android.widget.Spinner;
 
 import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioTransacciones;
@@ -27,6 +25,9 @@ public class TransaccionActivity extends BaseActivity {
     private ArrayList<String> listaTipoTransaccion;
     private String denominacionCuenta;
     private String nombreTransaccion;
+    private Long idTransaccion;
+    private String tipoTransaccion;
+    private Float  importe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +40,9 @@ public class TransaccionActivity extends BaseActivity {
         } else {
             configurarInterface(TRANSACCION_NO_EDITABLE);
         }
-        inicializarSpinnerTipoTransaccion();
     }
 
     private void configurarInterface(String modo) {
-        Spinner spnTipo = (Spinner)findViewById(R.id.spnTipoTransaccion);
-        Spinner spnCuenta = (Spinner)findViewById(R.id.spnCuentaAsociada);
-        EditText txtImporte = (EditText) findViewById(R.id.txtImporte);
         // Capturar botones del toolbar
         Button btnGuardar = (Button)findViewById(R.id.btnToolbarGuardar);
         Button btnCancelar = (Button)findViewById(R.id.btnToolbarCancelar);
@@ -53,15 +50,22 @@ public class TransaccionActivity extends BaseActivity {
         LinearLayout layoutCancelar = (LinearLayout) findViewById(R.id.lytRightToolbar);
         Space spcLeft = (Space) findViewById(R.id.spcLeft);
         Space spcRight = (Space) findViewById(R.id.spcRight);
+
+        //CAPTURAR COMPONENTES
         EditText txtTransaccion = (EditText) findViewById(R.id.txtTransaccion);
+        EditText txtImporte = (EditText) findViewById(R.id.txtImporte);
+        EditText txtTipoTransaccion = (EditText) findViewById(R.id.txtTipoTransaccion);
+        EditText txtDenominacionCuenta = (EditText) findViewById(R.id.txtCuentaAsociada);
 
         //Modificar la toolbar
         ActionBar actionBar = getSupportActionBar();
         switch (modo) {
             case TRANSACCION_NO_EDITABLE:
-                //ESTABLECER LOS DATOS DE TRANSACCION
-                txtTransaccion.setText(nombreTransaccion);
-                //txtImporte.setText();
+                //ESTABLECER VALORES EN COMPONENTES
+                txtTransaccion.setText(this.nombreTransaccion);
+                txtTipoTransaccion.setText(this.tipoTransaccion.trim().equals("D") ? "Débito":"Crédito");
+                txtImporte.setText("$ " + this.importe);
+                txtDenominacionCuenta.setText(this.denominacionCuenta);
 
                //MODIFICAR EL TOOLBAR
                 btnGuardar.setText("Confirmar");
@@ -75,13 +79,12 @@ public class TransaccionActivity extends BaseActivity {
                 paramsSpaceRight.width = 120;
 
                 /*DESHABILITAR COMPONENTES Y NO PERMITIR FOCUS*/
-                spnTipo.setEnabled(false);
-                spnCuenta.setEnabled(false);
+                txtTipoTransaccion.setEnabled(false);
+                txtDenominacionCuenta.setEnabled(false);
                 txtImporte.setEnabled(false);
                 txtImporte.setFocusable(false);
                 txtTransaccion.setEnabled(false);
                 txtTransaccion.setFocusable(false);
-
 
                 actionBar.setTitle("Transacción");
                 actionBar.setSubtitle("Confirmar transacción");
@@ -97,6 +100,12 @@ public class TransaccionActivity extends BaseActivity {
                 CAMBIAR TITULOS
                 */
                 txtTransaccion.setText("Transacción genérica");
+                txtDenominacionCuenta.setText(this.denominacionCuenta);
+                txtTipoTransaccion.setText(this.tipoTransaccion.trim().equals("D") ? "Débito":"Crédito");
+
+                txtDenominacionCuenta.setEnabled(false);
+                txtTipoTransaccion.setEnabled(false);
+
                 txtImporte.setEnabled(true);
                 txtImporte.setFocusable(true);
 
@@ -106,33 +115,30 @@ public class TransaccionActivity extends BaseActivity {
         }
     }
 
-
     /**
-     * TEMPORALMENTE PARA PROBAR EL SPINNER DE CUENTAS
+     * Obtiene los datos que llegan desde la activity que lo invoca
      */
-    private void inicializarSpinnerTipoTransaccion(){
-        listaTipoTransaccion = new ArrayList<String>();
-        listaTipoTransaccion.add("Carga de crédito teléfono Claro de Eric Daniel Pennachini Corporativo");
-        listaTipoTransaccion.add("Compra diaria de comida");
-        listaTipoTransaccion.add("Depósito efectivo mensual");
-        listaTipoTransaccion.add("Carga de tarjebus");
-        listaTipoTransaccion.add("Pasaje diario SUBE");
-        Spinner spn1 = (Spinner) findViewById(R.id.spnTipoTransaccion);
-        Spinner spn2 = (Spinner) findViewById(R.id.spnCuentaAsociada);
-
-        try {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, listaTipoTransaccion);
-
-            spn1.setAdapter(adapter);
-            spn2.setAdapter(adapter);
-        } catch(Exception ex) {
-            throw ex;
-        }
-    }
-
     private void leerBundle() {
         Bundle recurso = getIntent().getExtras();
         this.denominacionCuenta = recurso.getString("denominacionCuenta");
-        this.nombreTransaccion = recurso.getString("nombreTransaccion");
+        this.idTransaccion = recurso.getLong("idTransaccion");
+        this.tipoTransaccion = recurso.getString("tipoTransaccion");
+        this.nombreTransaccion = "";
+        if (this.idTransaccion !=0){
+            obtenerTransaccion(this.idTransaccion);
+        }
+    }
+
+
+    private void obtenerTransaccion(Long idTransaccion) {
+        ServicioTransacciones sTransacciones = new ServicioTransacciones();
+        Transaccion transaccion = new Transaccion();
+
+        sTransacciones.crearBase(getApplicationContext(),CADENA_SQL);
+
+        transaccion = sTransacciones.obtenerTransaccionPorId(idTransaccion);
+        this.importe = transaccion.getMonto();
+        this.tipoTransaccion = transaccion.getTipo();
+        this.nombreTransaccion = transaccion.getNombre();
     }
 }

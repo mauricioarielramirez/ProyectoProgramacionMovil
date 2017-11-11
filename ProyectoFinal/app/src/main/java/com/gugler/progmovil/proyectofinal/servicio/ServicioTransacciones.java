@@ -52,4 +52,8 @@ public class ServicioTransacciones extends Servicio {
         cuentaDAO.crearBase(contexto,cadena);
         return cuentaDAO.obtenerTransacciones(contexto,cadena,denominacion);
     }
+
+    public Transaccion obtenerTransaccionPorId(Long id) {
+        return  transaccionDao.obtenerPorId(id);
+    }
 }

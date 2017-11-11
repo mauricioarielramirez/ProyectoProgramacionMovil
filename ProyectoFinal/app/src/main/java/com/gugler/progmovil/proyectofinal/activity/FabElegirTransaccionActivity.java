@@ -31,6 +31,7 @@ public class FabElegirTransaccionActivity extends BaseActivity {
     private ArrayList<Object> listaTransacciones;
     private TransaccionAdapter adapter;
     private String denominacionCuenta;
+    private String tipoTransaccion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,9 @@ public class FabElegirTransaccionActivity extends BaseActivity {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("denominacionCuenta",denominacionCuenta);
-                bundle.putString("nombreTransaccion","");
+                bundle.putLong("idTransaccion",0);
+                bundle.putString("tipoTransaccion",tipoTransaccion);
+
                 // definir comportamiento para debito unico
                 Intent intento = new Intent(getApplicationContext(), TransaccionActivity.class);
                 intento.putExtras(bundle);
@@ -60,17 +63,19 @@ public class FabElegirTransaccionActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                bundle.putString("denominacionCuenta",denominacionCuenta);
                 TextView txvNombreTransaccion = (TextView) view.findViewById(R.id.txvNombreTransaccion);
-                //TextView txvIdtr = (TextView) view.findViewById(R.id.txvIdtr);
-                //bundle.putInt("idTransaccion",Integer.parseInt(txvIdtr.getText().toString()));
+                TextView txvIdtr = (TextView) view.findViewById(R.id.txvIdtr);
+
+                bundle.putString("denominacionCuenta",denominacionCuenta);
+                bundle.putLong("idTransaccion",Long.parseLong(txvIdtr.getText().toString()));
                 bundle.putString("nombreTransaccion",txvNombreTransaccion.getText().toString());
+                bundle.putString("tipoTransaccion",tipoTransaccion);
 
                 Intent intento = new Intent(getApplicationContext(), TransaccionActivity.class);
                 intento.putExtras(bundle);
                 startActivity(intento);
 
-                Toast toast = Toast.makeText (getApplicationContext(),txvNombreTransaccion.getText().toString(),Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText (getApplicationContext(),txvIdtr.getText().toString(),Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -127,6 +132,7 @@ public class FabElegirTransaccionActivity extends BaseActivity {
     private void obtenerTransacciones(){
         Bundle recurso = getIntent().getExtras();
         String nombreCuenta = recurso.getString("nombreCuenta");
+        tipoTransaccion = recurso.getString("tipoTransaccion");
         denominacionCuenta = nombreCuenta;
         llenarListView(nombreCuenta);
     }

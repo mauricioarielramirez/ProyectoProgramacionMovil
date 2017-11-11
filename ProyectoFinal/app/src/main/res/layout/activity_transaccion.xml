@@ -162,11 +162,15 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         android:textSize="18sp" />
 
-                    <Spinner
-                        android:id="@+id/spnTipoTransaccion"
-                        android:layout_width="match_parent"
+                    <EditText
+                        android:id="@+id/txtTipoTransaccion"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.28" />
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:text="Name" />
+
                 </LinearLayout>
 
                 <Space
@@ -183,10 +187,13 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textSize="18sp" />
 
-                <Spinner
-                    android:id="@+id/spnCuentaAsociada"
+                <EditText
+                    android:id="@+id/txtCuentaAsociada"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Name" />
 
                 <Space
                     android:layout_width="match_parent"

@@ -49,12 +49,24 @@ public class NormalActivity extends BaseActivity {
 
                 Toast.makeText(getApplicationContext(), txvId.getText().toString() +" "+txvDescripcion.getText(), Toast.LENGTH_SHORT).show();
 
+                Intent intento;
+                Bundle bundle;
                 switch (txvDescripcion.getText().toString()){
                     case "Débito":
-                        Intent intento = new Intent(getApplicationContext(),ElegirDebitoActivity.class);
+                        intento = new Intent(getApplicationContext(),ElegirCuentaActivity.class);
+                        bundle = new Bundle();
+                        bundle.putString("tipoTransaccion", "D");
+                        intento.putExtras(bundle);
                         startActivity(intento);
+                        // Debería pasarse un bundle con el tipo de operacion, asi se reutiliza la misma activity
                         break;
                     case "Crédito":
+                        intento = new Intent(getApplicationContext(),ElegirCuentaActivity.class);
+                        bundle = new Bundle();
+                        bundle.putString("tipoTransaccion", "C");
+                        intento.putExtras(bundle);
+                        startActivity(intento);
+                        // Debería pasarse un bundle con el tipo de operacion, asi se reutiliza la misma activity
                         break;
                     case "Consultas":
                         break;
