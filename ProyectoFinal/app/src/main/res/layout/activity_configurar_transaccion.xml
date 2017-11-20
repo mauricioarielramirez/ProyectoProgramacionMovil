@@ -100,6 +100,12 @@
                     android:layout_height="15dp" />
 
                 <CheckBox
+                    android:id="@+id/chkFavortio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Favorito" />
+
+                <CheckBox
                     android:id="@+id/chkDisponibleTodas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -134,12 +140,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Notificaciones activas" />
-
-                <Switch
-                    android:id="@+id/swtHabilitada"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Transacción activa" />
 
                 <Space
                     android:layout_width="match_parent"

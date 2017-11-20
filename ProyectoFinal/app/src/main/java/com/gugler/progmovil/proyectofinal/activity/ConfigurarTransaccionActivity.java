@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -74,7 +75,7 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
                 transaccion.setId(null);
                 transaccion.setNombre( ((EditText)findViewById(R.id.txtNombre)).getText().toString() );
                 transaccion.setMonto( Float.parseFloat(((EditText)findViewById(R.id.txtSaldo)).getText().toString()) );
-                transaccion.setFavorito(false);
+                transaccion.setFavorito( ((CheckBox)findViewById(R.id.chkFavortio)).isChecked() );
 
                 String tipoTransaccion = ((Spinner) findViewById(R.id.spnTipoTransaccion)).getSelectedItem().toString();
                 String denominacionCuenta = ((Spinner) findViewById(R.id.spnCtasAsociadas)).getSelectedItem().toString();
@@ -95,6 +96,9 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
                 sTransacciones.crearBase(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL);
                 try {
                     sTransacciones.agregarTransaccion(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL,transaccion, denominacionCuenta);
+                    Toast toastEx = Toast.makeText(getApplicationContext(), "Transacción agregada exitosamente", Toast.LENGTH_SHORT);
+                    toastEx.show();
+                    onBackPressed();
                 } catch (Exception e) {
                     Toast toastEx = Toast.makeText(getApplicationContext(), ValidacionException.PROBLEMAS_ALTA_TRANSACCION, Toast.LENGTH_SHORT);
                     toastEx.show();

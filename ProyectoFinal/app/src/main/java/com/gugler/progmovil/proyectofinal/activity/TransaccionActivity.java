@@ -80,7 +80,9 @@ public class TransaccionActivity extends BaseActivity {
 
                 /*DESHABILITAR COMPONENTES Y NO PERMITIR FOCUS*/
                 txtTipoTransaccion.setEnabled(false);
+                txtTipoTransaccion.setFocusable(false);
                 txtDenominacionCuenta.setEnabled(false);
+                txtDenominacionCuenta.setFocusable(false);
                 txtImporte.setEnabled(false);
                 txtImporte.setFocusable(false);
                 txtTransaccion.setEnabled(false);

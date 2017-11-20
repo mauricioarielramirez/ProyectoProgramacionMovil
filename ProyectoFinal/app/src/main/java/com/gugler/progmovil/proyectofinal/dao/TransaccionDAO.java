@@ -154,10 +154,10 @@ public class TransaccionDAO {
      */
     public ArrayList<Transaccion> listarTodo(){
         ArrayList<Transaccion> transacciones = new ArrayList<Transaccion>();
-        Cursor cursor = db.rawQuery("SELECT "+TR_ID+", "+TR_NOMBRE+", "+TR_TIPO+", "+TR_MONTO+" FROM db_transaccion",null);
+        Cursor cursor = db.rawQuery("SELECT "+TR_ID+", "+TR_NOMBRE+", "+TR_TIPO+", "+TR_MONTO+", "+TR_FAVORITO+" FROM db_transaccion",null);
         if (cursor.moveToFirst()){
             do{
-                transacciones.add(new Transaccion(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getFloat(3),Boolean.parseBoolean(cursor.getString(4))));
+                transacciones.add(new Transaccion(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getFloat(3), (cursor.getInt(4))==0?false:true ));
             }while(cursor.moveToNext());
         }
         cursor.close();

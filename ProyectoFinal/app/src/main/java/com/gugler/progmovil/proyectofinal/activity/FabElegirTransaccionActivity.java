@@ -10,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -108,13 +106,22 @@ public class FabElegirTransaccionActivity extends BaseActivity {
 
     /**
      * Realiza la llamada para obtener las cuentas hacia el servicio
+     * Se remueven las transacciones que no correspondan al tipo de transacción solicitado (Débito/Crédito)
      */
     private void llenarListView(String nombreCuenta){
         ServicioTransacciones sTransacciones = new ServicioTransacciones();
         sTransacciones.crearBase(this,CADENA_SQL);
         ArrayList<Transaccion> transacciones = new ArrayList<Transaccion>();
+        ArrayList<Transaccion> transaccionesFiltradas = new ArrayList<Transaccion>();
         try {
             transacciones = sTransacciones.listarPorCuenta(this,CADENA_SQL,nombreCuenta);
+            transaccionesFiltradas.addAll(transacciones);
+            for(Transaccion tr: transacciones){
+                if (!tr.getTipo().equals(tipoTransaccion)){
+                    transaccionesFiltradas.remove(tr);
+                }
+            }
+
         } catch (ValidacionException e) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Error en la aplicación");
@@ -123,7 +130,7 @@ public class FabElegirTransaccionActivity extends BaseActivity {
             alert.show();
         }
         //listaTransacciones.add(" Transacciones");
-        listaTransacciones.addAll(transacciones);
+        listaTransacciones.addAll(transaccionesFiltradas);
     }
 
     /**
@@ -170,19 +177,9 @@ public class FabElegirTransaccionActivity extends BaseActivity {
                     TextView txvMensajeInformativo = (TextView) findViewById(R.id.txvMensajeInformativo);
                     Space spcMensajeInformativo = (Space) findViewById(R.id.spcMensajeInformativo);
                     if (items>0) { // Para no tener en cuenta la cabecera
-                        LinearLayout lytDebitoUnico = (LinearLayout)findViewById(R.id.lytDebitoUnico);
-                        RelativeLayout lytRelativePadre = (RelativeLayout) findViewById(R.id.lytRelativePadre);
-                        Space spcDivisor = (Space) findViewById(R.id.spcDivisor);
-                        //lstParams.height = lytRelativePadre.getHeight() - lytDebitoUnico.getHeight()-spcDivisor.getHeight();
-                        altoMaximo  = lytRelativePadre.getHeight() - lytDebitoUnico.getHeight()-spcDivisor.getHeight();
                         spcMensajeInformativo.setVisibility(View.GONE);
                         txvMensajeInformativo.setText("");
                         txvMensajeInformativo.setVisibility(ViewGroup.GONE);
-                        if (lstTransacciones1.getHeight() > altoMaximo) {
-                            lstParams.height = altoMaximo;
-                        } else {
-                            lstParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                        }
                     }else {
                         lstParams.height = 0;
                         ViewGroup.LayoutParams txvParams = txvMensajeInformativo.getLayoutParams();

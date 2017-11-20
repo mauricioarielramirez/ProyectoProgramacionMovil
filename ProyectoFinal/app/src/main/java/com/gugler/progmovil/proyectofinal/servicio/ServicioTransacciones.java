@@ -6,6 +6,7 @@ import com.gugler.progmovil.proyectofinal.dao.CuentaDAO;
 import com.gugler.progmovil.proyectofinal.dao.TransaccionDAO;
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
+import com.gugler.progmovil.proyectofinal.modelo.dto.FavoritoItem;
 
 import java.util.ArrayList;
 
@@ -56,4 +57,34 @@ public class ServicioTransacciones extends Servicio {
     public Transaccion obtenerTransaccionPorId(Long id) {
         return  transaccionDao.obtenerPorId(id);
     }
+
+    /**
+     * Obtiene las transacciones con marca de favoritos
+     * @return
+     * @throws ValidacionException
+     */
+    public ArrayList<FavoritoItem> obtenerFavoritos() throws ValidacionException{
+        //Obtener las transacciones y filtrarlas
+        ArrayList<Transaccion> transacciones =  listarTodo();
+        ArrayList<FavoritoItem> favoritos = new ArrayList<FavoritoItem>();
+        ArrayList<Transaccion> transaccionesFiltradas = new ArrayList<Transaccion>();
+
+        transaccionesFiltradas.addAll(transacciones);
+        for (Transaccion tr: transacciones){
+            if((tr.getFavorito()).equals(false)){
+                transaccionesFiltradas.remove(tr);
+            }
+        }
+
+        //Aramar listado de DTO
+        for (Transaccion tr: transaccionesFiltradas){
+            FavoritoItem fav = new FavoritoItem();
+            fav.setNombreTransaccion(tr.getNombre());
+            fav.setTipo(tr.getTipo());
+            fav.setCantidadCuentasAsociadas("3 cuentas asociadas");
+            favoritos.add(fav);
+        }
+        return favoritos;
+    }
+
 }

@@ -12,9 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gugler.progmovil.proyectofinal.adaptador.FavoritosAdapter;
 import com.gugler.progmovil.proyectofinal.adaptador.ListAdapter;
+import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.dto.ListaItem;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioCuentas;
+import com.gugler.progmovil.proyectofinal.servicio.ServicioTransacciones;
 
 import java.util.ArrayList;
 
@@ -25,7 +28,7 @@ public class NormalActivity extends BaseActivity {
     private ArrayList<Object> listaOperaciones;
     private ListAdapter adapterOperaciones;
     private ArrayList<Object> listaFavoritos;
-    private ListAdapter adapterFavoritos;
+    private FavoritosAdapter adapterFavoritos;
 
     private final String OPERACIONES = " Operaciones";
     private final String FAVORITOS = "AHI VA";
@@ -143,7 +146,7 @@ public class NormalActivity extends BaseActivity {
         ListView lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
         llenarListView(this.FAVORITOS);
         try{
-            adapterFavoritos= new ListAdapter(this,listaFavoritos);
+            adapterFavoritos= new FavoritosAdapter(this,listaFavoritos);
             lstFavoritos.setAdapter(adapterFavoritos);
         }catch(Exception ex){
             throw  ex;
@@ -180,14 +183,14 @@ public class NormalActivity extends BaseActivity {
                 listaOperaciones.add(new ListaItem(4,"Administrar"));
                 break;
             case FAVORITOS:
-                listaFavoritos.add(new ListaItem(1,"Pasaje diario"));
-                listaFavoritos.add(new ListaItem(2,"Compra comida"));
-                listaFavoritos.add(new ListaItem(3,"Carga de crédito"));
-                listaFavoritos.add(new ListaItem(4,"SUBE obrero"));
-                listaFavoritos.add(new ListaItem(5,"Pasaje diario"));
-                listaFavoritos.add(new ListaItem(6,"Compra comida"));
-                listaFavoritos.add(new ListaItem(7,"Carga de crédito"));
-                listaFavoritos.add(new ListaItem(8,"SUBE obrero"));
+                ServicioTransacciones sTransacciones = new ServicioTransacciones();
+                try {
+                    sTransacciones.crearBase(getApplicationContext(), CADENA_SQL);
+                    listaFavoritos.addAll(sTransacciones.obtenerFavoritos());
+                } catch (ValidacionException e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "No se pudieron cargar los favoritos", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
                 break;
         }
     }

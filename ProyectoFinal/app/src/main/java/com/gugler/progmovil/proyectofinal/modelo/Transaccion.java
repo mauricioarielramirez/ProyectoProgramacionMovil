@@ -61,4 +61,45 @@ public class Transaccion {
     public void setFavorito(Boolean favorito) {
         this.favorito = favorito;
     }
+
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (obj instanceof Transaccion){
+//            return ((Transaccion)obj).getTipo().equals(this.getTipo()) &&
+//                    ((Transaccion)obj).getNombre().equals(this.getNombre()) &&
+//                    ((Transaccion)obj).getMonto().equals(this.getMonto());
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return super.hashCode();
+//    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Transaccion that = (Transaccion) o;
+
+        if (!id.equals(that.id)) return false;
+        if (!nombre.equals(that.nombre)) return false;
+        if (!tipo.equals(that.tipo)) return false;
+        if (!monto.equals(that.monto)) return false;
+        return favorito.equals(that.favorito);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + nombre.hashCode();
+        result = 31 * result + tipo.hashCode();
+        result = 31 * result + monto.hashCode();
+        result = 31 * result + favorito.hashCode();
+        return result;
+    }
 }
