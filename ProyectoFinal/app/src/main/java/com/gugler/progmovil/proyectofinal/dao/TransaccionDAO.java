@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
+import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
 import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
 
 import java.util.ArrayList;
@@ -147,7 +148,6 @@ public class TransaccionDAO {
         }
     }
 
-
     /**
      * Devuelve todas las transacciones existentes
      * @return
@@ -162,5 +162,35 @@ public class TransaccionDAO {
         }
         cursor.close();
         return transacciones;
+    }
+
+    /**
+     * Devuelve las cuentas relacionadas con la transaccion
+     * @param contexto
+     * @param cadena
+     * @param idTransaccion
+     * @return
+     * @throws ValidacionException
+     */
+    public ArrayList<Cuenta> obtenerCuentas(Context contexto, String cadena, Long idTransaccion) throws ValidacionException {
+        ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
+        CuentaDAO cuentaDAO = new CuentaDAO();
+        cuentaDAO.crearBase(contexto,cadena);
+
+        String[] campos = new String[]{"cutr_ct_denominacion", "cutr_tr_id"}; //Campos a devolver
+        String[] filtro = new String[]{idTransaccion.toString()};                         //Filtro
+
+        try{
+            Cursor cursor = db.rawQuery("SELECT DISTINCT cutr_ct_denominacion FROM db_cuenta_transaccion WHERE cutr_tr_id ="+idTransaccion.toString(),null);
+            if (cursor.moveToFirst()) {
+                do {
+                    cuentas.add(cuentaDAO.obtenerPorDenominacion(cursor.getString(0)));
+                } while(cursor.moveToNext());
+                cursor.close();
+            }
+            return cuentas;
+        }catch (Exception ex){
+            throw new ValidacionException(ValidacionException.PROBLEMAS_LEER_TRANSACCION);
+        }
     }
 }

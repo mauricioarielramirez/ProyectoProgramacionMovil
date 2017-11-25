@@ -5,6 +5,7 @@ import android.content.Context;
 import com.gugler.progmovil.proyectofinal.dao.CuentaDAO;
 import com.gugler.progmovil.proyectofinal.dao.TransaccionDAO;
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
+import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
 import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
 import com.gugler.progmovil.proyectofinal.modelo.dto.FavoritoItem;
 
@@ -79,6 +80,7 @@ public class ServicioTransacciones extends Servicio {
         //Aramar listado de DTO
         for (Transaccion tr: transaccionesFiltradas){
             FavoritoItem fav = new FavoritoItem();
+            fav.setIdTransaccion(tr.getId().toString());
             fav.setNombreTransaccion(tr.getNombre());
             fav.setTipo(tr.getTipo());
             fav.setCantidadCuentasAsociadas("3 cuentas asociadas");
@@ -87,4 +89,15 @@ public class ServicioTransacciones extends Servicio {
         return favoritos;
     }
 
+    /**
+     * Obtiene las cuentas vinculadas a una transacción
+     * @param contexto
+     * @param cadena
+     * @param idTransaccion
+     * @return
+     * @throws ValidacionException
+     */
+    public ArrayList<Cuenta> obtenerCuentasPorTransaccion(Context contexto, String cadena, Long idTransaccion) throws ValidacionException{
+        return transaccionDao.obtenerCuentas(contexto, cadena, idTransaccion);
+    }
 }

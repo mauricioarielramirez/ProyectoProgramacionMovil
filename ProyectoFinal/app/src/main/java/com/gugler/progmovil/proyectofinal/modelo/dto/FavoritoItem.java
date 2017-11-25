@@ -5,6 +5,7 @@ package com.gugler.progmovil.proyectofinal.modelo.dto;
  */
 
 public class FavoritoItem {
+    private String idTransaccion;
     private String nombreTransaccion;
     private String cantidadCuentasAsociadas;
     private String tipo;
@@ -16,6 +17,14 @@ public class FavoritoItem {
         this.nombreTransaccion = nombreTransaccion;
         this.cantidadCuentasAsociadas = cantidadCuentasAsociadas;
         this.tipo = tipo;
+    }
+
+    public String getIdTransaccion() {
+        return idTransaccion;
+    }
+
+    public void setIdTransaccion(String idTransaccion) {
+        this.idTransaccion = idTransaccion;
     }
 
     public String getNombreTransaccion() {

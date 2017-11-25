@@ -52,10 +52,15 @@ public class FavoritosAdapter extends BaseAdapter {
         if (convertView == null){
             convertView = mInflater.inflate(R.layout.favorito_item,parent,false);
         }
+        TextView txvIdTransaccion = (TextView) convertView.findViewById(R.id.txvIdTransaccion);
         TextView txvNombre = (TextView) convertView.findViewById(R.id.txtNombreTransaccionFavorito);
         TextView txvCuentas = (TextView) convertView.findViewById(R.id.txvCuentaAsociadasFavoritos);
+        TextView txvTipoTransaccion = (TextView) convertView.findViewById(R.id.txvTipoTransaccion);
+
+        txvIdTransaccion.setText(item.getIdTransaccion());
         txvNombre.setText(item.getNombreTransaccion());
         txvCuentas.setText(item.getCantidadCuentasAsociadas());
+        txvTipoTransaccion.setText(item.getTipo());
         ImageView imgArrow = (ImageView) convertView.findViewById(R.id.imgArrow);
         Resources resource = convertView.getResources();
         Drawable drawable;

@@ -42,6 +42,20 @@ public class NormalActivity extends BaseActivity {
         inicializarListViewOperaciones();
         inicializarListViewFavoritos();
 
+        ListView lstFav = (ListView) findViewById(R.id.lstFavoritos);
+        lstFav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txvIdTransaccion = (TextView) view.findViewById(R.id.txvIdTransaccion);
+                TextView txvTipoTransaccion = (TextView) view.findViewById(R.id.txvTipoTransaccion);
+                Bundle bundle = new Bundle();
+                bundle.putString("idTransaccion", txvIdTransaccion.getText().toString());
+                bundle.putString("tipoTransaccion", txvTipoTransaccion.getText().toString());
+                Intent intento = new Intent(getApplicationContext(),ElegirCuentaActivity.class);
+                intento.putExtras(bundle);
+                startActivity(intento);
+            }
+        });
 
         ListView lst = (ListView) findViewById(R.id.lstOperaciones);
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
