@@ -5,12 +5,14 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioCuentas;
+import com.gugler.progmovil.proyectofinal.watcher.CuentaWatcher;
 
 import progmovil.gugler.com.pf.R;
 
@@ -24,6 +26,12 @@ public class ConfigurarCuentaActivity extends BaseActivity{
         prepararStringSql();
         configurarInterface("");
 
+        //Seteo de los watcher
+        Button btnToolbarGuardar = (Button) findViewById(R.id.btnToolbarGuardar);
+        btnToolbarGuardar.setEnabled(false);
+        EditText txtDenominacionCuenta = (EditText) findViewById(R.id.txtDenominacion);
+        txtDenominacionCuenta.addTextChangedListener(new CuentaWatcher(txtDenominacionCuenta, btnToolbarGuardar));
+
         Button btnGuardarToolbar = (Button) findViewById(R.id.btnToolbarGuardar);
         btnGuardarToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +41,10 @@ public class ConfigurarCuentaActivity extends BaseActivity{
 
                 String denominacion = ((TextView) findViewById(R.id.txtDenominacion)).getText().toString();
                 String descripcion = ((TextView) findViewById(R.id.txtDescripcion)).getText().toString();
-                Float saldo = Float.parseFloat(((TextView) findViewById(R.id.txtSaldo)).getText().toString());
+                Float saldo = 0F;
+                if ( !((TextView) findViewById(R.id.txtSaldo)).getText().toString().equals("")) {
+                    saldo = Float.parseFloat(((TextView) findViewById(R.id.txtSaldo)).getText().toString());
+                }
 
                 Cuenta cuentaAgregar = new Cuenta(denominacion, descripcion, saldo);
                 try {

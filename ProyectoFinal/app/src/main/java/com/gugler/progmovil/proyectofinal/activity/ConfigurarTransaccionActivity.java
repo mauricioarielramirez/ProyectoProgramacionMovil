@@ -22,6 +22,7 @@ import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
 import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioCuentas;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioTransacciones;
+import com.gugler.progmovil.proyectofinal.watcher.TransaccionWatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,15 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
         prepararStringSql();
         configurarInterface("");
         inicializarSpinnerTipoTransaccion();
+
+        //Seteo de watcher
+        Button btnToolbarGuardar = (Button) findViewById(R.id.btnToolbarGuardar);
+        btnToolbarGuardar.setEnabled(false);
+        EditText txtNombreTransaccion = (EditText) findViewById(R.id.txtNombre);
+        EditText txtSaldo = (EditText) findViewById(R.id.txtSaldo);
+
+        txtNombreTransaccion.addTextChangedListener(new TransaccionWatcher(txtNombreTransaccion,txtSaldo,btnToolbarGuardar));
+        txtSaldo.addTextChangedListener(new TransaccionWatcher(txtNombreTransaccion,txtSaldo,btnToolbarGuardar));
 
         Button btnGuardarToolbar = (Button) findViewById(R.id.btnToolbarGuardar);
         btnGuardarToolbar.setOnClickListener(new View.OnClickListener() {

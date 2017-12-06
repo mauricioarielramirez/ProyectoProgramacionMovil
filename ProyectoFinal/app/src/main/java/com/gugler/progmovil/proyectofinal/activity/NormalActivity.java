@@ -43,6 +43,9 @@ public class NormalActivity extends BaseActivity {
         inicializarListViewFavoritos();
 
         ListView lstFav = (ListView) findViewById(R.id.lstFavoritos);
+        /**
+         * OnClic para la lista de favoritos
+         */
         lstFav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -58,6 +61,9 @@ public class NormalActivity extends BaseActivity {
         });
 
         ListView lst = (ListView) findViewById(R.id.lstOperaciones);
+        /**
+         * OnClic para la lista de operaciones
+         */
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -143,7 +149,9 @@ public class NormalActivity extends BaseActivity {
                     lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
                     ViewGroup.LayoutParams lstParams = lstFavoritos.getLayoutParams();
                     items = lstFavoritos.getCount();
-                    lstParams.height = (alto / items)*3;
+                    if (items > 3) {
+                        lstParams.height = (alto / items)*3;
+                    }
                 }catch (Exception ex){
                     return;
                 }
@@ -233,5 +241,6 @@ public class NormalActivity extends BaseActivity {
             Intent intento = new Intent(this, InicioActivity.class);
             startActivity(intento);
         }
+        inicializarListViewFavoritos();
     }
 }
