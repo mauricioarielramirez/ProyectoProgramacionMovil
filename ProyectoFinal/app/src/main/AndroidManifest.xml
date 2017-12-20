@@ -10,17 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"> <!-- Por defecto para todas las activity que no se configure con otra cosa -->
         <activity
-            android:name="com.gugler.progmovil.proyectofinal.activity.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"> <!-- Permite usar el action bar para personalizarlo -->
+            android:name="com.gugler.progmovil.proyectofinal.activity.MainActivity"> <!-- Permite usar el action bar para personalizarlo  android:theme="@style/Theme.AppCompat.Light.DarkActionBar"   -->
         </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuentaActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.InicioActivity"
-            android:label="@string/title_activity_inicio"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            android:label="@string/title_activity_inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,20 +26,16 @@
         </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.ElegirCuentaActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name="com.gugler.progmovil.proyectofinal.activity.MenuPrincipalActivity" />
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarTransaccionActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.NormalActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.TransaccionActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.AdministracionActivity">
@@ -50,8 +43,7 @@
         </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.FabElegirTransaccionActivity"
-            android:label="@string/title_activity_fab_elegir_transaccion"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
+            android:label="@string/title_activity_fab_elegir_transaccion"></activity>
     </application>
 
 </manifest>

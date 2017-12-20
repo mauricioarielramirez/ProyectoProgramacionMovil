@@ -15,5 +15,5 @@
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="#000000"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 </LinearLayout>

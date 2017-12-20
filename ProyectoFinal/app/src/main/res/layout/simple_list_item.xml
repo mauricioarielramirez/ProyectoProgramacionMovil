@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="0.01"
@@ -14,9 +15,21 @@
         android:layout_height="wrap_content">
 
         <Space
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="21dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_item_new" />
+
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.01" />
+            android:adjustViewBounds="false"
+            app:srcCompat="@drawable/ic_account_menu" />
 
         <TextView
             android:id="@+id/txvId"
@@ -29,8 +42,11 @@
         <TextView
             android:id="@+id/txvDescripcion"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descripción del contenido" />
+            android:layout_height="match_parent"
+            android:text="Descripción del contenido"
+            android:textColor="@android:color/black"
+            android:gravity="center_vertical"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
