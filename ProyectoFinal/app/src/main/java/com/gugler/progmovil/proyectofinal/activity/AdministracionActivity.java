@@ -92,11 +92,11 @@ public class AdministracionActivity extends BaseActivity {
     }
 
     private void llenarListViews(){
-        listaAdminCrear.add(new ListaItem(1," Cuenta"));
-        listaAdminCrear.add(new ListaItem(2," Transacción"));
-        listaAdminModificar.add(new ListaItem(3," Cuenta"));
-        listaAdminModificar.add(new ListaItem(4," Transacción"));
-        listaAdminModificar.add(new ListaItem(5," Movimiento"));
+        listaAdminCrear.add(new ListaItem(1," Cuenta",ListaItem.OPERACIONES_ADMINISTRAR_NUEVA_CUENTA));
+        listaAdminCrear.add(new ListaItem(2," Transacción",ListaItem.OPERACIONES_ADMINISTRAR_NUEVA_TRANSACCION));
+        listaAdminModificar.add(new ListaItem(3," Cuenta",ListaItem.OPERACIONES_ADMINISTRAR_MODIFICAR_CUENTA));
+        listaAdminModificar.add(new ListaItem(4," Transacción",ListaItem.OPERACIONES_ADMINISTRAR_MODIFICAR_TRANSACCION));
+        listaAdminModificar.add(new ListaItem(5," Movimiento",ListaItem.OPERACIONES_ADMINISTRAR_MODIFICAR_MOVIMIENTO));
     }
 
 }

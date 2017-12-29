@@ -19,13 +19,13 @@
             android:layout_height="match_parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imgIconoL"
             android:layout_width="21dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_item_new" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imgIconoR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="false"

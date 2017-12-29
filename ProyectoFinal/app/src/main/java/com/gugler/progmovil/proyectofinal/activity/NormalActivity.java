@@ -31,7 +31,7 @@ public class NormalActivity extends BaseActivity {
     private FavoritosAdapter adapterFavoritos;
 
     private final String OPERACIONES = " Operaciones";
-    private final String FAVORITOS = "AHI VA";
+    private final String FAVORITOS = " Favoritos";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,10 +199,17 @@ public class NormalActivity extends BaseActivity {
     private void llenarListView(String nombreListview) {
         switch (nombreListview) {
             case OPERACIONES:
-                listaOperaciones.add(new ListaItem(1,"Débito"));
-                listaOperaciones.add(new ListaItem(2,"Crédito"));
-                listaOperaciones.add(new ListaItem(3,"Consultas"));
-                listaOperaciones.add(new ListaItem(4,"Administrar"));
+                listaOperaciones.add(new ListaItem(1,"Débito", ListaItem.OPERACIONES_DEBITO));
+
+                 /* ImageView imgMenuDebito = (ImageView) findViewById(R.id.imgIconoL);
+                  Resources resource = this.getResources();
+                  Drawable drawable;
+                  drawable = resource.getDrawable(R.drawable.ic_debito_menu);
+                  imgMenuDebito.setImageDrawable(drawable);*/
+
+                listaOperaciones.add(new ListaItem(2,"Crédito", ListaItem.OPERACIONES_CREDITO));
+                listaOperaciones.add(new ListaItem(3,"Consultas", ListaItem.OPERACIONES_CONSULTAS));
+                listaOperaciones.add(new ListaItem(4,"Administrar", ListaItem.OPERACIONES_ADMINISTRAR));
                 break;
             case FAVORITOS:
                 ServicioTransacciones sTransacciones = new ServicioTransacciones();

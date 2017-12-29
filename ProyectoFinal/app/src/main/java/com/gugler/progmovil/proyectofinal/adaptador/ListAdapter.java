@@ -1,10 +1,13 @@
 package com.gugler.progmovil.proyectofinal.adaptador;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gugler.progmovil.proyectofinal.modelo.dto.ListaItem;
@@ -53,6 +56,65 @@ public class ListAdapter extends BaseAdapter {
         TextView txvDescripcion = (TextView) convertView.findViewById(R.id.txvDescripcion);
         txvId.setText(item.getId().toString());
         txvDescripcion.setText(item.getDescripcion());
+
+        ImageView imgIconoLeft = (ImageView) convertView.findViewById(R.id.imgIconoL);
+        ImageView imgIconoRight = (ImageView) convertView.findViewById(R.id.imgIconoR);
+        Resources resource = convertView.getResources();
+        Drawable drawableLeft = null;
+        Drawable drawableRight = null;
+
+        switch (item.getTipoItem()){
+            case ListaItem.OPERACIONES_DEBITO:
+                drawableLeft = resource.getDrawable(R.drawable.ic_debito_menu);
+                drawableRight = resource.getDrawable(R.drawable.ic_blank_icon);
+                break;
+            case ListaItem.OPERACIONES_CREDITO:
+                drawableLeft = resource.getDrawable(R.drawable.ic_credito_menu);
+                drawableRight = resource.getDrawable(R.drawable.ic_blank_icon);
+                break;
+            case ListaItem.OPERACIONES_CONSULTAS:
+                drawableLeft = resource.getDrawable(R.drawable.ic_consultar_menu);
+                drawableRight = resource.getDrawable(R.drawable.ic_blank_icon);
+                break;
+            case ListaItem.OPERACIONES_ADMINISTRAR:
+                drawableLeft = resource.getDrawable(R.drawable.ic_administrar_menu);
+                drawableRight = resource.getDrawable(R.drawable.ic_blank_icon);
+                break;
+            case ListaItem.OPERACIONES_ADMINISTRAR_NUEVA_CUENTA:
+                drawableLeft = resource.getDrawable(R.drawable.ic_item_new);
+                drawableRight = resource.getDrawable(R.drawable.ic_account_menu);
+                break;
+            case ListaItem.OPERACIONES_ADMINISTRAR_NUEVA_TRANSACCION:
+                drawableLeft = resource.getDrawable(R.drawable.ic_item_new);
+                drawableRight = resource.getDrawable(R.drawable.ic_transaccion_menu);
+                break;
+            case ListaItem.OPERACIONES_ADMINISTRAR_MODIFICAR_CUENTA:
+                drawableLeft = resource.getDrawable(R.drawable.ic_item_edit);
+                drawableRight = resource.getDrawable(R.drawable.ic_account_menu);
+                break;
+            case ListaItem.OPERACIONES_ADMINISTRAR_MODIFICAR_TRANSACCION:
+                drawableLeft = resource.getDrawable(R.drawable.ic_item_edit);
+                drawableRight = resource.getDrawable(R.drawable.ic_transaccion_menu);
+                break;
+            case ListaItem.OPERACIONES_ADMINISTRAR_MODIFICAR_MOVIMIENTO:
+                drawableLeft = resource.getDrawable(R.drawable.ic_item_edit);
+                drawableRight = resource.getDrawable(R.drawable.ic_transaccion_menu);
+                break;
+
+            default:
+                drawableLeft = resource.getDrawable(R.drawable.ic_blank_icon);
+                drawableRight = resource.getDrawable(R.drawable.ic_blank_icon);
+        }
+        imgIconoLeft.setImageDrawable(drawableLeft);
+        imgIconoRight.setImageDrawable(drawableRight);
+
+//        if (item.getTipo().equals("C")) {
+//            drawable = resource.getDrawable(R.drawable.ic_arrow_credit);
+//        } else {
+//            drawable = resource.getDrawable(R.drawable.ic_arrow_debit);
+//        }
+//        imgArrow.setImageDrawable(drawable);
+
         return convertView;
     }
 }
