@@ -39,4 +39,12 @@ public class ServicioCuentas extends Servicio {
     public Boolean asociarTransaccion (String denominacionCuenta, Long ultimoIdTransaccion){
         return cuentaDao.agregarCuentaTransaccion(denominacionCuenta, ultimoIdTransaccion);
     }
+
+    public Cuenta obtenerCuentaPorDenominacion(String denomincion){
+        return cuentaDao.obtenerPorDenominacion(denomincion);
+    }
+
+    public Boolean modificarCuenta(Cuenta cuenta) throws ValidacionException, Exception{
+        return cuentaDao.modificar(cuenta,cuenta.getDenominacion());
+    }
 }

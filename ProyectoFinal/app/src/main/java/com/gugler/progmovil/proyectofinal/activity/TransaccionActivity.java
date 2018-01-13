@@ -11,10 +11,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Space;
 
+import com.gugler.progmovil.proyectofinal.modelo.Movimiento;
 import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
+import com.gugler.progmovil.proyectofinal.servicio.ServicioMovimientos;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioTransacciones;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import progmovil.gugler.com.pf.R;
 
@@ -40,6 +43,30 @@ public class TransaccionActivity extends BaseActivity {
         } else {
             configurarInterface(TRANSACCION_NO_EDITABLE);
         }
+
+        Button btnGuardar = (Button)findViewById(R.id.btnToolbarGuardar);
+        btnGuardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ServicioMovimientos servicioMovimientos = new ServicioMovimientos();
+                servicioMovimientos.crearBase(getApplicationContext(),CADENA_SQL);
+
+                Movimiento movimiento = new Movimiento();
+
+                movimiento.setCuentaAsociada(denominacionCuenta);
+                movimiento.setTipo(tipoTransaccion);
+                movimiento.setMonto(importe);
+                movimiento.setFechaHora(Calendar.getInstance().getTime());
+                movimiento.setTransaccion(nombreTransaccion);
+
+                try {
+                    servicioMovimientos.agregarMovimiento(movimiento,getApplicationContext(),CADENA_SQL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
     private void configurarInterface(String modo) {

@@ -8,18 +8,20 @@ import java.util.Date;
 
 public class Movimiento {
     private Long id;
-    private Cuenta cuentaAsociada;
+    private String cuentaAsociada;
+    private String transaccion;
     private Float monto;
     private String tipo;
-    private Float saldoActual;
+    private Float saldoActual; /*Saldo de la cuenta al momento del impacto del movimiento*/
     private Date fechaHora;
 
     public Movimiento() {
     }
 
-    public Movimiento(Long id, Cuenta cuentaAsociada, Float monto, String tipo, Float saldoActual, Date fechaHora) {
+    public Movimiento(Long id, String cuentaAsociada, String transaccion, Float monto, String tipo, Float saldoActual, Date fechaHora) {
         this.id = id;
         this.cuentaAsociada = cuentaAsociada;
+        this.transaccion = transaccion;
         this.monto = monto;
         this.tipo = tipo;
         this.saldoActual = saldoActual;
@@ -34,12 +36,20 @@ public class Movimiento {
         this.id = id;
     }
 
-    public Cuenta getCuentaAsociada() {
+    public String getCuentaAsociada() {
         return cuentaAsociada;
     }
 
-    public void setCuentaAsociada(Cuenta cuentaAsociada) {
+    public void setCuentaAsociada(String cuentaAsociada) {
         this.cuentaAsociada = cuentaAsociada;
+    }
+
+    public String getTransaccion() {
+        return transaccion;
+    }
+
+    public void setTransaccion(String transaccion) {
+        this.transaccion = transaccion;
     }
 
     public Float getMonto() {
