@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.gugler.progmovil.proyectofinal.adaptador.FavoritosAdapter;
 import com.gugler.progmovil.proyectofinal.adaptador.ListAdapter;
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
+import com.gugler.progmovil.proyectofinal.modelo.dto.FavoritoItem;
 import com.gugler.progmovil.proyectofinal.modelo.dto.ListaItem;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioCuentas;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioTransacciones;
@@ -216,6 +217,10 @@ public class NormalActivity extends BaseActivity {
                 try {
                     sTransacciones.crearBase(getApplicationContext(), CADENA_SQL);
                     listaFavoritos.addAll(sTransacciones.obtenerFavoritos());
+                    for (Object tran : listaFavoritos){
+                        Integer cantidadCtasAsociadas = sTransacciones.obtenerCuentasPorTransaccion(getApplicationContext(),CADENA_SQL, Long.parseLong( ((FavoritoItem)tran).getIdTransaccion() )).size();
+                        ((FavoritoItem)tran).setCantidadCuentasAsociadas((cantidadCtasAsociadas > 1 ? cantidadCtasAsociadas.toString() + " cuentas asociadas" : "1 cuenta asociada"));
+                    }
                 } catch (ValidacionException e) {
                     Toast toast = Toast.makeText(getApplicationContext(), "No se pudieron cargar los favoritos", Toast.LENGTH_SHORT);
                     toast.show();

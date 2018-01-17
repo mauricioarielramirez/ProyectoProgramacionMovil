@@ -83,7 +83,9 @@ public class ServicioTransacciones extends Servicio {
             fav.setIdTransaccion(tr.getId().toString());
             fav.setNombreTransaccion(tr.getNombre());
             fav.setTipo(tr.getTipo());
-            fav.setCantidadCuentasAsociadas("3 cuentas asociadas");
+
+            // Integer cantidadCuentas = obtenerCuentasPorTransaccion()
+            fav.setCantidadCuentasAsociadas("(ninguna cuenta asociada)");
             favoritos.add(fav);
         }
         return favoritos;

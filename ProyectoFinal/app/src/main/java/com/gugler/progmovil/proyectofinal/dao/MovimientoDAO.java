@@ -46,7 +46,7 @@ public class MovimientoDAO {
         try {
 
             ContentValues registro = new ContentValues();
-            registro.put(MV_ID,movimiento.getId());
+            registro.put(MV_ID, obtenerUltimoId() + 1);
             registro.put(MV_DENOMINACION_CUENTA,movimiento.getCuentaAsociada().trim());
             registro.put(MV_NOMBRE_TRANSACCION,movimiento.getTransaccion().trim());
             registro.put(MV_TIPO,movimiento.getTipo().trim());
@@ -61,6 +61,18 @@ public class MovimientoDAO {
         }catch (Exception ex){
             throw  ex;
         }
+    }
+
+    private Long obtenerUltimoId(){
+        Cursor cursor = db.rawQuery("SELECT MAX(mv_id) from db_movimiento",null);
+        Long id = 0L;
+        if (cursor.moveToFirst()){
+            do{
+                id = cursor.getLong(0);
+            }while(cursor.moveToNext());
+            cursor.close();
+        }
+        return id;
     }
 
     public Boolean modificar (Movimiento movimiento) throws ValidacionException, Exception{
