@@ -1,5 +1,6 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Space;
+import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.modelo.Movimiento;
 import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
@@ -61,10 +63,16 @@ public class TransaccionActivity extends BaseActivity {
 
                 try {
                     servicioMovimientos.agregarMovimiento(movimiento,getApplicationContext(),CADENA_SQL);
+                    Toast tExito = Toast.makeText(getApplicationContext(), "Movimiento realizado exitosamente", Toast.LENGTH_SHORT);
+                    tExito.show();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Toast tError = Toast.makeText(getApplicationContext(), "Error al realizar movimiento: " + e.getMessage(), Toast.LENGTH_LONG);
+                    tError.show();
+                } finally {
+                    Intent intento = new Intent(getApplicationContext(), NormalActivity.class);
+                    startActivity(intento);
                 }
-
             }
         });
     }

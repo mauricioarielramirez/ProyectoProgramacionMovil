@@ -72,9 +72,6 @@ public class FabElegirTransaccionActivity extends BaseActivity {
                 Intent intento = new Intent(getApplicationContext(), TransaccionActivity.class);
                 intento.putExtras(bundle);
                 startActivity(intento);
-
-                Toast toast = Toast.makeText (getApplicationContext(),txvIdtr.getText().toString(),Toast.LENGTH_SHORT);
-                toast.show();
             }
         });
     }

@@ -143,8 +143,13 @@ public class ElegirCuentaActivity extends BaseActivity {
         this.tipoTransaccion = recurso.getString("tipoTransaccion");
         // Si es llamado de favoritos, se carga este valor
         this.idTransaccion = recurso.getString("idTransaccion");
-        Toast toast = Toast.makeText(getApplicationContext(),idTransaccion,Toast.LENGTH_SHORT);
-        toast.show();
     }
 
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        prepararStringSql();
+//        inicializarListView();
+//    }
 }

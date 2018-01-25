@@ -9,8 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"> <!-- Por defecto para todas las activity que no se configure con otra cosa -->
-        <activity
-            android:name="com.gugler.progmovil.proyectofinal.activity.MainActivity"> <!-- Permite usar el action bar para personalizarlo  android:theme="@style/Theme.AppCompat.Light.DarkActionBar"   -->
+        <activity android:name="com.gugler.progmovil.proyectofinal.activity.MainActivity"> <!-- Permite usar el action bar para personalizarlo  android:theme="@style/Theme.AppCompat.Light.DarkActionBar" -->
         </activity>
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarCuentaActivity"
@@ -37,13 +36,12 @@
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.TransaccionActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="com.gugler.progmovil.proyectofinal.activity.AdministracionActivity">
-
-        </activity>
+        <activity android:name="com.gugler.progmovil.proyectofinal.activity.AdministracionActivity" />
         <activity
             android:name="com.gugler.progmovil.proyectofinal.activity.FabElegirTransaccionActivity"
-            android:label="@string/title_activity_fab_elegir_transaccion"></activity>
+            android:label="@string/title_activity_fab_elegir_transaccion" />
+        <activity android:name="progmovil.gugler.com.proyectofinal.TransaccionCtasAsociadasActivity" />
+        <activity android:name="com.gugler.progmovil.proyectofinal.activity.TransaccionCtasAsociadasActivity"></activity>
     </application>
 
 </manifest>

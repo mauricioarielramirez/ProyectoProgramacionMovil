@@ -71,8 +71,6 @@ public class NormalActivity extends BaseActivity {
                 TextView txvId = (TextView) view.findViewById(R.id.txvId);
                 TextView txvDescripcion = (TextView) view.findViewById(R.id.txvDescripcion);
 
-                Toast.makeText(getApplicationContext(), txvId.getText().toString() +" "+txvDescripcion.getText(), Toast.LENGTH_SHORT).show();
-
                 Intent intento;
                 Bundle bundle;
                 switch (txvDescripcion.getText().toString()){
