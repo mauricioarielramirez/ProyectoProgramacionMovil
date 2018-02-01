@@ -43,25 +43,45 @@ public class AdministracionActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView txtIdOpcion = (TextView) view.findViewById(R.id.txvId);
                 Intent intento;
+                Bundle recurso = new Bundle();
                 switch (txtIdOpcion.getText().toString().trim()){
                     case NUEVA_CUENTA:
+                        //Bundle recurso = new Bundle();
+                        recurso.putString("tipoTransaccion", "N");
                         intento = new Intent(getApplicationContext(),ConfigurarCuentaActivity.class);
+                        intento.putExtras(recurso);
                         startActivity(intento);
                         break;
                     case NUEVA_TRANSACCION:
                         intento = new Intent(getApplicationContext(),ConfigurarTransaccionActivity.class);
                         startActivity(intento);
                         break;
+                }
+
+            }
+        });
+        ListView lstAdministrarModificar = (ListView) findViewById(R.id.lstAdminModificar);
+        lstAdministrarModificar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txtIdOpcion = (TextView) view.findViewById(R.id.txvId);
+                Intent intento;
+                Bundle recurso = new Bundle();
+                switch (txtIdOpcion.getText().toString().trim()){
                     case MODIFICAR_CUENTA:
+                        recurso.putString("tipoTransaccion", "S");
+                        intento = new Intent(getApplicationContext(),ElegirCuentaActivity.class);
+                        intento.putExtras(recurso);
+                        startActivity(intento);
                         break;
                     case MODIFICAR_TRANSACCION:
                         break;
                     case MODIFICAR_MOVIMIENTO:
                         break;
                 }
-
             }
         });
+
     }
 
     public void configurarInterface(String modo) {

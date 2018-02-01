@@ -76,4 +76,25 @@ public class Cuenta {
     public String toString() {
         return this.getDenominacion().concat(" ");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cuenta cuenta = (Cuenta) o;
+
+        if (!denominacion.equals(cuenta.denominacion)) return false;
+        if (!descripcion.equals(cuenta.descripcion)) return false;
+        return saldo.equals(cuenta.saldo);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = denominacion.hashCode();
+        result = 31 * result + descripcion.hashCode();
+        result = 31 * result + saldo.hashCode();
+        return result;
+    }
 }

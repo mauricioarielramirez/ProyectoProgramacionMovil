@@ -140,7 +140,7 @@
                         android:editable="false"
                         android:ems="10"
                         android:enabled="false"
-                        android:inputType="textPersonName"
+                        android:inputType="numberDecimal"
                         android:text="0,00" />
                 </LinearLayout>
 

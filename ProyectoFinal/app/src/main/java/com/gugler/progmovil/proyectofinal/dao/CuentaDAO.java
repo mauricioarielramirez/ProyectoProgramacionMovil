@@ -105,14 +105,14 @@ public class CuentaDAO {
     /**
      * Intenta modificar un objeto cuenta.
      * @param cuentaModificada
-     * @param denominacion
+     * @param denominacion: Nombre viejo de la cuenta
      * @return Devuelve true si la modificación se llevó con éxito, sino false.
      * @throws ValidacionException Devolución en caso de que no exista el elemento a modificar.
      * @throws Exception
      */
     public boolean modificar(Cuenta cuentaModificada, String denominacion) throws ValidacionException,Exception{
         Cuenta cuentaOriginal = obtenerPorDenominacion(denominacion); //Comprobar si existe elemento
-        if (cuentaOriginal == null){
+        if (cuentaOriginal == null) {
             ValidacionException ex = new ValidacionException(ValidacionException.NO_EXISTE_EN_BASE);
             throw  ex;
         }else{

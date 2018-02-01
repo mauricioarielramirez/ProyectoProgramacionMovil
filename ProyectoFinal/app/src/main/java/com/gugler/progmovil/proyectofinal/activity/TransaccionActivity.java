@@ -55,10 +55,18 @@ public class TransaccionActivity extends BaseActivity {
 
                 Movimiento movimiento = new Movimiento();
 
+                //Si es transacción genérica tomo el valor de los campos modificables
+                if (idTransaccion == 0) {
+                    EditText txtImporte = (EditText) findViewById(R.id.txtImporte);
+                    EditText txtTransaccion = (EditText) findViewById(R.id.txtTransaccion);
+                    nombreTransaccion = txtTransaccion.getText().toString();
+                    importe = Float.parseFloat(txtImporte.getText().toString());
+                }
+
                 movimiento.setCuentaAsociada(denominacionCuenta);
                 movimiento.setTipo(tipoTransaccion);
-                movimiento.setMonto(importe);
                 movimiento.setFechaHora(Calendar.getInstance().getTime());
+                movimiento.setMonto(importe);
                 movimiento.setTransaccion(nombreTransaccion);
 
                 try {

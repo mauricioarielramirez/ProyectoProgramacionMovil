@@ -47,8 +47,12 @@ public class ServicioMovimientos extends Servicio{
         cuenta = servicioCuentas.obtenerCuentaPorDenominacion(denominacionCuenta);
         saldo = (tipo.trim().equals("D") ? cuenta.getSaldo()-monto : cuenta.getSaldo() + monto ); //guardo el saldo resultante
         cuenta.setSaldo(saldo);
-        servicioCuentas.modificarCuenta(cuenta);
+        servicioCuentas.modificarCuenta(cuenta,denominacionCuenta);
     };
 
+
+    public void modificarHistoriaDeMovimiento(String valorViejo, String valorNuevo, Integer tipo) throws Exception {
+        movimientoDao.modificarHistoriaDeMovimiento(valorViejo,valorNuevo,tipo);
+    }
 
 }

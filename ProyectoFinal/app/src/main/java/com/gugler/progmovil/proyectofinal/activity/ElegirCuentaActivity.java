@@ -51,26 +51,39 @@ public class ElegirCuentaActivity extends BaseActivity {
                 Intent intento;
                 Bundle recurso;
                 // Toast.makeText(getApplicationContext(), txvNombreCuenta.getText(), Toast.LENGTH_LONG).show();
-                if (idTransaccion==null) {
-                    intento = new Intent(getApplicationContext(),FabElegirTransaccionActivity.class);
-                    recurso = new Bundle();
-                    recurso.putString("nombreCuenta", txvNombreCuenta.getText().toString());
-                    recurso.putString("tipoTransaccion",tipoTransaccion);
+                switch (tipoTransaccion) {
+                    case "C": /*DÉBTIO*/
+                    case "D": /*CRÉDITO*/
+                        if (idTransaccion == null) {
+                            intento = new Intent(getApplicationContext(), FabElegirTransaccionActivity.class);
+                            recurso = new Bundle();
+                            recurso.putString("nombreCuenta", txvNombreCuenta.getText().toString());
+                            recurso.putString("tipoTransaccion", tipoTransaccion);
 
-                    intento.putExtras(recurso);
+                            intento.putExtras(recurso);
 
-                    startActivity(intento);
-                } else {
-                    intento = new Intent(getApplicationContext(), TransaccionActivity.class);
+                            startActivity(intento);
+                        } else {
+                            intento = new Intent(getApplicationContext(), TransaccionActivity.class);
 
-                    recurso = new Bundle();
-                    recurso.putString("denominacionCuenta", txvNombreCuenta.getText().toString());
-                    recurso.putString("tipoTransaccion",tipoTransaccion);
-                    recurso.putLong("idTransaccion", Long.parseLong(idTransaccion));
+                            recurso = new Bundle();
+                            recurso.putString("denominacionCuenta", txvNombreCuenta.getText().toString());
+                            recurso.putString("tipoTransaccion", tipoTransaccion);
+                            recurso.putLong("idTransaccion", Long.parseLong(idTransaccion));
 
-                    intento.putExtras(recurso);
+                            intento.putExtras(recurso);
 
-                    startActivity(intento);
+                            startActivity(intento);
+                        }
+                        break;
+                    case "S":
+                        intento = new Intent(getApplicationContext(), ConfigurarCuentaActivity.class);
+                        recurso = new Bundle();
+                        recurso.putString("denominacionCuenta", txvNombreCuenta.getText().toString());
+                        recurso.putString("tipoTransaccion", "M"); //Envio M para modificación
+                        intento.putExtras(recurso);
+                        startActivity(intento);
+                        break;
                 }
 
             }
@@ -80,15 +93,21 @@ public class ElegirCuentaActivity extends BaseActivity {
     private void configurarInterface(String modo) {
         ActionBar actionBar;
         switch (modo) {
-            case "D":
+            case "D": // Débito
                 actionBar = getSupportActionBar();
                 actionBar.setTitle("Elegir débito");
                 actionBar.setSubtitle("Seleccione una cuenta");
                 break;
-            case "C":
+            case "C": // Credito
                 actionBar = getSupportActionBar();
                 actionBar.setTitle("Elegir Crédito");
                 actionBar.setSubtitle("Seleccione una cuenta");
+                break;
+            case "S": //Setting
+                actionBar = getSupportActionBar();
+                actionBar.setTitle("Elegir Cuenta");
+                actionBar.setSubtitle("");
+
                 break;
             default:
                 actionBar = getSupportActionBar();

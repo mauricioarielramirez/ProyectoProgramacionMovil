@@ -17,6 +17,9 @@ import java.util.ArrayList;
 
 public class MovimientoDAO {
 
+    public static final Integer CUENTA = 0;
+    public static final Integer TRANSACCION = 1;
+
     private static final String MV_ID = "mv_id";
     private static final String MV_DENOMINACION_CUENTA = "mv_denominacion_cuenta";
     private static final String MV_NOMBRE_TRANSACCION = "mv_nombre_transaccion";
@@ -75,7 +78,35 @@ public class MovimientoDAO {
         return id;
     }
 
+    /**
+     * Modifica un movimiento en particular, accedido por una consulta
+     * @param movimiento
+     * @return
+     * @throws ValidacionException
+     * @throws Exception
+     */
     public Boolean modificar (Movimiento movimiento) throws ValidacionException, Exception{
+
+        return false;
+    }
+
+    /**
+     * Modifica en forma masiva la historia de movimiento
+     * @param valorViejo
+     * @param valorNuevo
+     * @param tipo 0 para denominaciónCuenta, 1 para nombreTransaccion
+     * @return
+     * @throws ValidacionException
+     * @throws Exception
+     */
+    public Boolean modificarHistoriaDeMovimiento (String valorViejo, String valorNuevo, Integer tipo) throws ValidacionException, Exception {
+        String nombreCampo;
+        if (!valorNuevo.equals(valorNuevo)) {
+            nombreCampo = (tipo==CUENTA ? "mv_denominacion_cuenta" : "mv_nombre_transaccion");
+            ContentValues registroActualizar = new ContentValues();
+            registroActualizar.put(nombreCampo, valorNuevo);
+            db.update("db_movimiento", registroActualizar, nombreCampo+"="+valorViejo, null);
+        }
         return false;
     }
 
