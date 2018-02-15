@@ -123,7 +123,7 @@ public class CuentaDAO {
                     registro.put(CT_DENOMINACION, cuentaModificada.getDenominacion());
                     registro.put(CT_DESCRIPCION, cuentaModificada.getDescripcion());
                     registro.put(CT_SALDO, cuentaModificada.getSaldo());
-                    long res = db.update("db_cuenta",registro,"ct_denominacion =?",valores);
+                    long res = db.update("db_cuenta",registro,"ct_denominacion = ?",valores);
                     return (res == -1 ? false : true);
                 }catch (Exception ex){
                     throw  ex;

@@ -101,11 +101,11 @@ public class MovimientoDAO {
      */
     public Boolean modificarHistoriaDeMovimiento (String valorViejo, String valorNuevo, Integer tipo) throws ValidacionException, Exception {
         String nombreCampo;
-        if (!valorNuevo.equals(valorNuevo)) {
+        if (!valorViejo.equals(valorNuevo)) {
             nombreCampo = (tipo==CUENTA ? "mv_denominacion_cuenta" : "mv_nombre_transaccion");
             ContentValues registroActualizar = new ContentValues();
             registroActualizar.put(nombreCampo, valorNuevo);
-            db.update("db_movimiento", registroActualizar, nombreCampo+"="+valorViejo, null);
+            db.update("db_movimiento", registroActualizar, nombreCampo+"=?", new String[] {valorViejo});
         }
         return false;
     }

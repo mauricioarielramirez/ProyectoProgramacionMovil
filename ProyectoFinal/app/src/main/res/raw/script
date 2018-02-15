@@ -6,3 +6,22 @@ CREATE TABLE db_memo (me_secuencial BIGINT PRIMARY KEY NOT NULL, me_ruta_acceso 
 CREATE TABLE db_recordatorio (re_secuencial BIGINT PRIMARY KEY NOT NULL, re_texto VARCHAR (255), re_accion VARCHAR (255), re_minimo_multiplicador INTEGER, re_saldo_minimo NUMERIC, re_saldo_maximo NUMERIC, re_ct_denominacion varchar(255) REFERENCES db_cuenta (ct_denominacion) ON DELETE CASCADE, re_tr_nombre BIGINT REFERENCES db_transaccion (tr_nombre) ON DELETE CASCADE);
 CREATE TABLE db_cuenta_transaccion (cutr_ct_denominacion VARCHAR (255) REFERENCES db_cuenta (ct_denominacion) ON DELETE CASCADE ON UPDATE CASCADE, cutr_tr_id BIGINT REFERENCES db_transaccion(tr_id) ON DELETE CASCADE);
 
+INSERT INTO db_cuenta(ct_denominacion, ct_descripcion, ct_saldo)
+VALUES("Cuenta SUBE", "Tarjeta de uso diario", 150.75);
+
+INSERT INTO db_transaccion(tr_id, tr_nombre, tr_tipo, tr_monto, tr_favorito)
+values(1,"Pasaje normal", "D", 8.75, 1);
+
+INSERT INTO db_transaccion(tr_id, tr_nombre, tr_tipo, tr_monto, tr_favorito)
+values(2,"Carga semanal", "C", 150, 1);
+
+INSERT INTO db_cuenta_transaccion(cutr_ct_denominacion, cutr_tr_id)
+VALUES("Cuenta SUBE", 1);
+INSERT INTO db_cuenta_transaccion(cutr_ct_denominacion, cutr_tr_id)
+VALUES("Cuenta SUBE", 2);
+
+INSERT INTO db_movimiento(mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion)
+VALUES(1,8.75,"D",149,"2018-02-14 22:53:19","Cuenta SUBE","Pasaje normal");
+
+INSERT INTO db_movimiento(mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion)
+VALUES(2,150,"D",200,"2018-02-14 22:53:19","Cuenta SUBE","Carga semanal");
