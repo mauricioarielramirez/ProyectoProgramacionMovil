@@ -42,6 +42,7 @@
             android:label="@string/title_activity_fab_elegir_transaccion" />
         <activity android:name="progmovil.gugler.com.proyectofinal.TransaccionCtasAsociadasActivity" />
         <activity android:name="com.gugler.progmovil.proyectofinal.activity.TransaccionCtasAsociadasActivity" />
+        <activity android:name="com.gugler.progmovil.proyectofinal.activity.ConfigurarConsultaActivity"></activity>
     </application>
 
 </manifest>

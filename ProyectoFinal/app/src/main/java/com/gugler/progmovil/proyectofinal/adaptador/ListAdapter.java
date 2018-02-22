@@ -98,7 +98,7 @@ public class ListAdapter extends BaseAdapter {
                 break;
             case ListaItem.OPERACIONES_ADMINISTRAR_MODIFICAR_MOVIMIENTO:
                 drawableLeft = resource.getDrawable(R.drawable.ic_item_edit);
-                drawableRight = resource.getDrawable(R.drawable.ic_transaccion_menu);
+                drawableRight = resource.getDrawable(R.drawable.ic_movement_menu);
                 break;
 
             default:

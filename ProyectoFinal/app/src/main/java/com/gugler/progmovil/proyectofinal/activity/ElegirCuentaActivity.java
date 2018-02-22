@@ -84,6 +84,10 @@ public class ElegirCuentaActivity extends BaseActivity {
                         intento.putExtras(recurso);
                         startActivity(intento);
                         break;
+                    case "Q":
+                        intento = new Intent(getApplicationContext(), ConfigurarConsultaActivity.class);
+                        startActivity(intento);
+                        break;
                 }
 
             }

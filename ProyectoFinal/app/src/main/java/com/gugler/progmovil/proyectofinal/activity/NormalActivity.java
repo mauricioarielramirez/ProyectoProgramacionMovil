@@ -91,6 +91,12 @@ public class NormalActivity extends BaseActivity {
                         // Debería pasarse un bundle con el tipo de operacion, asi se reutiliza la misma activity
                         break;
                     case "Consultas":
+                        intento = new Intent(getApplicationContext(), ElegirCuentaActivity.class);
+                        bundle = new Bundle();
+                        // se le pasa una Q para indicar que es el modo de consultas (tiene que listar todas las cuentas)
+                        bundle.putString("tipoTransaccion", "Q");
+                        intento.putExtras(bundle);
+                        startActivity(intento);
                         break;
                     case "Administrar":
                         Intent intentoAdmin = new Intent(getApplicationContext(), AdministracionActivity.class);
