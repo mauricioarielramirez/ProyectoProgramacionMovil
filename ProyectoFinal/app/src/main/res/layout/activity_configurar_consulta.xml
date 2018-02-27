@@ -88,14 +88,19 @@
                                         android:layout_weight="1"
                                         android:text="Fecha desde" />
 
-                                    <EditText
-                                        android:id="@+id/txtFechaDesde"
+                                    <Button
+                                        android:id="@+id/btnFechaDesde"
+                                        style="@android:style/Widget.DeviceDefault.Button.Borderless"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:ems="10"
-                                        android:inputType="date"
-                                        android:text="01/12/2017" />
+                                        android:text="21/12/2018"
+                                        android:onClick="onClickFecha"/>
+
+                                    <Space
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
 
                                 </LinearLayout>
 
@@ -107,7 +112,7 @@
 
                                     <Space
                                         android:layout_width="20dp"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:layout_weight="1" />
 
                                     <TextView
@@ -115,16 +120,23 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="Fecha hasta" />
+                                        android:text="Fecha hasta"
+                                        />
 
-                                    <EditText
-                                        android:id="@+id/txtFechaHasta"
+                                    <Button
+                                        android:id="@+id/btnFechaHasta"
+                                        style="@android:style/Widget.DeviceDefault.Button.Borderless"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:ems="10"
-                                        android:inputType="date"
-                                        android:text="31/12/2017" />
+                                        android:text="22/01/2017"
+                                        android:onClick="onClickFecha"/>
+
+                                    <Space
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+
                                 </LinearLayout>
 
                                 <RadioButton
@@ -133,6 +145,24 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="Comparar dos periodos" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <Space
+                                        android:layout_width="150dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+
+                                    <Space
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -150,44 +180,29 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="Fecha desde (Periodo 1)" />
+                                        android:text="Periodo 1" />
 
-                                    <EditText
-                                        android:id="@+id/txtPeriodo1Desde"
-                                        android:layout_width="150dp"
+                                    <Button
+                                        android:id="@+id/btnPeriodo1Desde"
+                                        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:ems="10"
-                                        android:inputType="date"
-                                        android:text="31/12/2017" />
-                                </LinearLayout>
+                                        android:text="01/01/2018" />
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
+                                    <Button
+                                        android:id="@+id/btnPeriodo1Hasta"
+                                        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="05/01/2018" />
 
                                     <Space
                                         android:layout_width="20dp"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1" />
 
-                                    <TextView
-                                        android:id="@+id/textView19"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="Fecha hasta (Periodo 1)" />
-
-                                    <EditText
-                                        android:id="@+id/txtPeriodo1Hasta"
-                                        android:layout_width="150dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:ems="10"
-                                        android:inputType="date"
-                                        android:text="31/12/2017" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -206,44 +221,28 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="Fecha desde (periodo 2)" />
+                                        android:text="Periodo 2" />
 
-                                    <EditText
-                                        android:id="@+id/txtPeriodo2Desde"
-                                        android:layout_width="150dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:ems="10"
-                                        android:inputType="date"
-                                        android:text="31/12/2017" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
-
-                                    <Space
-                                        android:layout_width="20dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1" />
-
-                                    <TextView
-                                        android:id="@+id/textView17"
+                                    <Button
+                                        android:id="@+id/btnPeriodo2Desde"
+                                        style="@android:style/Widget.DeviceDefault.Button.Borderless"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="Fecha hasta (periodo 2)" />
+                                        android:text="07/01/2018" />
 
-                                    <EditText
-                                        android:id="@+id/txtPeriodo2Hasta"
-                                        android:layout_width="150dp"
+                                    <Button
+                                        android:id="@+id/btnPeriodo2Hasta"
+                                        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:ems="10"
-                                        android:inputType="date"
-                                        android:text="31/12/2017" />
+                                        android:text="09/01/2018" />
+
+                                    <Space
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
 
                                 </LinearLayout>
 
@@ -258,12 +257,18 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="1" />
 
-                                    <CheckBox
-                                        android:id="@+id/chkMostrarPorTransaccion"
-                                        android:layout_width="250dp"
+                                    <Button
+                                        android:id="@+id/btnOpcionesConsulta"
+                                        style="@android:style/Widget.Material.Button.ButtonBar.AlertDialog"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="Mostrar transacciones" />
+                                        android:text="Opciones" />
+
+                                    <Space
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
                                 </LinearLayout>
 
                             </RadioGroup>
@@ -274,23 +279,35 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="350dp"
+                            <Space
+                                android:layout_width="20dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
                                 <CheckBox
                                     android:id="@+id/chkMostrarDebitos"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Transacciones de débito" />
 
                                 <CheckBox
                                     android:id="@+id/chkMostrarCreditos"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Transacciones de crédito" />
+
                             </LinearLayout>
+
+                            <Space
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
                         </LinearLayout>
 
                     </LinearLayout>

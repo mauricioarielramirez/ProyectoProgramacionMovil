@@ -3,40 +3,26 @@ package com.gugler.progmovil.proyectofinal.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.View;
-import android.widget.EditText;
 
-import java.util.Calendar;
+import com.gugler.progmovil.proyectofinal.fragment.DatePickerFragment;
+import com.gugler.progmovil.proyectofinal.fragment.OpcionesConsultaDialog;
+
+import java.util.ArrayList;
 
 import progmovil.gugler.com.pf.R;
 
 public class ConfigurarConsultaActivity extends BaseActivity {
 
+    private ArrayList<Integer> mSelectedItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configurar_consulta);
+        mSelectedItems = new ArrayList<>();
 
-        EditText txtFechaDesde = (EditText) findViewById(R.id.txtFechaDesde);
-        txtFechaDesde.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int yy = calendar.get(Calendar.YEAR);
-                int mm = calendar.get(Calendar.MONTH);
-                int dd = calendar.get(Calendar.DAY_OF_MONTH);
-//                DatePickerDialog datePicker = new DatePickerDialog(, new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                        String date = "Date"+String.valueOf(year) +"-"+String.valueOf(monthOfYear)
-//                                +"-"+String.valueOf(dayOfMonth);
-//                        tfDescription.setText(date);
-//                        tfDate.setText(date);
-//                    }
-//                }, yy, mm, dd);
-
-
-            }
-        });
+//        EditText txtFechaDesde = (EditText) findViewById(R.id.txtFechaDesde);
+//        txtFechaDesde.setOnClickListener(onClickFecha(txtFechaDesde));
     }
 
     private void configurarInterface(String modo) {
@@ -54,4 +40,24 @@ public class ConfigurarConsultaActivity extends BaseActivity {
                 actionBar.setSubtitle(":/");
         }
     }
+
+    public void onClickFecha(View view)
+    {
+        Bundle r = new Bundle();
+        DatePickerFragment picker = new DatePickerFragment();
+        r.putInt("campoFecha", view.getId());
+        picker.setArguments(r);
+        picker.show(getFragmentManager(), "fechaNacimientoPicker");
+    }
+
+    public void onConsultaOpciones(View view)
+    {
+        Bundle r = new Bundle();
+        OpcionesConsultaDialog dialog = new OpcionesConsultaDialog();
+        r.putSerializable("listaOpciones", mSelectedItems);
+        dialog.setArguments(r);
+        dialog.show(getFragmentManager(), "opcionesConsultaDialog");
+    }
+
+
 }
