@@ -2,13 +2,10 @@
 <resources>
     <array name="OpcionesConsulta">
         <item>
-            Elemento 1
+            Transacciones de débito
         </item>
         <item>
-            Elemento 2
-        </item>
-        <item>
-            Elemento 3
+            Transacciones de crédito
         </item>
     </array>
 

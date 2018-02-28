@@ -19,30 +19,30 @@ public class OpcionesConsultaDialog extends DialogFragment {
 
     private ArrayList<Integer> mSelectedItemsDevolver; // La cargo inicialmente con los elementos que vienen en el bundle
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return super.onCreateDialog(savedInstanceState);
-        mSelectedItems = new ArrayList();
-        //AlertDialog.Builder builder = new AlertDialog.Builder(getOwnerActivity());
-        DialogFragment.instantiate(getActivity(),"opcionesConsultaDialog").set
-        .setTitle("Seleccione").setMultiChoiceItems(R.array.OpcionesConsulta,null,new DialogInterface.OnMultiChoiceClickListener(){
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                if (isChecked){
-                    mSelectedItems.add(which);
-                } else if(mSelectedItems.contains(which)){
-                    mSelectedItems.remove(Integer.valueOf(which));
-                }
-            }
-        })
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mSelectedItemsDevolver.clear();
-                        mSelectedItemsDevolver.addAll(mSelectedItems);
-                    }
-                });
-    }
+//    @Override
+//    public Dialog onCreateDialog(Bundle savedInstanceState) {
+//        return super.onCreateDialog(savedInstanceState);
+//        mSelectedItems = new ArrayList();
+//        //AlertDialog.Builder builder = new AlertDialog.Builder(getOwnerActivity());
+//        DialogFragment.instantiate(getActivity(),"opcionesConsultaDialog")
+//            .setTitle("Seleccione").setMultiChoiceItems(R.array.OpcionesConsulta,null,new DialogInterface.OnMultiChoiceClickListener(){
+//                @Override
+//                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+//                    if (isChecked){
+//                        mSelectedItems.add(which);
+//                    } else if(mSelectedItems.contains(which)){
+//                        mSelectedItems.remove(Integer.valueOf(which));
+//                    }
+//                }
+//            })
+//            .setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    mSelectedItemsDevolver.clear();
+//                    mSelectedItemsDevolver.addAll(mSelectedItems);
+//                }
+//            });
+//    }
 
     //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
