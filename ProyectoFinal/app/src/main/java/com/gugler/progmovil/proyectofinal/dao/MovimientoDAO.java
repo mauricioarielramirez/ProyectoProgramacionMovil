@@ -7,8 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.Movimiento;
+import com.gugler.progmovil.proyectofinal.modelo.dto.CabeceraResumenDTO;
+import com.gugler.progmovil.proyectofinal.modelo.dto.ResumenComparativoDTO;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -138,6 +141,132 @@ public class MovimientoDAO {
         }
         cursor.close();
         return movimientos;
+    }
+
+
+    /**
+     * Devuelve el contenido de la cabecera llenando los primeros 4 campos para conuslta normal, o los últimos dos para comparacion de periodos
+     * @param fechaDesdePeriodo1
+     * @param fechaHastaPeriodo1
+     * @param fechaDesdePeriodo2
+     * @param fechaHastaPeriodo2
+     * @return
+     */
+    public CabeceraResumenDTO devolverCabecera(Date fechaDesdePeriodo1, Date fechaHastaPeriodo1, Date fechaDesdePeriodo2, Date fechaHastaPeriodo2) {
+        CabeceraResumenDTO cabeceraResumenDTO = new CabeceraResumenDTO();
+        String fechaDesdePeriodo1String = new SimpleDateFormat("dd/MM/yyyy").format(fechaDesdePeriodo1);
+        String fechaHastaPeriodo1String = new SimpleDateFormat("dd/MM/yyyy").format(fechaHastaPeriodo1);
+
+        // SI FECHAS DE PERIODO 2 VIENEN VACIAS (MODO DE CONSULTA ORDINARIO)
+        if (fechaDesdePeriodo2.toString().equals("") && fechaHastaPeriodo2.toString().equals("")){
+            /*Este es el caso de la cabecera ordinaria*/
+            Cursor cursor = db.rawQuery("Select ifnull(case when mv_tipo = 'C' then sum(mv_monto) end,0) AS \"Total de créditos\","
+                    +"ifnull(case when mv_tipo = 'D' then sum(mv_monto) end,0) AS \"Total de débitos\","+
+                    "(select mv_saldo_actual from db_movimiento where mv_fecha_hora >= '"+fechaDesdePeriodo1.toString()+
+                    "' and mv_fecha_hora <= '"+fechaHastaPeriodo1.toString()+
+                    "' order by mv_fecha_hora Desc LIMIT 1) as \"Saldo Actual\""+
+                    "FROM db_movimiento where mv_fecha_hora >= '"+fechaDesdePeriodo1.toString() +
+                    "' and mv_fecha_hora <= '"+fechaHastaPeriodo1.toString()+"'",null); //lleva null a final
+            if (cursor.moveToFirst()){
+                do{
+                    //movimientos.add(new Movimiento(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getFloat(3),cursor.getString(4),cursor.getFloat(6), Date.valueOf(cursor.getString(5))));
+                    cabeceraResumenDTO.setPeriodo("Del "+fechaDesdePeriodo1String+" al " + fechaHastaPeriodo1String);
+                    cabeceraResumenDTO.setTotalCreditos("$ " + String.valueOf(cursor.getDouble(0)));
+                    cabeceraResumenDTO.setTotalDebito("$ " + String.valueOf(cursor.getDouble(1)));
+                    cabeceraResumenDTO.setSaldoActual("$ " + String.valueOf(cursor.getDouble(2)));
+
+                }while(cursor.moveToNext());
+            }
+            cursor.close();
+        //SI FECHAS DEL PERIODO DOS VIENEN CARGADAS, ENTONCES CARGAR LAS CABECERAS CON INICIO-FIN DE LOS DOS PERIODOS
+        } else {
+            //Solo se necesita mostrar los dos periodos desde - hasta
+            String fechaDesdePeriodo2String = new SimpleDateFormat("dd/MM/yyyy").format(fechaDesdePeriodo2);
+            String fechaHastaPeriodo2String = new SimpleDateFormat("dd/MM/yyyy").format(fechaHastaPeriodo2);
+            cabeceraResumenDTO.setPeriodo1("Del "+fechaDesdePeriodo1String+" al " + fechaHastaPeriodo1String);
+            cabeceraResumenDTO.setPeriodo2("Del "+fechaDesdePeriodo2String+" al " + fechaHastaPeriodo2String);
+
+        }
+        return cabeceraResumenDTO;
+    }
+
+    /**
+     * Devuelve los datos para el cuadro de resumen comparativo para las consultas con dos periodos
+     * @param fechaDesdePeriodo1
+     * @param fechaHastaPeriodo1
+     * @param fechaDesdePeriodo2
+     * @param fechaHastaPeriodo2
+     * @return
+     */
+    public ArrayList<ResumenComparativoDTO> devolverRsumenComparativo(Date fechaDesdePeriodo1, Date fechaHastaPeriodo1, Date fechaDesdePeriodo2, Date fechaHastaPeriodo2) {
+        ArrayList<ResumenComparativoDTO> resumenComparativoDTO = new ArrayList<ResumenComparativoDTO>();
+        ArrayList<String> periodo = new ArrayList<String>();
+
+        Cursor cursor = db.rawQuery("SELECT 'Periodo 1' as Periodo "+
+                "ifnull(case when mv_tipo = 'D' then sum(mv_monto) end,0) AS Débito,"+
+                "(select count (*) where mv_tipo = 'D') as \"Cantidad débitos\","+
+                "ifnull(case when mv_tipo = 'C' then sum(mv_monto) end,0) AS Crédito,"+
+                "(select count (*) where mv_tipo = 'C') as \"Cantidad créditos\","+
+                "(select mv_saldo_actual from db_movimiento where mv_fecha_hora >='"+fechaDesdePeriodo1.toString()+
+                "' and mv_fecha_hora <='"+fechaHastaPeriodo1.toString()+
+                "' order by mv_fecha_hora asc LIMIT 1) as \"Saldo inicial\","+
+                "(select mv_saldo_actual from db_movimiento where mv_fecha_hora >='"+fechaDesdePeriodo1.toString()+
+                "' and mv_fecha_hora <= '"+fechaHastaPeriodo1.toString()+
+                "' order by mv_fecha_hora desc LIMIT 1) as \"Saldo Final\""+
+                "FROM db_movimiento"+
+                " where mv_fecha_hora >= '"+fechaDesdePeriodo1.toString()+
+                "' and mv_fecha_hora <= "+fechaHastaPeriodo1.toString()+
+                "' UNION ALL"+
+                "SELECT 'Periodo 2' as Periodo "+
+                "ifnull(case when mv_tipo = 'D' then sum(mv_monto) end,0) AS Débito,"+
+                "(select count (*) where mv_tipo = 'D') as \"Cantidad débitos\","+
+                "ifnull(case when mv_tipo = 'C' then sum(mv_monto) end,0) AS Crédito,"+
+                "(select count (*) where mv_tipo = 'C') as \"Cantidad créditos\","+
+                "(select mv_saldo_actual from db_movimiento where mv_fecha_hora >='"+fechaDesdePeriodo2.toString()+
+                "' and mv_fecha_hora <='"+fechaHastaPeriodo2.toString()+
+                "' order by mv_fecha_hora asc LIMIT 1) as \"Saldo inicial\","+
+                "(select mv_saldo_actual from db_movimiento where mv_fecha_hora >='"+fechaDesdePeriodo2.toString()+
+                "' and mv_fecha_hora <= '"+fechaHastaPeriodo2.toString()+
+                "' order by mv_fecha_hora desc LIMIT 1) as \"Saldo Final\""+
+                "FROM db_movimiento"+
+                " where mv_fecha_hora >= '"+fechaDesdePeriodo2.toString()+
+                "' and mv_fecha_hora <= "+fechaHastaPeriodo2.toString()+"'",null);
+
+        if (cursor.moveToFirst()){
+            do{
+
+                // Capture the recordset
+                periodo.add(cursor.getString(0));
+                periodo.add(cursor.getString(1));
+                periodo.add(cursor.getString(2));
+                periodo.add(cursor.getString(3));
+                periodo.add(cursor.getString(4));
+                periodo.add(cursor.getString(5));
+                periodo.add(cursor.getString(6));
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+
+        for (String s:periodo) {
+            ResumenComparativoDTO resumenComparativoDTOAux = new ResumenComparativoDTO();
+            // PENSAR EN LA FORMA DE RESOLVER LO QUE SE PROPONE EN LA ISSUE (Cuadro comparativo)
+
+        }
+        return null;
+    }
+
+    /**
+     * Permite listar los movimientos por rango de fechas
+     * @param denominacionCuenta
+     * @param fechaDesde
+     * @param fechaHasta
+     * @return
+     */
+    public ArrayList<Movimiento> listarTodoConFecha(String denominacionCuenta, Date fechaDesde, Date fechaHasta) {
+
+
+
+        return null;
     }
 
 }
