@@ -10,9 +10,11 @@ import com.gugler.progmovil.proyectofinal.modelo.Movimiento;
 import com.gugler.progmovil.proyectofinal.modelo.dto.CabeceraResumenDTO;
 import com.gugler.progmovil.proyectofinal.modelo.dto.ResumenComparativoDTO;
 
-import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Ariel on 13/1/2018.
@@ -118,25 +120,29 @@ public class MovimientoDAO {
         return true;
     }
 
-    public ArrayList<Movimiento> listarTodo() {
+    public ArrayList<Movimiento> listarTodo() throws ParseException {
         ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
         Cursor cursor = db.rawQuery("SELECT "+MV_ID+", "+MV_DENOMINACION_CUENTA+", "+MV_NOMBRE_TRANSACCION+", "+MV_MONTO+", "+MV_TIPO+", "+MV_FECHA_HORA+", "+MV_SALDO_ACTUAL+ " FROM db_movimiento",null);
         if (cursor.moveToFirst()){
             do{
                 //Long id, String cuentaAsociada, String transaccion, Float monto, String tipo, Float saldoActual, Date fechaHora
-                movimientos.add(new Movimiento(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getFloat(3),cursor.getString(4),cursor.getFloat(6), Date.valueOf(cursor.getString(5))));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date fecha = dateFormat.parse(cursor.getString(5));
+                movimientos.add(new Movimiento(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getFloat(3),cursor.getString(4),cursor.getFloat(6), fecha));
             }while(cursor.moveToNext());
         }
         cursor.close();
         return movimientos;
     }
 
-    public ArrayList<Movimiento> listarPorCuenta(String denominacionCuenta) {
+    public ArrayList<Movimiento> listarPorCuenta(String denominacionCuenta) throws ParseException {
         ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
         Cursor cursor = db.rawQuery("SELECT "+MV_ID+", "+MV_DENOMINACION_CUENTA+", "+MV_NOMBRE_TRANSACCION+", "+MV_MONTO+", "+MV_TIPO+", "+MV_FECHA_HORA+", "+MV_SALDO_ACTUAL+ " FROM db_movimiento where mv_denominacion_cuenta = "+denominacionCuenta ,null);
         if (cursor.moveToFirst()){
             do{
-                movimientos.add(new Movimiento(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getFloat(3),cursor.getString(4),cursor.getFloat(6), Date.valueOf(cursor.getString(5))));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date fecha = dateFormat.parse(cursor.getString(5));
+                movimientos.add(new Movimiento(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getFloat(3),cursor.getString(4),cursor.getFloat(6), fecha));
             }while(cursor.moveToNext());
         }
         cursor.close();
@@ -190,6 +196,13 @@ public class MovimientoDAO {
         return cabeceraResumenDTO;
     }
 
+
+    /*
+    *   private String concepto;
+    private String periodo1;
+    private String periodo2;
+    private String diferencia;
+    * */
     /**
      * Devuelve los datos para el cuadro de resumen comparativo para las consultas con dos periodos
      * @param fechaDesdePeriodo1
@@ -198,60 +211,18 @@ public class MovimientoDAO {
      * @param fechaHastaPeriodo2
      * @return
      */
-    public ArrayList<ResumenComparativoDTO> devolverRsumenComparativo(Date fechaDesdePeriodo1, Date fechaHastaPeriodo1, Date fechaDesdePeriodo2, Date fechaHastaPeriodo2) {
-        ArrayList<ResumenComparativoDTO> resumenComparativoDTO = new ArrayList<ResumenComparativoDTO>();
-        ArrayList<String> periodo = new ArrayList<String>();
+    public ArrayList<ResumenComparativoDTO> devolverResumenComparativo(Date fechaDesdePeriodo1, Date fechaHastaPeriodo1, Date fechaDesdePeriodo2, Date fechaHastaPeriodo2) {
+       /* Cursor cursor = db.rawQuery("select * from db_movimiento where mv_fecha_hora between '" + fechaDesdePeriodo1.toString() + "' and '" + fechaHastaPeriodo1.toString() + "' " +
+                "union all select * from db_movimiento where mv_fecha_hora between '" + fechaDesdePeriodo2.toString() + "' and '" + fechaHastaPeriodo2.toString() + "';", null);
+        ArrayList<ResumenComparativoDTO> listaResumenDto = new ArrayList<ResumenComparativoDTO>();
+        if (cursor.moveToFirst()) {
+            do {
 
-        Cursor cursor = db.rawQuery("SELECT 'Periodo 1' as Periodo "+
-                "ifnull(case when mv_tipo = 'D' then sum(mv_monto) end,0) AS Débito,"+
-                "(select count (*) where mv_tipo = 'D') as \"Cantidad débitos\","+
-                "ifnull(case when mv_tipo = 'C' then sum(mv_monto) end,0) AS Crédito,"+
-                "(select count (*) where mv_tipo = 'C') as \"Cantidad créditos\","+
-                "(select mv_saldo_actual from db_movimiento where mv_fecha_hora >='"+fechaDesdePeriodo1.toString()+
-                "' and mv_fecha_hora <='"+fechaHastaPeriodo1.toString()+
-                "' order by mv_fecha_hora asc LIMIT 1) as \"Saldo inicial\","+
-                "(select mv_saldo_actual from db_movimiento where mv_fecha_hora >='"+fechaDesdePeriodo1.toString()+
-                "' and mv_fecha_hora <= '"+fechaHastaPeriodo1.toString()+
-                "' order by mv_fecha_hora desc LIMIT 1) as \"Saldo Final\""+
-                "FROM db_movimiento"+
-                " where mv_fecha_hora >= '"+fechaDesdePeriodo1.toString()+
-                "' and mv_fecha_hora <= "+fechaHastaPeriodo1.toString()+
-                "' UNION ALL"+
-                "SELECT 'Periodo 2' as Periodo "+
-                "ifnull(case when mv_tipo = 'D' then sum(mv_monto) end,0) AS Débito,"+
-                "(select count (*) where mv_tipo = 'D') as \"Cantidad débitos\","+
-                "ifnull(case when mv_tipo = 'C' then sum(mv_monto) end,0) AS Crédito,"+
-                "(select count (*) where mv_tipo = 'C') as \"Cantidad créditos\","+
-                "(select mv_saldo_actual from db_movimiento where mv_fecha_hora >='"+fechaDesdePeriodo2.toString()+
-                "' and mv_fecha_hora <='"+fechaHastaPeriodo2.toString()+
-                "' order by mv_fecha_hora asc LIMIT 1) as \"Saldo inicial\","+
-                "(select mv_saldo_actual from db_movimiento where mv_fecha_hora >='"+fechaDesdePeriodo2.toString()+
-                "' and mv_fecha_hora <= '"+fechaHastaPeriodo2.toString()+
-                "' order by mv_fecha_hora desc LIMIT 1) as \"Saldo Final\""+
-                "FROM db_movimiento"+
-                " where mv_fecha_hora >= '"+fechaDesdePeriodo2.toString()+
-                "' and mv_fecha_hora <= "+fechaHastaPeriodo2.toString()+"'",null);
-
-        if (cursor.moveToFirst()){
-            do{
-
-                // Capture the recordset
-                periodo.add(cursor.getString(0));
-                periodo.add(cursor.getString(1));
-                periodo.add(cursor.getString(2));
-                periodo.add(cursor.getString(3));
-                periodo.add(cursor.getString(4));
-                periodo.add(cursor.getString(5));
-                periodo.add(cursor.getString(6));
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
-        cursor.close();
+        cursor.close();*/
+       //Para periodo 1 cargar la lista movimientosPeriodo1
 
-        for (String s:periodo) {
-            ResumenComparativoDTO resumenComparativoDTOAux = new ResumenComparativoDTO();
-            // PENSAR EN LA FORMA DE RESOLVER LO QUE SE PROPONE EN LA ISSUE (Cuadro comparativo)
-
-        }
         return null;
     }
 
@@ -263,10 +234,20 @@ public class MovimientoDAO {
      * @return
      */
     public ArrayList<Movimiento> listarTodoConFecha(String denominacionCuenta, Date fechaDesde, Date fechaHasta) {
-
-
-
-        return null;
+        ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
+        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion from db_movimiento where mv_fecha_hora between '" + fechaDesde.toString() +"' and '"+ fechaHasta.toString()+"' order by mv_fecha_hora asc" ,null);
+        Date fecha = new Date();
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    fecha = new SimpleDateFormat("dd/MM/yyyy").parse(cursor.getString(4));
+                } catch (ParseException e) {
+                    fecha = Calendar.getInstance().getTime(); // O lanzar hacia arriba
+                }
+                movimientos.add(new Movimiento(cursor.getLong(0),cursor.getString(5),cursor.getString(6),cursor.getFloat(1),cursor.getString(2),cursor.getFloat(3),fecha));
+            } while (cursor.moveToNext());
+        }
+        return movimientos;
     }
 
 }
