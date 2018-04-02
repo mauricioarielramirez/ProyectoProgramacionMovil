@@ -10,7 +10,7 @@
         android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/txvColumnaNroPeriodoRango"
+        android:id="@+id/txvColumnaConcepto"
         android:layout_width="160dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -20,7 +20,7 @@
         android:textSize="10sp" />
 
     <TextView
-        android:id="@+id/txvColumnaFechaRango"
+        android:id="@+id/txvColumnaPeriodo1"
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -30,7 +30,7 @@
         android:textSize="10sp" />
 
     <TextView
-        android:id="@+id/txvColumnaTransaccionRango"
+        android:id="@+id/txvColumnaPeriodo2"
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -40,7 +40,7 @@
         android:textSize="10sp" />
 
     <TextView
-        android:id="@+id/txvColumnaMontoRango"
+        android:id="@+id/txvColumnaDiferencia"
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

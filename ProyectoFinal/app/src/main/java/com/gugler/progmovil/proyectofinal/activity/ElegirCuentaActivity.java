@@ -86,6 +86,9 @@ public class ElegirCuentaActivity extends BaseActivity {
                         break;
                     case "Q":
                         intento = new Intent(getApplicationContext(), ConfigurarConsultaActivity.class);
+                        recurso = new Bundle();
+                        recurso.putString("denominacionCuenta",txvNombreCuenta.getText().toString());
+                        intento.putExtras(recurso);
                         startActivity(intento);
                         break;
                 }

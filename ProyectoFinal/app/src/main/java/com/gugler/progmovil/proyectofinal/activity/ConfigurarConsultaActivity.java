@@ -2,22 +2,28 @@ package com.gugler.progmovil.proyectofinal.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.gugler.progmovil.proyectofinal.fragment.DatePickerFragment;
 import com.gugler.progmovil.proyectofinal.fragment.OpcionesConsultaDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import progmovil.gugler.com.pf.R;
 
 public class ConfigurarConsultaActivity extends BaseActivity {
 
     private ArrayList<Integer> mSelectedItems;
+    private String denominacionCuenta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +32,19 @@ public class ConfigurarConsultaActivity extends BaseActivity {
         mSelectedItems = new ArrayList<>();
         mSelectedItems.add(0);
         mSelectedItems.add(1);
+        leerBundle();
 
         Button btnOpciones = (Button) findViewById(R.id.btnOpcionesConsulta);
+        Button btnConfirmarConsulta = (Button) findViewById(R.id.btnConfirmarConsulta);
+
+
+        //denominacionCuenta = bundle.getString("denominacionCuenta");
+
         btnOpciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(ConfigurarConsultaActivity.this);
                 alert.setTitle("Opciones");
-//                alert.setMessage("PUTO EL QUE LEE XD");
                 boolean[] checked = new boolean[]{false, false, false};
 
                 for (int i : mSelectedItems) {
@@ -52,6 +63,51 @@ public class ConfigurarConsultaActivity extends BaseActivity {
                 });
                 alert.setPositiveButton("OK", null);
                 alert.show();
+            }
+
+        });
+
+        btnConfirmarConsulta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Capturar los datos de los campos
+                RadioButton rdbRangoDeFechas = (RadioButton) findViewById(R.id.rdbRangoDeFechas);
+                RadioButton rdbCompararPeriodos = (RadioButton) findViewById(R.id.rdbCompararPeriodos);
+                TextView btnPeriodo1Desde = (TextView) findViewById(R.id.btnPeriodo1Desde);
+                TextView btnPeriodo1Hasta = (TextView) findViewById(R.id.btnPeriodo1Hasta);
+                TextView btnPeriodo2Desde = (TextView) findViewById(R.id.btnPeriodo2Desde);
+                TextView btnPeriodo2Hasta = (TextView) findViewById(R.id.btnPeriodo2Hasta);
+
+                if (rdbRangoDeFechas.isChecked()) { //Consulta normal
+
+                }
+
+                if (rdbCompararPeriodos.isChecked()) { //Consulta comparativa
+                    Bundle bundle = new Bundle();
+                    bundle.putChar("tipoConsulta",'C');
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    try {
+                        Date periodo1Desde = dateFormat.parse(btnPeriodo1Desde.getText().toString());
+                        Date periodo1Hasta = dateFormat.parse(btnPeriodo1Hasta.getText().toString());
+                        Date periodo2Desde = dateFormat.parse(btnPeriodo2Desde.getText().toString());
+                        Date periodo2Hasta = dateFormat.parse(btnPeriodo2Hasta.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        //Toast
+                    }
+                    bundle.putString("denominacionCuenta",denominacionCuenta);
+                    bundle.putString("fechaInicialPeriodo1",btnPeriodo1Desde.getText().toString());
+                    bundle.putString("fechaFinalPeriodo1",btnPeriodo1Hasta.getText().toString());
+                    bundle.putString("fechaInicialPeriodo2",btnPeriodo2Desde.getText().toString());
+                    bundle.putString("fechaFinalPeriodo2",btnPeriodo2Hasta.getText().toString());
+                    bundle.putString("mostrarDebito","S");
+                    bundle.putString("mostrarCredito","S");
+
+                    Intent intent = new Intent(getApplicationContext(),ResultadoConsultaActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -117,7 +173,7 @@ public class ConfigurarConsultaActivity extends BaseActivity {
     private void configurarInterface(String modo) {
         ActionBar actionBar;
         switch (modo) {
-            case "C": // NO VA A ENTRAR ACA
+            case "C":
                 actionBar = getSupportActionBar();
                 actionBar.setTitle("Consulta");
                 actionBar.setSubtitle("Configuración");
@@ -148,5 +204,9 @@ public class ConfigurarConsultaActivity extends BaseActivity {
         dialog.show(getFragmentManager(), "opcionesConsultaDialog");
     }
 
+    public void leerBundle() {
+        Bundle recurso = getIntent().getExtras();
+        this.denominacionCuenta = recurso.getString("denominacionCuenta");
+    }
 
 }

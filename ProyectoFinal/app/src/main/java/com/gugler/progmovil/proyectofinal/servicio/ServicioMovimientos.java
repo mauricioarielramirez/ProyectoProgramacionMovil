@@ -62,10 +62,10 @@ public class ServicioMovimientos extends Servicio{
         movimientoDao.modificarHistoriaDeMovimiento(valorViejo,valorNuevo,tipo);
     }
 
-    public ArrayList<ResumenComparativoDTO> devolverResumenComparativo(Date fechaDesdePeriodo1, Date fechaHastaPeriodo1, Date fechaDesdePeriodo2, Date fechaHastaPeriodo2) {
+    public ArrayList<ResumenComparativoDTO> devolverResumenComparativo(Date fechaDesdePeriodo1, Date fechaHastaPeriodo1, Date fechaDesdePeriodo2, Date fechaHastaPeriodo2, String denominacionCuenta) {
         // ArrayList<ResumenComparativoColDTO> listaResumenComparativo = movimientoDao.devolverRsumenComparativo(fechaDesdePeriodo1, fechaHastaPeriodo1, fechaDesdePeriodo2, fechaHastaPeriodo2);
-        ArrayList<Movimiento> movimientosPeriodo1 = movimientoDao.listarTodoConFecha("", fechaDesdePeriodo1, fechaHastaPeriodo1);
-        ArrayList<Movimiento> movimientosPeriodo2 = movimientoDao.listarTodoConFecha("", fechaDesdePeriodo2, fechaHastaPeriodo2);
+        ArrayList<Movimiento> movimientosPeriodo1 = movimientoDao.listarTodoConFecha(denominacionCuenta, fechaDesdePeriodo1, fechaHastaPeriodo1);
+        ArrayList<Movimiento> movimientosPeriodo2 = movimientoDao.listarTodoConFecha(denominacionCuenta, fechaDesdePeriodo2, fechaHastaPeriodo2);
 
         ArrayList<ResumenComparativoDTO> listaResumen = new ArrayList<ResumenComparativoDTO>();
         ResumenComparativoDTO dtoCantidadDebitos = new ResumenComparativoDTO();
@@ -108,39 +108,42 @@ public class ServicioMovimientos extends Servicio{
                 creditosPeriodo2 = creditosPeriodo2 + 1;
             }
         }
-        dtoSaldoInicial.setPeriodo1(movimientosPeriodo1.get(0).getSaldoActual().toString());
-        dtoSaldoInicial.setPeriodo2(movimientosPeriodo2.get(0).getSaldoActual().toString());
-        dtoSaldoInicial.setDiferencia(String.valueOf(movimientosPeriodo2.get(0).getSaldoActual()-(movimientosPeriodo1.get(0).getSaldoActual())));
 
-        dtoSaldoFinal.setPeriodo1(movimientosPeriodo1.get(movimientosPeriodo1.size()-1).getSaldoActual().toString());
-        dtoSaldoFinal.setPeriodo2(movimientosPeriodo2.get(movimientosPeriodo2.size()-1).getSaldoActual().toString());
-        dtoSaldoFinal.setDiferencia(String.valueOf((movimientosPeriodo2.get(movimientosPeriodo2.size()-1).getSaldoActual()) - ((movimientosPeriodo1.get(movimientosPeriodo1.size()-1).getSaldoActual()))));
+        if (movimientosPeriodo1.size()>0 && movimientosPeriodo2.size() > 0) {
+            dtoSaldoInicial.setPeriodo1(movimientosPeriodo1.get(0).getSaldoActual().toString());
+            dtoSaldoInicial.setPeriodo2(movimientosPeriodo2.get(0).getSaldoActual().toString());
+            dtoSaldoInicial.setDiferencia(String.valueOf(movimientosPeriodo2.get(0).getSaldoActual()-(movimientosPeriodo1.get(0).getSaldoActual())));
 
-        dtoCantidadDebitos.setPeriodo1(debitosPeriodo1.toString());
-        dtoCantidadDebitos.setPeriodo2(debitosPeriodo2.toString());
+            dtoSaldoFinal.setPeriodo1(movimientosPeriodo1.get(movimientosPeriodo1.size()-1).getSaldoActual().toString());
+            dtoSaldoFinal.setPeriodo2(movimientosPeriodo2.get(movimientosPeriodo2.size()-1).getSaldoActual().toString());
+            dtoSaldoFinal.setDiferencia(String.valueOf((movimientosPeriodo2.get(movimientosPeriodo2.size()-1).getSaldoActual()) - ((movimientosPeriodo1.get(movimientosPeriodo1.size()-1).getSaldoActual()))));
 
-        dtoCantidadCreditos.setPeriodo1(creditosPeriodo1.toString());
-        dtoCantidadCreditos.setPeriodo2(creditosPeriodo2.toString());
+            dtoCantidadDebitos.setPeriodo1(debitosPeriodo1.toString());
+            dtoCantidadDebitos.setPeriodo2(debitosPeriodo2.toString());
 
-        dtoCredito.setPeriodo1(creditoPeriodo1.toString());
-        dtoCredito.setPeriodo2(creditoPeriodo2.toString());
-        dtoCredito.setDiferencia(String.valueOf(creditoPeriodo2-creditoPeriodo1));
+            dtoCantidadCreditos.setPeriodo1(creditosPeriodo1.toString());
+            dtoCantidadCreditos.setPeriodo2(creditosPeriodo2.toString());
 
-        dtoDebito.setPeriodo1(debitoPeriodo1.toString());
-        dtoDebito.setPeriodo2(debitoPeriodo2.toString());
-        dtoDebito.setDiferencia(String.valueOf(debitoPeriodo2-debitoPeriodo1));
+            dtoCredito.setPeriodo1(creditoPeriodo1.toString());
+            dtoCredito.setPeriodo2(creditoPeriodo2.toString());
+            dtoCredito.setDiferencia(String.valueOf(creditoPeriodo2-creditoPeriodo1));
 
-        Integer diferenciaDebitos = debitosPeriodo2 - debitosPeriodo1;
-        dtoCantidadDebitos.setDiferencia(diferenciaDebitos.toString());
-        Integer diferenciaCreditos = creditosPeriodo2 - creditosPeriodo1;
-        dtoCantidadDebitos.setDiferencia(diferenciaCreditos.toString());
+            dtoDebito.setPeriodo1(debitoPeriodo1.toString());
+            dtoDebito.setPeriodo2(debitoPeriodo2.toString());
+            dtoDebito.setDiferencia(String.valueOf(debitoPeriodo2-debitoPeriodo1));
 
-        listaResumen.add(dtoDebito);
-        listaResumen.add(dtoCantidadDebitos);
-        listaResumen.add(dtoCredito);
-        listaResumen.add(dtoCantidadCreditos);
-        listaResumen.add(dtoSaldoInicial);
-        listaResumen.add(dtoSaldoFinal);
+            Integer diferenciaDebitos = debitosPeriodo2 - debitosPeriodo1;
+            dtoCantidadDebitos.setDiferencia(diferenciaDebitos.toString());
+            Integer diferenciaCreditos = creditosPeriodo2 - creditosPeriodo1;
+            dtoCantidadDebitos.setDiferencia(diferenciaCreditos.toString());
+
+            listaResumen.add(dtoDebito);
+            listaResumen.add(dtoCantidadDebitos);
+            listaResumen.add(dtoCredito);
+            listaResumen.add(dtoCantidadCreditos);
+            listaResumen.add(dtoSaldoInicial);
+            listaResumen.add(dtoSaldoFinal);
+        }
 
         return listaResumen;
     }

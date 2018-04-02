@@ -4,27 +4,31 @@
     android:layout_height="match_parent">
 
     <Space
-        android:layout_width="20dp"
+        android:layout_width="5dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
     <TextView
         android:id="@+id/txvConceptoCabecera"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="Cantidad de créditos"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/black"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txvValorCabecera"
-        android:layout_width="210dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Del 01/01/2018 al 31/01/2018" />
+        android:text="Del 01/01/2018 al 31/01/2018"
+        android:textAlignment="viewEnd"
+        android:textColor="@android:color/black" />
 
     <Space
-        android:layout_width="20dp"
+        android:layout_width="5dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 </LinearLayout>

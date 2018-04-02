@@ -235,7 +235,7 @@ public class MovimientoDAO {
      */
     public ArrayList<Movimiento> listarTodoConFecha(String denominacionCuenta, Date fechaDesde, Date fechaHasta) {
         ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
-        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion from db_movimiento where mv_fecha_hora between '" + fechaDesde.toString() +"' and '"+ fechaHasta.toString()+"' order by mv_fecha_hora asc" ,null);
+        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion from db_movimiento where mv_fecha_hora between '" + fechaDesde.toString() +"' and '"+ fechaHasta.toString()+"' "+"and mv_denominacion_cuenta = '"+denominacionCuenta.toString()+"' order by mv_fecha_hora asc" ,null);
         Date fecha = new Date();
         if (cursor.moveToFirst()) {
             do {

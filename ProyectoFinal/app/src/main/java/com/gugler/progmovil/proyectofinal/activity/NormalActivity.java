@@ -115,6 +115,7 @@ public class NormalActivity extends BaseActivity {
     private void configurarInterface(String modo) {
         switch (modo) {
             default:
+                System.out.println("Texto de salida");
                 ActionBar actionBar = getSupportActionBar();
                 actionBar.setTitle("Seguimiento de efectivo");
                 actionBar.setSubtitle("Elegir acción");
