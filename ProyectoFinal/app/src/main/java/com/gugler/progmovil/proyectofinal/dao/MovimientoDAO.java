@@ -235,7 +235,24 @@ public class MovimientoDAO {
      */
     public ArrayList<Movimiento> listarTodoConFecha(String denominacionCuenta, Date fechaDesde, Date fechaHasta) {
         ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
-        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion from db_movimiento where mv_fecha_hora between '" + fechaDesde.toString() +"' and '"+ fechaHasta.toString()+"' "+"and mv_denominacion_cuenta = '"+denominacionCuenta.toString()+"' order by mv_fecha_hora asc" ,null);
+        Date fechaDesdeLocal;
+        Date fechaHastaLocal;
+        //setear formatter y parser
+        /*
+        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+        parser.setTimeZone(TimeZone.getTimeZone("EST"));
+        try{
+            fechaDesdeLocal = parser.parse(fechaDesde.toString());
+            fechaHastaLocal = parser.parse(fechaHasta.toString());;
+        }catch(ParseException e){
+            fechaDesdeLocal = Calendar.getInstance().getTime();
+            fechaHastaLocal  = Calendar.getInstance().getTime();
+        }*/
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        fechaDesdeLocal = fechaDesde;
+        fechaHastaLocal = fechaHasta;
+
+        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion from db_movimiento where mv_fecha_hora between '" + formatter.format(fechaDesdeLocal) +"' and '"+ formatter.format(fechaHastaLocal)+"' "+"and mv_denominacion_cuenta = '"+denominacionCuenta.toString()+"' order by mv_fecha_hora asc" ,null);
         Date fecha = new Date();
         if (cursor.moveToFirst()) {
             do {

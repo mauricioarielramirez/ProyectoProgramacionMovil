@@ -55,6 +55,13 @@ public class CabeceraResumenComparativoAdapter extends BaseAdapter {
         TextView txvColumnaPeriodo2 = (TextView) convertView.findViewById(R.id.txvColumnaPeriodo2);
         TextView txvColumnaDiferencia = (TextView) convertView.findViewById(R.id.txvColumnaDiferencia);
 
+        if (item.getConcepto().equals("Concepto")) {
+            txvColumnaConcepto.setBackgroundResource(R.color.tableHeader);
+            txvColumnaPeriodo1.setBackgroundResource(R.color.tableHeader);
+            txvColumnaPeriodo2.setBackgroundResource(R.color.tableHeader);
+            txvColumnaDiferencia.setBackgroundResource(R.color.tableHeader);
+        }
+
         txvColumnaConcepto.setText(item.getConcepto());
         txvColumnaPeriodo1.setText(item.getPeriodo1());
         txvColumnaPeriodo2.setText(item.getPeriodo2());

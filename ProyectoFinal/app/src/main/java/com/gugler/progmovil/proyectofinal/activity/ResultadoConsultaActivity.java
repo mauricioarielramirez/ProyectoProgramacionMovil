@@ -2,7 +2,9 @@ package com.gugler.progmovil.proyectofinal.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gugler.progmovil.proyectofinal.adaptador.CabeceraConsultaAdapter;
 import com.gugler.progmovil.proyectofinal.adaptador.CabeceraResumenComparativoAdapter;
@@ -10,9 +12,9 @@ import com.gugler.progmovil.proyectofinal.modelo.dto.CabeceraConsultaDTO;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioMovimientos;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import progmovil.gugler.com.pf.R;
 
@@ -55,6 +57,14 @@ public class ResultadoConsultaActivity extends BaseActivity {
 
     private void configurarInterface(Character modo) {
         ActionBar actionBar = getSupportActionBar();
+        // Seteo de headers
+        View vIncludeSuperior = findViewById(R.id.includeCabeceraSuperior);
+        TextView txvTituloHeaderSuperior = (TextView) vIncludeSuperior.findViewById(R.id.txvTituloHeader);
+        txvTituloHeaderSuperior.setText("Resumen");
+        View vIncludeInferior = findViewById(R.id.includeCabeceraInferior);
+        TextView txvTituloHeaderInferior = (TextView) vIncludeInferior.findViewById(R.id.txvTituloHeader);
+        txvTituloHeaderInferior.setText("Movimientos");
+
         switch (modo) {
             case 'N': //Normal
                 actionBar.setTitle("Consulta");
@@ -107,6 +117,7 @@ public class ResultadoConsultaActivity extends BaseActivity {
 
         listaResumenComparativoDTO.addAll(servicioMovimientos.devolverResumenComparativo(periodo1Desde,periodo1Hasta,periodo2Desde,periodo2Hasta,this.denominacionCuenta));
         ListView lstConsultaPeriodoComparador = (ListView) findViewById(R.id.lstConsultaPeriodoComparador);
+
         CabeceraResumenComparativoAdapter adapter;
         try{
             adapter = new CabeceraResumenComparativoAdapter(this,listaResumenComparativoDTO);

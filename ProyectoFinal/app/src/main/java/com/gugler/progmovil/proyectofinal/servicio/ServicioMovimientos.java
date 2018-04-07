@@ -100,7 +100,7 @@ public class ServicioMovimientos extends Servicio{
             }
         }
         for (Movimiento mv: movimientosPeriodo2) {
-            if (mv.getTipo().equals("C")) {
+            if (mv.getTipo().equals("D")) {
                 debitoPeriodo2 = mv.getMonto() + debitoPeriodo2;
                 debitosPeriodo2 = debitosPeriodo2 + 1;
             } else {
@@ -135,8 +135,9 @@ public class ServicioMovimientos extends Servicio{
             Integer diferenciaDebitos = debitosPeriodo2 - debitosPeriodo1;
             dtoCantidadDebitos.setDiferencia(diferenciaDebitos.toString());
             Integer diferenciaCreditos = creditosPeriodo2 - creditosPeriodo1;
-            dtoCantidadDebitos.setDiferencia(diferenciaCreditos.toString());
+            dtoCantidadCreditos.setDiferencia(diferenciaCreditos.toString());
 
+            listaResumen.add(new ResumenComparativoDTO("Concepto", "Períodoc 1", "Período 2", "Diferencia"));
             listaResumen.add(dtoDebito);
             listaResumen.add(dtoCantidadDebitos);
             listaResumen.add(dtoCredito);

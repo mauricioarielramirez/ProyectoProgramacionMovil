@@ -18,12 +18,22 @@
         <ListView
             android:id="@+id/lstConsultaResumen"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:contextClickable="false"
+            android:clickable="false"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <ListView
             android:id="@+id/lstConsultaPeriodoComparador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <include
             android:id="@+id/includeCabeceraInferior"

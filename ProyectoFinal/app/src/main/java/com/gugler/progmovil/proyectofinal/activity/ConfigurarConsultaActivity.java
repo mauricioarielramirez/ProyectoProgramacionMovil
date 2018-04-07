@@ -37,7 +37,6 @@ public class ConfigurarConsultaActivity extends BaseActivity {
         Button btnOpciones = (Button) findViewById(R.id.btnOpcionesConsulta);
         Button btnConfirmarConsulta = (Button) findViewById(R.id.btnConfirmarConsulta);
 
-
         //denominacionCuenta = bundle.getString("denominacionCuenta");
 
         btnOpciones.setOnClickListener(new View.OnClickListener() {
