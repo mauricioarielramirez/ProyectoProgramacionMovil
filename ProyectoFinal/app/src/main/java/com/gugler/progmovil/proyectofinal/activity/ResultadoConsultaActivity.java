@@ -5,9 +5,11 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.adaptador.CabeceraConsultaAdapter;
 import com.gugler.progmovil.proyectofinal.adaptador.CabeceraResumenComparativoAdapter;
+import com.gugler.progmovil.proyectofinal.adaptador.MovimientoPorPeriodoAdapter;
 import com.gugler.progmovil.proyectofinal.modelo.dto.CabeceraConsultaDTO;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioMovimientos;
 
@@ -75,7 +77,7 @@ public class ResultadoConsultaActivity extends BaseActivity {
                 actionBar.setSubtitle("Comparación de periodos");
                 llenarCabeceraComparativo();
                 llenarResumenComparativo();
-                //llenarMovimientosComparativo();
+                llenarMovimientosComparativo();
                 break;
             default:
                 //ActionBar actionBar = getSupportActionBar();
@@ -129,7 +131,33 @@ public class ResultadoConsultaActivity extends BaseActivity {
     }
 
     private void llenarMovimientosComparativo() {
+        ServicioMovimientos servicioMovimientos = new ServicioMovimientos();
+        servicioMovimientos.crearBase(this,CADENA_SQL);
+        ArrayList<Object> movimientoPorPeriodoDTO = new ArrayList<Object>();
 
+        ListView lstMovimientoPeriodo = (ListView) findViewById(R.id.lstConsultaMovimientosDetalles);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date periodo1Desde = null, periodo1Hasta = null, periodo2Desde = null, periodo2Hasta = null;
+        try {
+            periodo1Desde = dateFormat.parse(this.fechaInicialPeriodo1);
+            periodo1Hasta = dateFormat.parse(this.fechaFinalPeriodo1);
+            periodo2Desde = dateFormat.parse(this.fechaInicialPeriodo2);
+            periodo2Hasta = dateFormat.parse(this.fechaFinalPeriodo2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        MovimientoPorPeriodoAdapter adapter = null;
+        try {
+            movimientoPorPeriodoDTO.addAll(servicioMovimientos.devolverMovimientosPorPeriodos(periodo1Desde,periodo1Hasta,periodo2Desde,periodo2Hasta,this.denominacionCuenta));
+            adapter = new MovimientoPorPeriodoAdapter(this,movimientoPorPeriodoDTO);
+            lstMovimientoPeriodo.setAdapter(adapter);
+        } catch (Exception ex) {
+            Toast toast = Toast.makeText(getApplicationContext(),"PUM",Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        adapter.notifyDataSetChanged();
     }
 
 

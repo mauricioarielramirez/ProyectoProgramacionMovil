@@ -237,17 +237,7 @@ public class MovimientoDAO {
         ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
         Date fechaDesdeLocal;
         Date fechaHastaLocal;
-        //setear formatter y parser
-        /*
-        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
-        parser.setTimeZone(TimeZone.getTimeZone("EST"));
-        try{
-            fechaDesdeLocal = parser.parse(fechaDesde.toString());
-            fechaHastaLocal = parser.parse(fechaHasta.toString());;
-        }catch(ParseException e){
-            fechaDesdeLocal = Calendar.getInstance().getTime();
-            fechaHastaLocal  = Calendar.getInstance().getTime();
-        }*/
+
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         fechaDesdeLocal = fechaDesde;
         fechaHastaLocal = fechaHasta;
@@ -257,7 +247,11 @@ public class MovimientoDAO {
         if (cursor.moveToFirst()) {
             do {
                 try {
-                    fecha = new SimpleDateFormat("dd/MM/yyyy").parse(cursor.getString(4));
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                    fecha = dateFormat.parse(cursor.getString(4));
+
+                    //fecha = new SimpleDateFormat("dd/MM/yyyy").parse(cursor.getString(4));
                 } catch (ParseException e) {
                     fecha = Calendar.getInstance().getTime(); // O lanzar hacia arriba
                 }
