@@ -52,17 +52,17 @@ public class MovimientoPorPeriodoAdapter extends BaseAdapter{
         if (convertView == null){
             convertView = mInflater.inflate(R.layout.consulta_movimiento_periodo_item,parent,false);
         }
-        TextView txvColumnaNroPeriodoRango = (TextView) convertView.findViewById(R.id.txvColumnaNroPeriodoRango);
+        //TextView txvColumnaNroPeriodoRango = (TextView) convertView.findViewById(R.id.txvColumnaNroPeriodoRango);
         TextView txvColumnaFechaRango = (TextView) convertView.findViewById(R.id.txvColumnaFechaRango);
-        TextView txvColumnaTransaccionRango = (TextView) convertView.findViewById(R.id.txvColumnaTransaccionRango);
+        //TextView txvColumnaTransaccionRango = (TextView) convertView.findViewById(R.id.txvColumnaTransaccionRango);
         TextView txvColumnaMontoRango = (TextView) convertView.findViewById(R.id.txvColumnaMontoRango);
-        TextView txvColumnaSaldoRango = (TextView) convertView.findViewById(R.id.txvColumnaSaldoRango);
+        //TextView txvColumnaSaldoRango = (TextView) convertView.findViewById(R.id.txvColumnaSaldoRango);
 
-        txvColumnaNroPeriodoRango.setText((item.getPeriodo()).toString());
+        //txvColumnaNroPeriodoRango.setText((item.getPeriodo()).toString());
         txvColumnaFechaRango.setText(item.getFecha());
-        txvColumnaTransaccionRango.setText(item.getTransaccion());
+        //txvColumnaTransaccionRango.setText(item.getTransaccion());
         txvColumnaMontoRango.setText(item.getMonto());
-        txvColumnaSaldoRango.setText(item.getSaldo());
+        //txvColumnaSaldoRango.setText(item.getSaldo());
 
         ImageView imgArrow = (ImageView) convertView.findViewById(R.id.imgTipoMovimiento);
         Resources resource = convertView.getResources();

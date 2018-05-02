@@ -124,7 +124,7 @@ public class ResultadoConsultaActivity extends BaseActivity {
         try{
             adapter = new CabeceraResumenComparativoAdapter(this,listaResumenComparativoDTO);
             lstConsultaPeriodoComparador.setAdapter(adapter);
-        }catch(Exception ex){
+        }catch(Exception ex) {
             throw  ex;
         }
         adapter.notifyDataSetChanged();

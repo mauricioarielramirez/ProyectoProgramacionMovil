@@ -18,9 +18,9 @@
         <ListView
             android:id="@+id/lstConsultaResumen"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contextClickable="false"
-            android:clickable="false"/>
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:contextClickable="false" />
 
         <Space
             android:layout_width="match_parent"
@@ -28,8 +28,8 @@
 
         <ListView
             android:id="@+id/lstConsultaPeriodoComparador"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <Space
             android:layout_width="match_parent"
@@ -42,12 +42,12 @@
         <ListView
             android:id="@+id/lstConsultaMovimientos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
         <ListView
             android:id="@+id/lstConsultaMovimientosDetalles"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
