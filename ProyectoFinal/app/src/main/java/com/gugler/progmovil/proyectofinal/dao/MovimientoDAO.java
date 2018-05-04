@@ -60,7 +60,8 @@ public class MovimientoDAO {
             registro.put(MV_TIPO,movimiento.getTipo().trim());
             registro.put(MV_MONTO,movimiento.getMonto());
             registro.put(MV_SALDO_ACTUAL,movimiento.getSaldoActual());
-            registro.put(MV_FECHA_HORA,movimiento.getFechaHora().toString());
+            String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(movimiento.getFechaHora());
+            registro.put(MV_FECHA_HORA,fecha);
 
             long res = db.insert("db_movimiento",null,registro);
 
@@ -238,7 +239,7 @@ public class MovimientoDAO {
         Date fechaDesdeLocal;
         Date fechaHastaLocal;
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         fechaDesdeLocal = fechaDesde;
         fechaHastaLocal = fechaHasta;
 
@@ -248,7 +249,7 @@ public class MovimientoDAO {
             do {
                 try {
 
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     fecha = dateFormat.parse(cursor.getString(4));
 
                     //fecha = new SimpleDateFormat("dd/MM/yyyy").parse(cursor.getString(4));

@@ -12,13 +12,13 @@
 
 
         <Space
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/txvColumnaConcepto"
-            android:layout_width="160dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/fondo_textview_tabla"
@@ -57,7 +57,7 @@
             android:textSize="10sp" />
 
         <Space
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 

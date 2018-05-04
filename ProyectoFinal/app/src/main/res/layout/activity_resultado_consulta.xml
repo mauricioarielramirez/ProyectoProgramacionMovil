@@ -1,54 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.gugler.progmovil.proyectofinal.activity.ResultadoConsultaActivity">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
-    <LinearLayout
+    <TabHost
+        android:id="@+id/tabHostPestañas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-        <include
-            android:id="@+id/includeCabeceraSuperior"
-            layout="@layout/consulta_movimiento_header" />
-
-        <ListView
-            android:id="@+id/lstConsultaResumen"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="false"
-            android:contextClickable="false" />
+            android:orientation="vertical">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <ListView
-            android:id="@+id/lstConsultaPeriodoComparador"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+                <LinearLayout
+                    android:id="@+id/tab1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <include
-            android:id="@+id/includeCabeceraInferior"
-            layout="@layout/consulta_movimiento_header" />
+                    <ListView
+                        android:id="@+id/lstConsultaResumen"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:contextClickable="false" />
+                </LinearLayout>
 
-        <ListView
-            android:id="@+id/lstConsultaMovimientos"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                <LinearLayout
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/lstConsultaMovimientosDetalles"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                    <ListView
+                        android:id="@+id/lstConsultaPeriodoComparador"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:contextClickable="false" />
+                </LinearLayout>
 
-    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/tab3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-</RelativeLayout>
+                    <include
+                        android:id="@+id/includeCabeceraInferior"
+                        layout="@layout/consulta_movimiento_header"
+                        android:clickable="false"
+                        android:contextClickable="false" />
+
+                    <ListView
+                        android:id="@+id/lstConsultaMovimientosDetalles"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:isScrollContainer="false" />
+
+                    <ListView
+                        android:id="@+id/lstConsultaMovimientos"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:isScrollContainer="false" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+</LinearLayout>
+<!--</RelativeLayout>-->

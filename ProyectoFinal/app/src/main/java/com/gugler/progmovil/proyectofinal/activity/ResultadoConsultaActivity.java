@@ -1,9 +1,11 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,31 @@ public class ResultadoConsultaActivity extends BaseActivity {
         Deberia recibir un buncle con el tipo de consulta, fecha y cuenta
         Llenar los listview correspondientes
         */
+        Resources res = getResources();
+
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHostPestañas);
+        tabHost.setup();
+        TabHost.TabSpec spec=tabHost.newTabSpec("mitab1");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("RESUMEN",
+                res.getDrawable(android.R.drawable.ic_dialog_map));
+        tabHost.addTab(spec);
+
+        spec=tabHost.newTabSpec("mitab2");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("TAB2",
+                res.getDrawable(android.R.drawable.ic_dialog_map));
+        tabHost.addTab(spec);
+
+        spec=tabHost.newTabSpec("mitab3");
+        spec.setContent(R.id.tab3);
+        spec.setIndicator("TAB3",
+                res.getDrawable(android.R.drawable.ic_dialog_map));
+        tabHost.addTab(spec);
+
+        tabHost.setCurrentTab(0);
+
+
         prepararStringSql();
         leerBundle();
         configurarInterface(this.tipoConsulta);

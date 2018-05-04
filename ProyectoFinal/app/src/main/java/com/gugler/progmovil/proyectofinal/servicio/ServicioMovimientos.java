@@ -160,12 +160,12 @@ public class ServicioMovimientos extends Servicio{
 
         for (Movimiento m:movimientosPeriodo1) {
 
-            String fechaString = new SimpleDateFormat("dd-MM-yyyy hh:mm").format(m.getFechaHora());
+            String fechaString = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(m.getFechaHora());
             movimientos.add(new MovimientosPorPeriodoDTO(1,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
         }
 
         for (Movimiento m:movimientosPeriodo2) {
-            String fechaString = new SimpleDateFormat("dd-MM-yyyy hh:mm").format(m.getFechaHora());
+            String fechaString = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(m.getFechaHora());
             movimientos.add(new MovimientosPorPeriodoDTO(2,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
         }
 
