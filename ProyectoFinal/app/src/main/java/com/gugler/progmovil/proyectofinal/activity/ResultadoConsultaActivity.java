@@ -3,10 +3,8 @@ package com.gugler.progmovil.proyectofinal.activity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.adaptador.CabeceraConsultaAdapter;
@@ -87,12 +85,12 @@ public class ResultadoConsultaActivity extends BaseActivity {
     private void configurarInterface(Character modo) {
         ActionBar actionBar = getSupportActionBar();
         // Seteo de headers
-        View vIncludeSuperior = findViewById(R.id.includeCabeceraSuperior);
+       /* View vIncludeSuperior = findViewById(R.id.includeCabeceraSuperior);
         TextView txvTituloHeaderSuperior = (TextView) vIncludeSuperior.findViewById(R.id.txvTituloHeader);
         txvTituloHeaderSuperior.setText("Resumen");
         View vIncludeInferior = findViewById(R.id.includeCabeceraInferior);
         TextView txvTituloHeaderInferior = (TextView) vIncludeInferior.findViewById(R.id.txvTituloHeader);
-        txvTituloHeaderInferior.setText("Movimientos");
+        txvTituloHeaderInferior.setText("Movimientos");*/
 
         switch (modo) {
             case 'N': //Normal
