@@ -1,16 +1,18 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gugler.progmovil.proyectofinal.adaptador.CabeceraConsultaAdapter;
 import com.gugler.progmovil.proyectofinal.adaptador.CabeceraResumenComparativoAdapter;
 import com.gugler.progmovil.proyectofinal.adaptador.MovimientoPorPeriodoAdapter;
-import com.gugler.progmovil.proyectofinal.modelo.dto.CabeceraConsultaDTO;
+import com.gugler.progmovil.proyectofinal.modelo.dto.MovimientosPorPeriodoDTO;
 import com.gugler.progmovil.proyectofinal.servicio.ServicioMovimientos;
 
 import java.text.ParseException;
@@ -42,28 +44,25 @@ public class ResultadoConsultaActivity extends BaseActivity {
         */
         Resources res = getResources();
 
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHostPestañas);
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHostPestanias);
         tabHost.setup();
+
         TabHost.TabSpec spec=tabHost.newTabSpec("mitab1");
         spec.setContent(R.id.tab1);
-        spec.setIndicator("RESUMEN",
-                res.getDrawable(android.R.drawable.ic_dialog_map));
+        spec.setIndicator("RESUMEN", null);
         tabHost.addTab(spec);
 
         spec=tabHost.newTabSpec("mitab2");
         spec.setContent(R.id.tab2);
-        spec.setIndicator("TAB2",
-                res.getDrawable(android.R.drawable.ic_dialog_map));
+        spec.setIndicator("Períodos", null);
         tabHost.addTab(spec);
 
         spec=tabHost.newTabSpec("mitab3");
         spec.setContent(R.id.tab3);
-        spec.setIndicator("TAB3",
-                res.getDrawable(android.R.drawable.ic_dialog_map));
+        spec.setIndicator("Movimientos", null);
         tabHost.addTab(spec);
 
         tabHost.setCurrentTab(0);
-
 
         prepararStringSql();
         leerBundle();
@@ -96,6 +95,10 @@ public class ResultadoConsultaActivity extends BaseActivity {
             case 'N': //Normal
                 actionBar.setTitle("Consulta");
                 actionBar.setSubtitle("Movimientos por periodo");
+                TabHost tabHost = (TabHost) findViewById(R.id.tabHostPestanias);
+                tabHost.getTabWidget().getChildAt(1).setVisibility(View.GONE);
+                llenarCabeceraNormal();
+                llenarMovimientosNormal();
                 break;
             case 'C': //Comparativo
                 actionBar.setTitle("Consulta");
@@ -111,20 +114,119 @@ public class ResultadoConsultaActivity extends BaseActivity {
         }
     }
 
-    private void llenarCabeceraComparativo() {
-        ArrayList<Object> listaCabeceraConsultaDTO = new ArrayList<Object>();
-        listaCabeceraConsultaDTO.add(new CabeceraConsultaDTO(" Periodo 1", " Del " +fechaInicialPeriodo1 +" al "+fechaFinalPeriodo1));
-        listaCabeceraConsultaDTO.add(new CabeceraConsultaDTO(" Periodo 2", " Del " +fechaInicialPeriodo2 +" al "+fechaFinalPeriodo2));
-        //capturar el listview
-        ListView lstCabecera = (ListView) findViewById(R.id.lstConsultaResumen);
-        CabeceraConsultaAdapter adapter;
-        try{
-            adapter = new CabeceraConsultaAdapter(getApplicationContext(),listaCabeceraConsultaDTO);
-            lstCabecera.setAdapter(adapter);
-        }catch(Exception ex){
-            throw  ex;
+    private void llenarCabeceraNormal() {
+        ServicioMovimientos sMovimientos = new ServicioMovimientos();
+        sMovimientos.crearBase(this, CADENA_SQL);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaDesde = null, fechaHasta = null;
+        try {
+            fechaDesde = dateFormat.parse(this.fechaInicialPeriodo1);
+            fechaHasta = dateFormat.parse(this.fechaFinalPeriodo1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<MovimientosPorPeriodoDTO> listaMovimientosDTO = sMovimientos.devolverPeriodoMovimientos(this.denominacionCuenta, fechaDesde, fechaHasta);
+
+        TextView txvElemento1I = (TextView) findViewById(R.id.txvElemento1I);
+        txvElemento1I.setText("Periodo");
+        TextView txvElemento1D = (TextView) findViewById(R.id.txvElemento1D);
+        txvElemento1D.setText("Del " + this.fechaInicialPeriodo1 + " al " + this.fechaFinalPeriodo1);
+
+        Integer cantidadCreditos = 0, cantidadDebitos = 0;
+        for (MovimientosPorPeriodoDTO mov: listaMovimientosDTO) {
+            if (mov.getTipo().equals("C")) {
+                cantidadCreditos++;
+            } else {
+                cantidadDebitos++;
+            }
+        }
+        TextView txvElemento2I = (TextView) findViewById(R.id.txvElemento2I);
+        txvElemento2I.setText("Total de créditos");
+        TextView txvElemento2D = (TextView) findViewById(R.id.txvElemento2D);
+        txvElemento2D.setText(cantidadCreditos.toString());
+        TextView txvElemento3I = (TextView) findViewById(R.id.txvElemento3I);
+        txvElemento3I.setText("Total de débitos");
+        TextView txvElemento3D = (TextView) findViewById(R.id.txvElemento3D);
+        txvElemento3D.setText(cantidadDebitos.toString());
+        TextView txvElemento4I = (TextView) findViewById(R.id.txvElemento4I);
+        txvElemento4I.setText("Total");
+        TextView txvElemento4D = (TextView) findViewById(R.id.txvElemento4D);
+        txvElemento4D.setText(String.valueOf(listaMovimientosDTO.size()));
+        TextView txvElemento5I = (TextView) findViewById(R.id.txvElemento5I);
+        txvElemento5I.setText("Saldo actual");
+        TextView txvElemento5D = (TextView) findViewById(R.id.txvElemento5D);
+        int cantidadMovimientos = listaMovimientosDTO.size();
+        if (cantidadMovimientos == 0) {
+            txvElemento5D.setText(" - ");
+        } else {
+            txvElemento5D.setText(String.valueOf( (listaMovimientosDTO.get(listaMovimientosDTO.size() - 1)).getSaldo() ));
+        }
+
+    }
+
+    private void llenarMovimientosNormal() {
+        ServicioMovimientos servicioMovimientos = new ServicioMovimientos();
+        servicioMovimientos.crearBase(this,CADENA_SQL);
+        ArrayList<Object> movimientoPorPeriodoDTO = new ArrayList<Object>();
+
+        ListView lstMovimientoPeriodo = (ListView) findViewById(R.id.lstConsultaMovimientosDetalles);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date periodo1Desde = null, periodo1Hasta = null;
+        try {
+            periodo1Desde = dateFormat.parse(this.fechaInicialPeriodo1);
+            periodo1Hasta = dateFormat.parse(this.fechaFinalPeriodo1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        MovimientoPorPeriodoAdapter adapter = null;
+        try {
+            movimientoPorPeriodoDTO.addAll(servicioMovimientos.devolverPeriodoMovimientos(this.denominacionCuenta,periodo1Desde,periodo1Hasta));
+            adapter = new MovimientoPorPeriodoAdapter(this,movimientoPorPeriodoDTO);
+            lstMovimientoPeriodo.setAdapter(adapter);
+        } catch (Exception ex) {
+            Toast toast = Toast.makeText(getApplicationContext(),"PUM",Toast.LENGTH_SHORT);
+            toast.show();
         }
         adapter.notifyDataSetChanged();
+
+        // Bloquea la pestaña de movimientos
+        if (movimientoPorPeriodoDTO.size() == 0) {
+            TabHost tabHost = (TabHost) findViewById(R.id.tabHostPestanias);
+            tabHost.getTabWidget().getChildAt(2).setEnabled(false);
+            tabHost.getTabWidget().getChildAt(2).setBackgroundColor(getResources().getColor(R.color.disabledTab));
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title); // Titulo de la pestaña
+            tv.setTextColor(Color.parseColor("#737373"));
+        }
+
+    }
+
+
+    private void llenarCabeceraComparativo() {
+        TextView txvElemento3I = (TextView) findViewById(R.id.txvElemento3I);
+        txvElemento3I.setVisibility(View.GONE);
+        TextView txvElemento3D = (TextView) findViewById(R.id.txvElemento3D);
+        txvElemento3D.setVisibility(View.GONE);
+        TextView txvElemento4I = (TextView) findViewById(R.id.txvElemento4I);
+        txvElemento4I.setVisibility(View.GONE);
+        TextView txvElemento4D = (TextView) findViewById(R.id.txvElemento4D);
+        txvElemento4D.setVisibility(View.GONE);
+        TextView txvElemento5I = (TextView) findViewById(R.id.txvElemento5I);
+        txvElemento5I.setVisibility(View.GONE);
+        TextView txvElemento5D = (TextView) findViewById(R.id.txvElemento5D);
+        txvElemento5D.setVisibility(View.GONE);
+
+        TextView txvElemento1I = (TextView) findViewById(R.id.txvElemento1I);
+        txvElemento1I.setText("Periodo 1");
+        TextView txvElemento1D = (TextView) findViewById(R.id.txvElemento1D);
+        txvElemento1D.setText("Del " + fechaInicialPeriodo1 + " al " + fechaFinalPeriodo1);
+        TextView txvElemento2I = (TextView) findViewById(R.id.txvElemento2I);
+        txvElemento2I.setText("Periodo 2");
+        TextView txvElemento2D = (TextView) findViewById(R.id.txvElemento2D);
+        txvElemento2D.setText("Del " + fechaInicialPeriodo2 + " al " + fechaFinalPeriodo2);
     }
 
     private void llenarResumenComparativo() {
@@ -183,6 +285,15 @@ public class ResultadoConsultaActivity extends BaseActivity {
             toast.show();
         }
         adapter.notifyDataSetChanged();
+
+        // Bloquea la pestaña de movimientos
+        if (movimientoPorPeriodoDTO.size() == 0) {
+            TabHost tabHost = (TabHost) findViewById(R.id.tabHostPestanias);
+            tabHost.getTabWidget().getChildAt(2).setEnabled(false);
+            tabHost.getTabWidget().getChildAt(2).setBackgroundColor(getResources().getColor(R.color.disabledTab));
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title); // Titulo de la pestaña
+            tv.setTextColor(Color.parseColor("#737373"));
+        }
     }
 
 

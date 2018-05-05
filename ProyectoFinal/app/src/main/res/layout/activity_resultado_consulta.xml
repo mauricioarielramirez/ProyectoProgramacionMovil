@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TabHost
-        android:id="@+id/tabHostPestañas"
+        android:id="@+id/tabHostPestanias"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
@@ -35,12 +35,125 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <ListView
-                        android:id="@+id/lstConsultaResumen"
+                    <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:clickable="false"
-                        android:contextClickable="false" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txvElemento1I"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Periodo"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txvElemento1D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="120dp"
+                            android:layout_marginStart="120dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Del 01/01/2018 al 21/12/2018"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txvElemento2I"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Total de créditos"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txvElemento1I" />
+
+                        <TextView
+                            android:id="@+id/txvElemento2D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="120dp"
+                            android:layout_marginStart="120dp"
+                            android:layout_marginTop="8dp"
+                            android:text="$ 1800"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txvElemento1D" />
+
+                        <TextView
+                            android:id="@+id/txvElemento3I"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Elemento"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txvElemento2I" />
+
+                        <TextView
+                            android:id="@+id/txvElemento3D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="120dp"
+                            android:layout_marginStart="120dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Elemento"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txvElemento2D" />
+
+                        <TextView
+                            android:id="@+id/txvElemento4I"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Elemento"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txvElemento3I" />
+
+                        <TextView
+                            android:id="@+id/txvElemento4D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="120dp"
+                            android:layout_marginStart="120dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Elemento"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txvElemento3D" />
+
+                        <TextView
+                            android:id="@+id/txvElemento5I"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="TextView"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txvElemento4I" />
+
+                        <TextView
+                            android:id="@+id/txvElemento5D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="120dp"
+                            android:layout_marginTop="7dp"
+                            android:text="TextView"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txvElemento4D" />
+
+                    </android.support.constraint.ConstraintLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -53,8 +166,12 @@
                         android:id="@+id/lstConsultaPeriodoComparador"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
                         android:clickable="false"
-                        android:contextClickable="false" />
+                        android:contextClickable="false"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteX="8dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -62,12 +179,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
-                    <include
-                        android:id="@+id/includeCabeceraInferior"
-                        layout="@layout/consulta_movimiento_header"
-                        android:clickable="false"
-                        android:contextClickable="false" />
 
                     <ListView
                         android:id="@+id/lstConsultaMovimientosDetalles"
@@ -86,4 +197,3 @@
     </TabHost>
 
 </LinearLayout>
-<!--</RelativeLayout>-->

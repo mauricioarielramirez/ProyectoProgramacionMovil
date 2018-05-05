@@ -8,15 +8,11 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.gugler.progmovil.proyectofinal.fragment.DatePickerFragment;
 import com.gugler.progmovil.proyectofinal.fragment.OpcionesConsultaDialog;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import progmovil.gugler.com.pf.R;
 
@@ -73,29 +69,33 @@ public class ConfigurarConsultaActivity extends BaseActivity {
                 //Capturar los datos de los campos
                 RadioButton rdbRangoDeFechas = (RadioButton) findViewById(R.id.rdbRangoDeFechas);
                 RadioButton rdbCompararPeriodos = (RadioButton) findViewById(R.id.rdbCompararPeriodos);
-                TextView btnPeriodo1Desde = (TextView) findViewById(R.id.btnPeriodo1Desde);
-                TextView btnPeriodo1Hasta = (TextView) findViewById(R.id.btnPeriodo1Hasta);
-                TextView btnPeriodo2Desde = (TextView) findViewById(R.id.btnPeriodo2Desde);
-                TextView btnPeriodo2Hasta = (TextView) findViewById(R.id.btnPeriodo2Hasta);
+
+                Button btnFechaDesde = (Button) findViewById(R.id.btnFechaDesde);
+                Button btnFechaHasta = (Button) findViewById(R.id.btnFechaHasta);
+                Button btnPeriodo1Desde = (Button) findViewById(R.id.btnPeriodo1Desde);
+                Button btnPeriodo1Hasta = (Button) findViewById(R.id.btnPeriodo1Hasta);
+                Button btnPeriodo2Desde = (Button) findViewById(R.id.btnPeriodo2Desde);
+                Button btnPeriodo2Hasta = (Button) findViewById(R.id.btnPeriodo2Hasta);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("denominacionCuenta",denominacionCuenta);
 
                 if (rdbRangoDeFechas.isChecked()) { //Consulta normal
+                    bundle.putChar("tipoConsulta",'N');
+                    bundle.putString("fechaInicialPeriodo1",btnFechaDesde.getText().toString());
+                    bundle.putString("fechaFinalPeriodo1",btnFechaHasta.getText().toString());
+                    bundle.putString("fechaInicialPeriodo2", "");
+                    bundle.putString("fechaFinalPeriodo2", "");
+                    bundle.putString("mostrarDebito","S");
+                    bundle.putString("mostrarCredito","S");
 
+                    Intent intent = new Intent(getApplicationContext(),ResultadoConsultaActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
 
                 if (rdbCompararPeriodos.isChecked()) { //Consulta comparativa
-                    Bundle bundle = new Bundle();
                     bundle.putChar("tipoConsulta",'C');
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    try {
-                        Date periodo1Desde = dateFormat.parse(btnPeriodo1Desde.getText().toString());
-                        Date periodo1Hasta = dateFormat.parse(btnPeriodo1Hasta.getText().toString());
-                        Date periodo2Desde = dateFormat.parse(btnPeriodo2Desde.getText().toString());
-                        Date periodo2Hasta = dateFormat.parse(btnPeriodo2Hasta.getText().toString());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                        //Toast
-                    }
-                    bundle.putString("denominacionCuenta",denominacionCuenta);
                     bundle.putString("fechaInicialPeriodo1",btnPeriodo1Desde.getText().toString());
                     bundle.putString("fechaFinalPeriodo1",btnPeriodo1Hasta.getText().toString());
                     bundle.putString("fechaInicialPeriodo2",btnPeriodo2Desde.getText().toString());
