@@ -151,14 +151,15 @@ public class NormalActivity extends BaseActivity {
              * Modifica el alto del listview de favoritos, teniendo como máximo tres elementos para mostrar (permite scroll)
              */
             public void modificarAlto() {
-                try{
+                try {
                     lstFavoritos = (ListView)findViewById(R.id.lstFavoritos);
                     ViewGroup.LayoutParams lstParams = lstFavoritos.getLayoutParams();
                     items = lstFavoritos.getCount();
                     if (items > 3) {
                         lstParams.height = (alto / items)*3;
                     }
-                }catch (Exception ex){
+                } catch (Exception ex) {
+                    System.out.println("Error modificarAlto(): " + ex.getMessage());
                     return;
                 }
 
@@ -259,5 +260,6 @@ public class NormalActivity extends BaseActivity {
             startActivity(intento);
         }
         inicializarListViewFavoritos();
+        // llenarFavoritos();
     }
 }

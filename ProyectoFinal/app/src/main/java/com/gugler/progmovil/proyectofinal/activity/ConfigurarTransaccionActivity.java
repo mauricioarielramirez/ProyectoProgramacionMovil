@@ -1,5 +1,6 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -108,7 +109,9 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
                     sTransacciones.agregarTransaccion(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL,transaccion, denominacionCuenta);
                     Toast toastEx = Toast.makeText(getApplicationContext(), "Transacción agregada exitosamente", Toast.LENGTH_SHORT);
                     toastEx.show();
-                    onBackPressed();
+                    // onBackPressed();
+                    Intent intento = new Intent(getApplicationContext(), NormalActivity.class);
+                    startActivity(intento);
                 } catch (Exception e) {
                     Toast toastEx = Toast.makeText(getApplicationContext(), ValidacionException.PROBLEMAS_ALTA_TRANSACCION, Toast.LENGTH_SHORT);
                     toastEx.show();

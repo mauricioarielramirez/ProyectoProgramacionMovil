@@ -70,9 +70,14 @@ public class TransaccionActivity extends BaseActivity {
                 movimiento.setTransaccion(nombreTransaccion);
 
                 try {
-                    servicioMovimientos.agregarMovimiento(movimiento,getApplicationContext(),CADENA_SQL);
-                    Toast tExito = Toast.makeText(getApplicationContext(), "Movimiento realizado exitosamente", Toast.LENGTH_SHORT);
-                    tExito.show();
+                    if (movimiento.getMonto() > 0) {
+                        servicioMovimientos.agregarMovimiento(movimiento,getApplicationContext(),CADENA_SQL);
+                        Toast tExito = Toast.makeText(getApplicationContext(), "Movimiento realizado exitosamente", Toast.LENGTH_SHORT);
+                        tExito.show();
+                    } else {
+                        Toast tMensaje = Toast.makeText(getApplicationContext(), "No se guardará una transacción de $0", Toast.LENGTH_SHORT);
+                        tMensaje.show();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast tError = Toast.makeText(getApplicationContext(), "Error al realizar movimiento: " + e.getMessage(), Toast.LENGTH_LONG);
@@ -152,6 +157,7 @@ public class TransaccionActivity extends BaseActivity {
                 txtTipoTransaccion.setEnabled(false);
 
                 txtImporte.setEnabled(true);
+                txtImporte.setText("0");
                 txtImporte.setFocusable(true);
 
                 actionBar.setTitle("Transacción");
