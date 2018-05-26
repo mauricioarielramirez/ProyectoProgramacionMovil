@@ -243,7 +243,7 @@ public class MovimientoDAO {
         fechaDesdeLocal = fechaDesde;
         fechaHastaLocal = fechaHasta;
 
-        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion from db_movimiento where mv_fecha_hora between '" + formatter.format(fechaDesdeLocal) +"' and '"+ formatter.format(fechaHastaLocal)+"' "+"and mv_denominacion_cuenta = '"+denominacionCuenta.toString()+"' order by mv_fecha_hora asc" ,null);
+        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion from db_movimiento where substr(mv_fecha_hora,1,10) between substr('" + formatter.format(fechaDesdeLocal) +"',1,10) and substr('"+ formatter.format(fechaHastaLocal)+"',1,10) and mv_denominacion_cuenta = '"+denominacionCuenta.toString()+"' order by mv_fecha_hora asc" ,null);
         Date fecha = new Date();
         if (cursor.moveToFirst()) {
             do {
