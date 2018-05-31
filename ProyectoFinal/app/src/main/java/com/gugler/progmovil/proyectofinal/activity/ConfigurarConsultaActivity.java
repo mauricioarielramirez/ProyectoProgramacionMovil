@@ -12,7 +12,10 @@ import android.widget.RadioButton;
 import com.gugler.progmovil.proyectofinal.fragment.DatePickerFragment;
 import com.gugler.progmovil.proyectofinal.fragment.OpcionesConsultaDialog;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import progmovil.gugler.com.pf.R;
 
@@ -29,6 +32,30 @@ public class ConfigurarConsultaActivity extends BaseActivity {
         mSelectedItems.add(0);
         mSelectedItems.add(1);
         leerBundle();
+
+        // Configurar fechas
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+//        Calendar c1 = Calendar.getInstance();
+//        String fechaDesdeInicial = sdf.format(Calendar.getInstance().getTime());
+//        Calendar c2 = Calendar.getInstance();
+//        c2.add(Calendar.DATE, 1);
+//        String fechaHastaInicial = sdf.format(c2.getTime());
+        String fechaActual = sdf.format(Calendar.getInstance().getTime());
+
+        Button btnFechaDesde = (Button) findViewById(R.id.btnFechaDesde);
+        btnFechaDesde.setText(fechaActual);
+        Button btnFechaHasta = (Button) findViewById(R.id.btnFechaHasta);
+        btnFechaHasta.setText(fechaActual);
+
+        Button btnFechaDesde1 = (Button) findViewById(R.id.btnPeriodo1Desde);
+        btnFechaDesde1.setText(fechaActual);
+        Button btnFechaHasta1 = (Button) findViewById(R.id.btnPeriodo1Hasta);
+        btnFechaHasta1.setText(fechaActual);
+        Button btnFechaDesde2 = (Button) findViewById(R.id.btnPeriodo2Desde);
+        btnFechaDesde2.setText(fechaActual);
+        Button btnFechaHasta2 = (Button) findViewById(R.id.btnPeriodo2Hasta);
+        btnFechaHasta2.setText(fechaActual);
 
         Button btnOpciones = (Button) findViewById(R.id.btnOpcionesConsulta);
         Button btnConfirmarConsulta = (Button) findViewById(R.id.btnConfirmarConsulta);
@@ -130,11 +157,11 @@ public class ConfigurarConsultaActivity extends BaseActivity {
                     Button btn1 = (Button) findViewById(R.id.btnPeriodo1Desde);
                     btn1.setEnabled(true);
                     Button btn2 = (Button) findViewById(R.id.btnPeriodo1Hasta);
-                    btn2.setEnabled(true);
+                    btn2.setEnabled(false);
                     Button btn3 = (Button) findViewById(R.id.btnPeriodo2Desde);
-                    btn3.setEnabled(true);
+                    btn3.setEnabled(false);
                     Button btn4 = (Button) findViewById(R.id.btnPeriodo2Hasta);
-                    btn4.setEnabled(true);
+                    btn4.setEnabled(false);
 
                     Button btnDesde = (Button) findViewById(R.id.btnFechaDesde);
                     btnDesde.setEnabled(false);

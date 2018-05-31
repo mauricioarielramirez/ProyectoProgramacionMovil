@@ -98,6 +98,18 @@ public class ConfigurarCuentaActivity extends BaseActivity{
 
             }
         });
+
+        Button btnToolbarCancelar = (Button) findViewById(R.id.btnToolbarCancelar);
+        btnToolbarCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    onBackPressed();
+                } catch (Exception ex) {
+
+                }
+            }
+        });
     }
 
     private void configurarInterface(String modo) {

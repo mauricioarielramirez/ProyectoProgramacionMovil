@@ -119,6 +119,18 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
             }
         });
 
+        Button btnToolbarCancelar = (Button) findViewById(R.id.btnToolbarCancelar);
+        btnToolbarCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    onBackPressed();
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+
 //        Spinner spn = (Spinner) findViewById(R.id.spnCtasAsociadas);
         //CuentaAdapter adapter = new CuentaAdapter
         inicializarSpinner();
