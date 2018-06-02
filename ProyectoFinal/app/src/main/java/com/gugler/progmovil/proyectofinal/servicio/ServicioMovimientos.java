@@ -13,6 +13,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Ariel on 13/1/2018.
@@ -170,7 +172,7 @@ public class ServicioMovimientos extends Servicio{
     public ArrayList<MovimientosPorPeriodoDTO> devolverMovimientosPorPeriodos(Date fechaDesdePeriodo1, Date fechaHastaPeriodo1, Date fechaDesdePeriodo2, Date fechaHastaPeriodo2, String denominacionCuenta) throws Exception{
         ArrayList<Movimiento> movimientosPeriodo1 = movimientoDao.listarTodoConFecha(denominacionCuenta, fechaDesdePeriodo1, fechaHastaPeriodo1);
         ArrayList<Movimiento> movimientosPeriodo2 = movimientoDao.listarTodoConFecha(denominacionCuenta, fechaDesdePeriodo2, fechaHastaPeriodo2);
-        ArrayList<MovimientosPorPeriodoDTO> movimientos = new ArrayList<MovimientosPorPeriodoDTO>();
+        Set<MovimientosPorPeriodoDTO> movimientos = new HashSet<MovimientosPorPeriodoDTO>();
 
         String test = "";
 
@@ -185,6 +187,6 @@ public class ServicioMovimientos extends Servicio{
             movimientos.add(new MovimientosPorPeriodoDTO(2,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
         }
 
-        return movimientos;
+        return new ArrayList<MovimientosPorPeriodoDTO>(movimientos);
     }
 }

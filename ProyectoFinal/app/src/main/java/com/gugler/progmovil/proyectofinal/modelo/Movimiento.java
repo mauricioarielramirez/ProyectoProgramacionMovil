@@ -83,4 +83,33 @@ public class Movimiento {
     public void setFechaHora(Date fechaHora) {
         this.fechaHora = fechaHora;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Movimiento that = (Movimiento) o;
+
+        if (!id.equals(that.id)) return false;
+        if (!cuentaAsociada.equals(that.cuentaAsociada)) return false;
+        if (!transaccion.equals(that.transaccion)) return false;
+        if (!monto.equals(that.monto)) return false;
+        if (!tipo.equals(that.tipo)) return false;
+        if (!saldoActual.equals(that.saldoActual)) return false;
+        return fechaHora.equals(that.fechaHora);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + cuentaAsociada.hashCode();
+        result = 31 * result + transaccion.hashCode();
+        result = 31 * result + monto.hashCode();
+        result = 31 * result + tipo.hashCode();
+        result = 31 * result + saldoActual.hashCode();
+        result = 31 * result + fechaHora.hashCode();
+        return result;
+    }
 }

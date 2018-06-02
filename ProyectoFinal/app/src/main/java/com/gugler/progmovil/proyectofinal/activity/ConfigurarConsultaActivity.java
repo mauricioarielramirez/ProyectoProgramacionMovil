@@ -8,14 +8,18 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.fragment.DatePickerFragment;
 import com.gugler.progmovil.proyectofinal.fragment.OpcionesConsultaDialog;
+import com.gugler.progmovil.proyectofinal.watcher.DateButtonWatcher;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import progmovil.gugler.com.pf.R;
 
@@ -48,14 +52,22 @@ public class ConfigurarConsultaActivity extends BaseActivity {
         Button btnFechaHasta = (Button) findViewById(R.id.btnFechaHasta);
         btnFechaHasta.setText(fechaActual);
 
+        btnFechaDesde.addTextChangedListener(new DateButtonWatcher(btnFechaDesde, btnFechaHasta, "btn1", getApplicationContext()));
+        btnFechaHasta.addTextChangedListener(new DateButtonWatcher(btnFechaDesde, btnFechaHasta, "btn2", getApplicationContext()));
+
         Button btnFechaDesde1 = (Button) findViewById(R.id.btnPeriodo1Desde);
         btnFechaDesde1.setText(fechaActual);
         Button btnFechaHasta1 = (Button) findViewById(R.id.btnPeriodo1Hasta);
         btnFechaHasta1.setText(fechaActual);
+        btnFechaDesde1.addTextChangedListener(new DateButtonWatcher(btnFechaDesde1, btnFechaHasta1, "btn1", getApplicationContext()));
+        btnFechaHasta1.addTextChangedListener(new DateButtonWatcher(btnFechaDesde1, btnFechaHasta1, "btn2", getApplicationContext()));
+
         Button btnFechaDesde2 = (Button) findViewById(R.id.btnPeriodo2Desde);
         btnFechaDesde2.setText(fechaActual);
         Button btnFechaHasta2 = (Button) findViewById(R.id.btnPeriodo2Hasta);
         btnFechaHasta2.setText(fechaActual);
+        btnFechaDesde2.addTextChangedListener(new DateButtonWatcher(btnFechaDesde2, btnFechaHasta2, "btn1", getApplicationContext()));
+        btnFechaHasta2.addTextChangedListener(new DateButtonWatcher(btnFechaDesde2, btnFechaHasta2, "btn2", getApplicationContext()));
 
         Button btnOpciones = (Button) findViewById(R.id.btnOpcionesConsulta);
         Button btnConfirmarConsulta = (Button) findViewById(R.id.btnConfirmarConsulta);
@@ -122,17 +134,32 @@ public class ConfigurarConsultaActivity extends BaseActivity {
                 }
 
                 if (rdbCompararPeriodos.isChecked()) { //Consulta comparativa
-                    bundle.putChar("tipoConsulta",'C');
-                    bundle.putString("fechaInicialPeriodo1",btnPeriodo1Desde.getText().toString());
-                    bundle.putString("fechaFinalPeriodo1",btnPeriodo1Hasta.getText().toString());
-                    bundle.putString("fechaInicialPeriodo2",btnPeriodo2Desde.getText().toString());
-                    bundle.putString("fechaFinalPeriodo2",btnPeriodo2Hasta.getText().toString());
-                    bundle.putString("mostrarDebito","S");
-                    bundle.putString("mostrarCredito","S");
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date fechaBtn1 = null;
+                    Date fechaBtn2 = null;
+                    try {
+                        fechaBtn1 = sdf.parse(btnPeriodo1Hasta.getText().toString());
+                        fechaBtn2 = sdf.parse(btnPeriodo2Desde.getText().toString());
+                        if (fechaBtn2.before(fechaBtn1) || fechaBtn2.equals(fechaBtn1)) {
+                            Toast tError = Toast.makeText(getApplicationContext(), "Períodos superpuestos. \n\nControle la fecha de fin del periodo 1 y el inicio del periodo 2", Toast.LENGTH_LONG);
+                            tError.show();
+                        } else {
+                            bundle.putChar("tipoConsulta",'C');
+                            bundle.putString("fechaInicialPeriodo1",btnPeriodo1Desde.getText().toString());
+                            bundle.putString("fechaFinalPeriodo1",btnPeriodo1Hasta.getText().toString());
+                            bundle.putString("fechaInicialPeriodo2",btnPeriodo2Desde.getText().toString());
+                            bundle.putString("fechaFinalPeriodo2",btnPeriodo2Hasta.getText().toString());
+                            bundle.putString("mostrarDebito","S");
+                            bundle.putString("mostrarCredito","S");
 
-                    Intent intent = new Intent(getApplicationContext(),ResultadoConsultaActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                            Intent intent = new Intent(getApplicationContext(),ResultadoConsultaActivity.class);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return;
+                    }
                 }
             }
         });
@@ -145,7 +172,7 @@ public class ConfigurarConsultaActivity extends BaseActivity {
         rdbFechas.setChecked(true);
         rdbFechas.performClick();
 
-        configurarInterface("C");
+        configurarInterface("C");;
     }
 
     private void checkRadioButton2() {
@@ -157,11 +184,11 @@ public class ConfigurarConsultaActivity extends BaseActivity {
                     Button btn1 = (Button) findViewById(R.id.btnPeriodo1Desde);
                     btn1.setEnabled(true);
                     Button btn2 = (Button) findViewById(R.id.btnPeriodo1Hasta);
-                    btn2.setEnabled(false);
+                    btn2.setEnabled(true);
                     Button btn3 = (Button) findViewById(R.id.btnPeriodo2Desde);
-                    btn3.setEnabled(false);
+                    btn3.setEnabled(true);
                     Button btn4 = (Button) findViewById(R.id.btnPeriodo2Hasta);
-                    btn4.setEnabled(false);
+                    btn4.setEnabled(true);
 
                     Button btnDesde = (Button) findViewById(R.id.btnFechaDesde);
                     btnDesde.setEnabled(false);

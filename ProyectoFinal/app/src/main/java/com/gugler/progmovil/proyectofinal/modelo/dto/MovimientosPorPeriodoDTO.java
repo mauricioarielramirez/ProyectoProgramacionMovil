@@ -71,4 +71,29 @@ public class MovimientosPorPeriodoDTO {
     public void setSaldo(String saldo) {
         this.saldo = saldo;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MovimientosPorPeriodoDTO that = (MovimientosPorPeriodoDTO) o;
+
+        if (!fecha.equals(that.fecha)) return false;
+        if (!transaccion.equals(that.transaccion)) return false;
+        if (!tipo.equals(that.tipo)) return false;
+        if (!monto.equals(that.monto)) return false;
+        return saldo.equals(that.saldo);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fecha.hashCode();
+        result = 31 * result + transaccion.hashCode();
+        result = 31 * result + tipo.hashCode();
+        result = 31 * result + monto.hashCode();
+        result = 31 * result + saldo.hashCode();
+        return result;
+    }
 }
