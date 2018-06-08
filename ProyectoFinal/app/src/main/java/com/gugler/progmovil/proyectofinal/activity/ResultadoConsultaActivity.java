@@ -1,10 +1,12 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
+import android.app.AlertDialog;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -56,13 +58,37 @@ public class ResultadoConsultaActivity extends BaseActivity {
         spec.setContent(R.id.tab2);
         spec.setIndicator("Períodos", null);
         tabHost.addTab(spec);
-
         spec=tabHost.newTabSpec("mitab3");
         spec.setContent(R.id.tab3);
         spec.setIndicator("Movimientos", null);
         tabHost.addTab(spec);
 
         tabHost.setCurrentTab(0);
+        //Se va a contruir el alert para mostrar el detalle del resumen
+        ListView lstMovimientos = (ListView) findViewById(R.id.lstConsultaMovimientosDetalles);
+        lstMovimientos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(ResultadoConsultaActivity.this);
+                alert.setTitle("Detalles de movimiento");
+                alert.setNeutralButton("Cerrar",null);
+
+                ServicioMovimientos sMovimientos = new ServicioMovimientos();
+                sMovimientos.crearBase(getApplicationContext(), CADENA_SQL);
+                TextView txvIdMovimiento = (TextView) view.findViewById(R.id.txvIdMovimiento);
+
+                MovimientosPorPeriodoDTO movimientoDTO = sMovimientos.devolverMovimientoDTO(Long.parseLong(txvIdMovimiento.getText().toString()));
+                String mensaje =
+                        "\n" + "◘ Transacción: " + movimientoDTO.getTransaccion() +
+                        "\n" + "◘ Importe: $ " + movimientoDTO.getMonto() +
+                        "\n" + "◘ Saldo de la cuenta: $ " + movimientoDTO.getSaldo() +
+                        "\n" + "◘ Fecha: " + movimientoDTO.getFecha() +
+                        "\n" + "◘ Tipo: " + (movimientoDTO.getTipo().equals("D") ? "Débito" : "Crédito");
+                alert.setMessage(mensaje);
+                alert.setIcon(R.drawable.ic_info_black_24dp);
+                alert.show();
+            }
+        });
 
         prepararStringSql();
         leerBundle();

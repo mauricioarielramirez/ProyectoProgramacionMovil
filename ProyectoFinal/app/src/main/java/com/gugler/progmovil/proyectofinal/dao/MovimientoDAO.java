@@ -262,4 +262,23 @@ public class MovimientoDAO {
         return movimientos;
     }
 
+    public Movimiento getMovimientoPorId(Long idMovimiento) {
+        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion FROM db_movimiento WHERE mv_id = " + idMovimiento.toString() ,null);
+        Movimiento movimiento = new Movimiento();
+        Date fecha;
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    fecha = dateFormat.parse(cursor.getString(4));
+                } catch (ParseException e) {
+                    fecha = Calendar.getInstance().getTime(); // O lanzar hacia arriba
+                }
+                movimiento = new Movimiento(cursor.getLong(0), cursor.getString(5), cursor.getString(6), cursor.getFloat(1), cursor.getString(2), cursor.getFloat(3), fecha);
+                // return movimiento;
+            } while (cursor.moveToNext());
+        }
+        return movimiento;
+    }
+
 }

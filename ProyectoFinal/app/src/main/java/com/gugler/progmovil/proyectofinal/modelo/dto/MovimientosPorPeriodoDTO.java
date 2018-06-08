@@ -5,6 +5,7 @@ package com.gugler.progmovil.proyectofinal.modelo.dto;
  */
 
 public class MovimientosPorPeriodoDTO {
+    private Long   idMovimiento;
     private Integer periodo;
     private String fecha;
     private String transaccion;
@@ -15,13 +16,22 @@ public class MovimientosPorPeriodoDTO {
     public MovimientosPorPeriodoDTO() {
     }
 
-    public MovimientosPorPeriodoDTO(Integer periodo, String fecha, String transaccion, String tipo, String monto, String saldo) {
+    public MovimientosPorPeriodoDTO(Long idMovimiento, Integer periodo, String fecha, String transaccion, String tipo, String monto, String saldo) {
+        this.idMovimiento = idMovimiento;
         this.periodo = periodo;
         this.fecha = fecha;
         this.transaccion = transaccion;
         this.tipo = tipo;
         this.monto = monto;
         this.saldo = saldo;
+    }
+
+    public Long getIdMovimiento() {
+        return idMovimiento;
+    }
+
+    public void setIdMovimiento(Long idMovimiento) {
+        this.idMovimiento = idMovimiento;
     }
 
     public Integer getPeriodo() {

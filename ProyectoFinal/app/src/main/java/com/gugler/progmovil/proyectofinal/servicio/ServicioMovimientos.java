@@ -69,7 +69,7 @@ public class ServicioMovimientos extends Servicio{
 
         for (Movimiento m: listaMovimientos) {
             String fechaString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(m.getFechaHora());
-            movimientosPeriodo.add(new MovimientosPorPeriodoDTO(1,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
+            movimientosPeriodo.add(new MovimientosPorPeriodoDTO(m.getId(), 1,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
         }
 
         return movimientosPeriodo;
@@ -178,15 +178,24 @@ public class ServicioMovimientos extends Servicio{
 
         for (Movimiento m:movimientosPeriodo1) {
 
-            String fechaString = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(m.getFechaHora());
-            movimientos.add(new MovimientosPorPeriodoDTO(1,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
+            String fechaString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(m.getFechaHora());
+            movimientos.add(new MovimientosPorPeriodoDTO(m.getId(), 1,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
         }
 
         for (Movimiento m:movimientosPeriodo2) {
-            String fechaString = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(m.getFechaHora());
-            movimientos.add(new MovimientosPorPeriodoDTO(2,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
+            String fechaString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(m.getFechaHora());
+            movimientos.add(new MovimientosPorPeriodoDTO(m.getId(), 2,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
         }
 
         return new ArrayList<MovimientosPorPeriodoDTO>(movimientos);
+    }
+
+    public MovimientosPorPeriodoDTO devolverMovimientoDTO(Long idMovimiento) {
+        Movimiento movimiento = movimientoDao.getMovimientoPorId(idMovimiento);
+        String fechaMov = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(movimiento.getFechaHora());
+        MovimientosPorPeriodoDTO movimientoDTO = new MovimientosPorPeriodoDTO(
+                movimiento.getId(), 1, fechaMov, movimiento.getTransaccion(),
+                movimiento.getTipo(), movimiento.getMonto().toString(), movimiento.getSaldoActual().toString());
+        return movimientoDTO;
     }
 }

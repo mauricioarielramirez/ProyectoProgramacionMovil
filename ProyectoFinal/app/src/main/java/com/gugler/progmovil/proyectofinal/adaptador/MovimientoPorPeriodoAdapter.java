@@ -57,12 +57,14 @@ public class MovimientoPorPeriodoAdapter extends BaseAdapter{
         //TextView txvColumnaTransaccionRango = (TextView) convertView.findViewById(R.id.txvColumnaTransaccionRango);
         TextView txvColumnaMontoRango = (TextView) convertView.findViewById(R.id.txvColumnaMontoRango);
         //TextView txvColumnaSaldoRango = (TextView) convertView.findViewById(R.id.txvColumnaSaldoRango);
+        TextView txvIdMovimiento = (TextView) convertView.findViewById(R.id.txvIdMovimiento);
 
         //txvColumnaNroPeriodoRango.setText((item.getPeriodo()).toString());
         txvColumnaFechaRango.setText(item.getFecha());
         //txvColumnaTransaccionRango.setText(item.getTransaccion());
         txvColumnaMontoRango.setText(item.getMonto());
         //txvColumnaSaldoRango.setText(item.getSaldo());
+        txvIdMovimiento.setText(item.getIdMovimiento().toString());
 
         ImageView imgArrow = (ImageView) convertView.findViewById(R.id.imgTipoMovimiento);
         Resources resource = convertView.getResources();
