@@ -35,13 +35,19 @@ public class ServicioTransacciones extends Servicio {
          * 2) Agregar el registro de la relación 'cuenta_transaccion' a su correspondiente tabla
          */
         // 1)
-        Long ultimoIdTransaccion = transaccionDao.agregar(transaccion);
-        // 2)
-        ServicioCuentas sCuentas = new ServicioCuentas();
-        sCuentas.crearBase(contexto,cadena);
-        sCuentas.asociarTransaccion(denominacionCuenta,ultimoIdTransaccion);
-        return true;
+        if (!transaccionDao.existeTransaccion(transaccion.getNombre())){
+            Long ultimoIdTransaccion = transaccionDao.agregar(transaccion);
+            // 2)
+            ServicioCuentas sCuentas = new ServicioCuentas();
+            sCuentas.crearBase(contexto,cadena);
+            sCuentas.asociarTransaccion(denominacionCuenta,ultimoIdTransaccion);
+            return true;
+        }
+        return false;
     }
+
+
+
 
     public ArrayList<Transaccion> listarTodo(){
         ArrayList<Transaccion> transacciones;

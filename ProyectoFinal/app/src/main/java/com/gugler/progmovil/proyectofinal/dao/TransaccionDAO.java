@@ -54,6 +54,24 @@ public class TransaccionDAO {
         }
     }
 
+    public Boolean existeTransaccion (String nombreTransaccion) {
+        StringBuilder cadenaQuery = new StringBuilder();
+        Long dato = 0L;
+        cadenaQuery.append("select ifnull((select 1 as dato from db_transaccion where upper(tr_nombre) = upper('");
+        cadenaQuery.append(nombreTransaccion.toUpperCase());
+        cadenaQuery.append("')),0) as valor");
+        Cursor cursor = db.rawQuery(cadenaQuery.toString(),null);
+
+        if (cursor.moveToFirst()){
+            do{
+                dato = cursor.getLong(0);
+            }while(cursor.moveToNext());
+            cursor.close();
+        }
+
+        return (dato==0?false:true);
+    }
+
     private Long obtenerUltimoId(){
         Cursor cursor = db.rawQuery("SELECT MAX(tr_id) from db_transaccion",null);
         Long id = 0L;

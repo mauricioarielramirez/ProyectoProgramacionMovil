@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Space;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gugler.progmovil.proyectofinal.adaptador.TransaccionAdapter;
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
@@ -36,7 +35,8 @@ public class FabElegirTransaccionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fab_elegir_transaccion);
         prepararStringSql();
-        configurarInterface("");
+        leerBundle();
+        configurarInterface(denominacionCuenta);
         inicializarListView();
         redimensionarListView();
 
@@ -63,13 +63,28 @@ public class FabElegirTransaccionActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 TextView txvNombreTransaccion = (TextView) view.findViewById(R.id.txvNombreTransaccion);
                 TextView txvIdtr = (TextView) view.findViewById(R.id.txvIdtr);
+                Transaccion transaccionElegida = new Transaccion();
 
+                //Recupero la transacción
+                for (Object t : listaTransacciones) {
+                    if ( ((Transaccion)t).getId().equals(Long.parseLong(txvIdtr.getText().toString())) ){
+                        transaccionElegida = (Transaccion)t;
+                    }
+                }
                 bundle.putString("denominacionCuenta",denominacionCuenta);
                 bundle.putLong("idTransaccion",Long.parseLong(txvIdtr.getText().toString()));
                 bundle.putString("nombreTransaccion",txvNombreTransaccion.getText().toString());
                 bundle.putString("tipoTransaccion",tipoTransaccion);
+                bundle.putBoolean("favoritoTransaccion", transaccionElegida.getFavorito());
+                bundle.putFloat("montoTransaccion",transaccionElegida.getMonto());
 
-                Intent intento = new Intent(getApplicationContext(), TransaccionActivity.class);
+                Intent intento;
+                if (denominacionCuenta.equals("")) {
+                    intento = new Intent(getApplicationContext(), ConfigurarTransaccionActivity.class);
+                } else {
+                    intento = new Intent(getApplicationContext(), TransaccionActivity.class);
+                }
+
                 intento.putExtras(bundle);
                 startActivity(intento);
             }
@@ -77,13 +92,27 @@ public class FabElegirTransaccionActivity extends BaseActivity {
     }
 
     private void configurarInterface(String modo) {
+        ActionBar actionBar = getSupportActionBar();
         switch (modo) {
-            default:
-                ActionBar actionBar = getSupportActionBar();
+            case "": //Modo de edición (no hay cuentas)
+                actionBar.setTitle("Modificar transacción");
+                actionBar.setSubtitle("");
+                FloatingActionButton btnFab = (FloatingActionButton) findViewById(R.id.fab);
+                btnFab.setVisibility(View.GONE);
+                break;
+            default: //Entra si viene alguna cuenta
                 actionBar.setTitle("Elegir transacción");
                 actionBar.setSubtitle("");
         }
     }
+
+    private void leerBundle(){
+        Bundle recurso = getIntent().getExtras();
+        String nombreCuenta = recurso.getString("nombreCuenta");
+        tipoTransaccion = recurso.getString("tipoTransaccion");
+        denominacionCuenta = (nombreCuenta==null?"":nombreCuenta);
+    }
+
 
     /**
      * Instancia el adaptador de transaccion e interactúa con el componente listview
@@ -91,7 +120,8 @@ public class FabElegirTransaccionActivity extends BaseActivity {
     private void inicializarListView(){
         listaTransacciones = new ArrayList<Object>();
         ListView lstTransacciones = (ListView)findViewById(R.id.lstTransacciones);
-        obtenerTransacciones();
+        //obtenerTransacciones();
+        llenarListView(denominacionCuenta);
         try {
             adapter = new TransaccionAdapter(this,listaTransacciones);
             lstTransacciones.setAdapter(adapter);
@@ -111,13 +141,18 @@ public class FabElegirTransaccionActivity extends BaseActivity {
         ArrayList<Transaccion> transacciones = new ArrayList<Transaccion>();
         ArrayList<Transaccion> transaccionesFiltradas = new ArrayList<Transaccion>();
         try {
-            transacciones = sTransacciones.listarPorCuenta(this,CADENA_SQL,nombreCuenta);
-            transaccionesFiltradas.addAll(transacciones);
-            for(Transaccion tr: transacciones){
-                if (!tr.getTipo().equals(tipoTransaccion)){
-                    transaccionesFiltradas.remove(tr);
+            if(nombreCuenta.equals("")){
+                transaccionesFiltradas = sTransacciones.listarTodo();
+            }else {
+                transacciones = sTransacciones.listarPorCuenta(this,CADENA_SQL,nombreCuenta);
+                transaccionesFiltradas.addAll(transacciones);
+                for(Transaccion tr: transacciones){
+                    if (!tr.getTipo().equals(tipoTransaccion)){
+                        transaccionesFiltradas.remove(tr);
+                    }
                 }
             }
+
 
         } catch (ValidacionException e) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -134,11 +169,11 @@ public class FabElegirTransaccionActivity extends BaseActivity {
      * Leer el bundle con el nombre de cuenta
      */
     private void obtenerTransacciones(){
-        Bundle recurso = getIntent().getExtras();
+        /*Bundle recurso = getIntent().getExtras();
         String nombreCuenta = recurso.getString("nombreCuenta");
         tipoTransaccion = recurso.getString("tipoTransaccion");
-        denominacionCuenta = nombreCuenta;
-        llenarListView(nombreCuenta);
+        denominacionCuenta = nombreCuenta;*/
+        llenarListView(denominacionCuenta);
     }
 
     private void redimensionarListView() {

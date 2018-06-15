@@ -40,6 +40,12 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
     private ArrayList<String> listaTipoTransaccion;
     private ListAdapter adapterOperaciones;
 
+    private String nombreTransaccion;
+    private Long idTransaccion;
+    private String tipoTransaccion;
+    private Float montoTransaccion;
+    private Boolean favoritoTransaccion;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -64,8 +70,12 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
         setContentView(R.layout.activity_configurar_transaccion);
 
         prepararStringSql();
+        leerBundle();
         configurarInterface("");
         inicializarSpinnerTipoTransaccion();
+        if (this.nombreTransaccion != null) {
+            cargarCampos();
+        }
 
         //Seteo de watcher
         Button btnToolbarGuardar = (Button) findViewById(R.id.btnToolbarGuardar);
@@ -106,12 +116,20 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
                 sTransacciones = new ServicioTransacciones();
                 sTransacciones.crearBase(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL);
                 try {
-                    sTransacciones.agregarTransaccion(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL,transaccion, denominacionCuenta);
-                    Toast toastEx = Toast.makeText(getApplicationContext(), "Transacción agregada exitosamente", Toast.LENGTH_SHORT);
-                    toastEx.show();
+                    if (sTransacciones.agregarTransaccion(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL,transaccion, denominacionCuenta)){
+                        Toast toastEx = Toast.makeText(getApplicationContext(), "Transacción agregada exitosamente", Toast.LENGTH_SHORT);
+                        toastEx.show();
+                        Intent intento = new Intent(getApplicationContext(), NormalActivity.class);
+                        startActivity(intento);
+                    }else{
+                        Toast toastEx = Toast.makeText(getApplicationContext(), "El nombre de transacción ya existe, escriba otro.", Toast.LENGTH_LONG);
+                        toastEx.show();
+                        TextView textView = (TextView)findViewById(R.id.txtNombre);
+                        textView.requestFocus();
+                    }
+
                     // onBackPressed();
-                    Intent intento = new Intent(getApplicationContext(), NormalActivity.class);
-                    startActivity(intento);
+
                 } catch (Exception e) {
                     Toast toastEx = Toast.makeText(getApplicationContext(), ValidacionException.PROBLEMAS_ALTA_TRANSACCION, Toast.LENGTH_SHORT);
                     toastEx.show();
@@ -134,6 +152,14 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
 //        Spinner spn = (Spinner) findViewById(R.id.spnCtasAsociadas);
         //CuentaAdapter adapter = new CuentaAdapter
         inicializarSpinner();
+    }
+
+    private void cargarCampos() {
+        EditText txtNombreTransaccion = (EditText) findViewById(R.id.txtNombre);
+        EditText txtMontoTransaccion = (EditText) findViewById(R.id.txtSaldo);
+        txtNombreTransaccion.setText(this.nombreTransaccion);
+        // txtMontoTransaccion.setText(0);
+
     }
 
     private void configurarInterface(String modo) {
@@ -173,6 +199,17 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
         cuentas = sCuentas.listarTodo();
         for (Cuenta c: cuentas){
             listaCuentasAsociadas.add(c.toString());
+        }
+    }
+
+    private void leerBundle() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            this.nombreTransaccion = bundle.getString("nombreTransaccion");
+            this.idTransaccion = bundle.getLong("idTransaccion");
+            this.tipoTransaccion = bundle.getString("tipoTransaccion");
+            this.montoTransaccion = bundle.getFloat("montoTransaccion");
+            this.favoritoTransaccion = bundle.getBoolean("favoritoTransaccion");
         }
     }
 

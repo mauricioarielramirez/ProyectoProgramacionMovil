@@ -69,12 +69,17 @@ public class AdministracionActivity extends BaseActivity {
                 Bundle recurso = new Bundle();
                 switch (txtIdOpcion.getText().toString().trim()){
                     case MODIFICAR_CUENTA:
-                        recurso.putString("tipoTransaccion", "S");
+                        recurso.putString("tipoTransaccion", "S"); //S: SETTING, N: NEW
                         intento = new Intent(getApplicationContext(),ElegirCuentaActivity.class);
                         intento.putExtras(recurso);
                         startActivity(intento);
                         break;
                     case MODIFICAR_TRANSACCION:
+                        //Muestro todas las transacciones para modificar, pués podría cambiar la cuenta asociada
+                        recurso.putString("tipoTransaccion","S"); //S: SETTING, N: NEW
+                        intento = new Intent(getApplicationContext(),FabElegirTransaccionActivity.class);
+                        intento.putExtras(recurso);
+                        startActivity(intento);
                         break;
                     case MODIFICAR_MOVIMIENTO:
                         break;
