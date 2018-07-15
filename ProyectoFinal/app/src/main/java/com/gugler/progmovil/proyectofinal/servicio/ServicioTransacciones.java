@@ -130,4 +130,9 @@ public class ServicioTransacciones extends Servicio {
 
         return transaccionDao.modificar(transaccion);
     }
+
+    public Boolean eliminarTransaccion (Context contexto, String cadena, Long idTransaccion) {
+        return transaccionDao.eliminarTransaccion(contexto,cadena,idTransaccion);
+    }
+
 }

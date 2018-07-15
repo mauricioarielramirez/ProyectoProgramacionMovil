@@ -1,5 +1,7 @@
 package com.gugler.progmovil.proyectofinal.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,23 +49,7 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
     private Boolean favoritoTransaccion;
     private String cuentaTransaccion;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_guardar:
-                    //mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.action_cancelar:
-                    //mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-            }
-            return false;
-        }
-
-    };
+    private Boolean eliminarTranscaccion; // atributo para manejar el resultado de la elección del dialog
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,15 +63,45 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
         inicializarSpinner(); //Este es el de cuentas
         Button btnToolbarGuardar = (Button) findViewById(R.id.btnToolbarGuardar);
         btnToolbarGuardar.setEnabled(true);
+        Button btnEliminarTransaccion = (Button) findViewById(R.id.btnEliminarTransaccion);
+        eliminarTranscaccion = false;
+        btnEliminarTransaccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(ConfigurarTransaccionActivity.this);
+                alert.setTitle("Confirmar operación");
+                alert.setMessage("Ha elegido eliminar esta transacción ¿Continuar?");
+                alert.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        eliminarTranscaccion = true;
+                        if (sTransacciones.eliminarTransaccion(getApplicationContext(),CADENA_SQL,idTransaccion)){
+                            Toast toast = Toast.makeText(getApplicationContext(),"Transacción eliminada exitosamente",Toast.LENGTH_SHORT);
+                            toast.show();
+                            Intent intent = new Intent(getApplicationContext(),NormalActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Toast toast = Toast.makeText(getApplicationContext(),"No se pudo eliminar la transacción",Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                });
+                alert.setNegativeButton("No",null);
+                alert.show();
+            }
+        });
+
         if (this.nombreTransaccion != null) {
             try{
                 cargarCampos();
+                btnEliminarTransaccion.setVisibility(View.VISIBLE);
             } catch (Exception ex) {
                 // Mostrar toast de error
                 Toast toast = Toast.makeText(this.getApplicationContext(),"Se ha producido un error general",Toast.LENGTH_SHORT);
                 toast.show();
             }
         } else {
+            btnEliminarTransaccion.setVisibility(View.GONE);
             btnToolbarGuardar.setEnabled(false);
         }
 
@@ -168,6 +184,24 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
             }
         });
     }
+
+    // Esto servia si levantabas un menú contextual
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_guardar:
+                    //mTextMessage.setText(R.string.title_home);
+                    return true;
+                case R.id.action_cancelar:
+                    //mTextMessage.setText(R.string.title_dashboard);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     private void cargarCampos() throws  Exception{
         if (idTransaccion!=null || idTransaccion > 0) {

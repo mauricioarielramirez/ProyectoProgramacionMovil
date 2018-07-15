@@ -211,4 +211,14 @@ public class TransaccionDAO {
             throw new ValidacionException(ValidacionException.PROBLEMAS_LEER_TRANSACCION);
         }
     }
+
+    public Boolean eliminarTransaccion (Context context, String cadena, Long idTransaccion) {
+        Integer res = -1;
+        try{
+            res = db.delete("db_transaccion", "tr_id" + "=?",new String[]{idTransaccion.toString()});
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 }
