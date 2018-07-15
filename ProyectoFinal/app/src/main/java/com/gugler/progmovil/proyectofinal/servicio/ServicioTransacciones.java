@@ -108,4 +108,26 @@ public class ServicioTransacciones extends Servicio {
     public ArrayList<Cuenta> obtenerCuentasPorTransaccion(Context contexto, String cadena, Long idTransaccion) throws ValidacionException{
         return transaccionDao.obtenerCuentas(contexto, cadena, idTransaccion);
     }
+
+    /**
+     * Modifica todos los datos de una transacción
+     * @param contexto
+     * @param cadena
+     * @param denominacionCuenta
+     * @param transaccion
+     * @return
+     * @throws Exception
+     */
+    public Boolean modificarTransaccion (Context contexto, String cadena, String denominacionCuenta, Transaccion transaccion) throws Exception {
+
+        //Necesito cambiar la vinculación también, lo hago llamando a los métodos correspondientes también
+        ServicioCuentas sCuentas = new ServicioCuentas();
+        sCuentas.crearBase(contexto,cadena);
+        //Desvinculacion existente
+        sCuentas.desvincularTransaccion(denominacionCuenta,transaccion.getId(),'S'); //Elimina el registro de vinculación con la transacción y la cuenta
+        //Asociación nueva
+        sCuentas.asociarTransaccion(denominacionCuenta,transaccion.getId());
+
+        return transaccionDao.modificar(transaccion);
+    }
 }

@@ -44,7 +44,13 @@ public class ServicioCuentas extends Servicio {
         return cuentaDao.obtenerPorDenominacion(denomincion);
     }
 
-    public Boolean modificarCuenta(Cuenta cuenta, String denominacionCuenta) throws ValidacionException, Exception{
+    public Boolean modificarCuenta(Cuenta cuenta, String denominacionCuenta) throws ValidacionException, Exception {
         return cuentaDao.modificar(cuenta,denominacionCuenta);
     }
+
+    public Boolean desvincularTransaccion (String denominacionCuenta, Long idTransaccion,Character desvincularTodo) {
+        return cuentaDao.eliminarCuentaTransaccion(denominacionCuenta,idTransaccion, desvincularTodo);
+    }
+
+
 }

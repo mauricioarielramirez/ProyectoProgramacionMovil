@@ -94,13 +94,13 @@ public class FabElegirTransaccionActivity extends BaseActivity {
     private void configurarInterface(String modo) {
         ActionBar actionBar = getSupportActionBar();
         switch (modo) {
-            case "": //Modo de edición (no hay cuentas)
+            case "": //Modo de edición (no hay cuentas, vino de AdministracionActivity > (ModificarTransacción))
                 actionBar.setTitle("Modificar transacción");
                 actionBar.setSubtitle("");
                 FloatingActionButton btnFab = (FloatingActionButton) findViewById(R.id.fab);
                 btnFab.setVisibility(View.GONE);
                 break;
-            default: //Entra si viene alguna cuenta
+            default: //Entra si viene alguna cuenta (Vino de ElegirCuentaActivity)
                 actionBar.setTitle("Elegir transacción");
                 actionBar.setSubtitle("");
         }
@@ -141,13 +141,13 @@ public class FabElegirTransaccionActivity extends BaseActivity {
         ArrayList<Transaccion> transacciones = new ArrayList<Transaccion>();
         ArrayList<Transaccion> transaccionesFiltradas = new ArrayList<Transaccion>();
         try {
-            if(nombreCuenta.equals("")){
+            if(nombreCuenta.equals("")) {
                 transaccionesFiltradas = sTransacciones.listarTodo();
             }else {
                 transacciones = sTransacciones.listarPorCuenta(this,CADENA_SQL,nombreCuenta);
                 transaccionesFiltradas.addAll(transacciones);
                 for(Transaccion tr: transacciones){
-                    if (!tr.getTipo().equals(tipoTransaccion)){
+                    if (!tr.getTipo().equals(tipoTransaccion)) {
                         transaccionesFiltradas.remove(tr);
                     }
                 }

@@ -111,7 +111,8 @@
                     android:id="@+id/chkDisponibleTodas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Disponible para todas las cuentas" />
+                    android:text="Disponible para todas las cuentas"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -123,7 +124,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Opera automáticamente" />
+                        android:text="Opera automáticamente"
+                        android:visibility="gone"/>
 
                     <Space
                         android:layout_width="match_parent"
@@ -134,14 +136,16 @@
                         android:id="@+id/btnConfigurar"
                         android:layout_width="wrap_content"
                         android:layout_height="37dp"
-                        android:text="Configurar" />
+                        android:text="Configurar"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <Switch
                     android:id="@+id/swtNotificaciones"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Notificaciones activas" />
+                    android:text="Notificaciones activas"
+                    android:visibility="gone"/>
 
                 <Space
                     android:layout_width="match_parent"

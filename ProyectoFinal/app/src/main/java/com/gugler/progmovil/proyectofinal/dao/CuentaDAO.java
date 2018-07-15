@@ -186,6 +186,28 @@ public class CuentaDAO {
         return (res == -1 ? false : true);
     }
 
+    /**
+     *
+     * @param denominacionCuenta
+     * @param idTransaccion
+     * @param desvincularTodo Marca para indicar si se desaea borrar todas las relaciones de la transacción dada o una determinada combinación de transacción-denominacionCuenta
+     * @return
+     */
+    public Boolean eliminarCuentaTransaccion (String denominacionCuenta, Long idTransaccion, Character desvincularTodo) {
+        try {
+            long res = -1;
+            if (desvincularTodo.equals('S')) {
+                res = db.delete("db_cuenta_transaccion", "cutr_tr_id" + "=?",new String[]{idTransaccion.toString()});
+            } else {
+                res = db.delete("db_cuenta_transaccion", "cutr_ct_denominacion" + "=? AND " + "cutr_tr_id" + "=?",new String[]{denominacionCuenta,idTransaccion.toString()});
+            }
+
+            return (res == -1 ? false : true);
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
 }
 
 

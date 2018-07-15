@@ -157,7 +157,7 @@ public class TransaccionActivity extends BaseActivity {
                 txtTipoTransaccion.setEnabled(false);
 
                 txtImporte.setEnabled(true);
-                txtImporte.setText("0");
+                txtImporte.setText(this.importe.toString());
                 txtImporte.setFocusable(true);
 
                 actionBar.setTitle("Transacción");

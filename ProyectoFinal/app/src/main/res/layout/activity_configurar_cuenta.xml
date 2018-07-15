@@ -113,7 +113,8 @@
                     android:layout_weight="0.05"
                     android:switchTextAppearance="@android:style/TextAppearance"
                     android:text="Alertas por eventos"
-                    android:textAppearance="@android:style/TextAppearance" />
+                    android:textAppearance="@android:style/TextAppearance"
+                    android:visibility="gone"/>
 
                 <Space
                     android:layout_width="match_parent"
@@ -125,7 +126,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Configurar alertas"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:visibility="gone"/>
 
                 <Space
                     android:layout_width="match_parent"

@@ -102,24 +102,28 @@ public class ElegirCuentaActivity extends BaseActivity {
         switch (modo) {
             case "D": // Débito
                 actionBar = getSupportActionBar();
-                actionBar.setTitle("Elegir débito");
-                actionBar.setSubtitle("Seleccione una cuenta");
+                actionBar.setTitle("Realizar un débito");
+                actionBar.setSubtitle("Elija una cuenta");
                 break;
             case "C": // Credito
                 actionBar = getSupportActionBar();
-                actionBar.setTitle("Elegir Crédito");
-                actionBar.setSubtitle("Seleccione una cuenta");
+                actionBar.setTitle("Realizar un crédito");
+                actionBar.setSubtitle("Elija una cuenta");
                 break;
             case "S": //Setting
                 actionBar = getSupportActionBar();
-                actionBar.setTitle("Elegir Cuenta");
-                actionBar.setSubtitle("");
-
+                actionBar.setTitle("Modificar");
+                actionBar.setSubtitle("Elija una cuenta");
+                break;
+            case "Q": // Query
+                actionBar = getSupportActionBar();
+                actionBar.setTitle("Realizar una consulta");
+                actionBar.setSubtitle("Elija una cuenta");
                 break;
             default:
                 actionBar = getSupportActionBar();
-                actionBar.setTitle("Elegir débito");
-                actionBar.setSubtitle("Seleccione una cuenta");
+                actionBar.setTitle("Seleccione una cuenta");
+                actionBar.setSubtitle("Algo salió mal, reinicie la aplicación");
         }
     }
 

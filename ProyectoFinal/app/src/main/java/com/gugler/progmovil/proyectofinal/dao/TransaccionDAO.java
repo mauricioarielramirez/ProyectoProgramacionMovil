@@ -125,7 +125,7 @@ public class TransaccionDAO {
                 transaccion.setNombre(cursor.getString(1));
                 transaccion.setTipo(cursor.getString(2));
                 transaccion.setMonto(cursor.getFloat(3));
-                transaccion.setFavorito(Boolean.parseBoolean(cursor.getString(4)));
+                transaccion.setFavorito( (cursor.getInt(4))==0?false:true );
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -154,7 +154,7 @@ public class TransaccionDAO {
         try {
             String[] valores = {transaccion.getId().toString()};
             ContentValues registro = new ContentValues();
-            registro.put(TR_ID, obtenerUltimoId());
+            registro.put(TR_ID, transaccion.getId());
             registro.put(TR_NOMBRE, transaccion.getNombre());
             registro.put(TR_TIPO, transaccion.getTipo());
             registro.put(TR_MONTO, transaccion.getMonto());

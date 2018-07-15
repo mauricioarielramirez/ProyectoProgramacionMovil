@@ -45,6 +45,7 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
     private String tipoTransaccion;
     private Float montoTransaccion;
     private Boolean favoritoTransaccion;
+    private String cuentaTransaccion;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -72,14 +73,23 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
         prepararStringSql();
         leerBundle();
         configurarInterface("");
-        inicializarSpinnerTipoTransaccion();
+        inicializarSpinnerTipoTransaccion(); // Este es el de tipo Débito/Crédito
+        inicializarSpinner(); //Este es el de cuentas
+        Button btnToolbarGuardar = (Button) findViewById(R.id.btnToolbarGuardar);
+        btnToolbarGuardar.setEnabled(true);
         if (this.nombreTransaccion != null) {
-            cargarCampos();
+            try{
+                cargarCampos();
+            } catch (Exception ex) {
+                // Mostrar toast de error
+                Toast toast = Toast.makeText(this.getApplicationContext(),"Se ha producido un error general",Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        } else {
+            btnToolbarGuardar.setEnabled(false);
         }
 
         //Seteo de watcher
-        Button btnToolbarGuardar = (Button) findViewById(R.id.btnToolbarGuardar);
-        btnToolbarGuardar.setEnabled(false);
         EditText txtNombreTransaccion = (EditText) findViewById(R.id.txtNombre);
         EditText txtSaldo = (EditText) findViewById(R.id.txtSaldo);
 
@@ -90,10 +100,12 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
         btnGuardarToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Toast toast = Toast.makeText(getApplicationContext(), "Btn guardar click", Toast.LENGTH_SHORT);
-                toast.show();*/
                 Transaccion transaccion = new Transaccion();
-                transaccion.setId(null);
+                if (idTransaccion==null) {
+                    transaccion.setId(null);
+                } else {
+                    transaccion.setId(idTransaccion);
+                };
                 transaccion.setNombre( ((EditText)findViewById(R.id.txtNombre)).getText().toString() );
                 transaccion.setMonto( Float.parseFloat(((EditText)findViewById(R.id.txtSaldo)).getText().toString()) );
                 transaccion.setFavorito( ((CheckBox)findViewById(R.id.chkFavortio)).isChecked() );
@@ -116,19 +128,26 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
                 sTransacciones = new ServicioTransacciones();
                 sTransacciones.crearBase(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL);
                 try {
-                    if (sTransacciones.agregarTransaccion(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL,transaccion, denominacionCuenta)){
-                        Toast toastEx = Toast.makeText(getApplicationContext(), "Transacción agregada exitosamente", Toast.LENGTH_SHORT);
-                        toastEx.show();
-                        Intent intento = new Intent(getApplicationContext(), NormalActivity.class);
-                        startActivity(intento);
-                    }else{
-                        Toast toastEx = Toast.makeText(getApplicationContext(), "El nombre de transacción ya existe, escriba otro.", Toast.LENGTH_LONG);
-                        toastEx.show();
-                        TextView textView = (TextView)findViewById(R.id.txtNombre);
-                        textView.requestFocus();
+                    if(idTransaccion != null && idTransaccion > 0) { //Se trata de una modificación
+                        if (sTransacciones.modificarTransaccion(getApplicationContext(),CADENA_SQL,denominacionCuenta,transaccion)) {
+                            Toast toastEx = Toast.makeText(getApplicationContext(), "Transacción Modificada exitosamente", Toast.LENGTH_SHORT);
+                            toastEx.show();
+                            Intent intento = new Intent(getApplicationContext(), NormalActivity.class);
+                            startActivity(intento);
+                        }
+                    } else {
+                        if (sTransacciones.agregarTransaccion(getApplicationContext(),ConfigurarTransaccionActivity.super.CADENA_SQL,transaccion, denominacionCuenta)){
+                            Toast toastEx = Toast.makeText(getApplicationContext(), "Transacción agregada exitosamente", Toast.LENGTH_SHORT);
+                            toastEx.show();
+                            Intent intento = new Intent(getApplicationContext(), NormalActivity.class);
+                            startActivity(intento);
+                        }else{
+                            Toast toastEx = Toast.makeText(getApplicationContext(), "El nombre de transacción ya existe, escriba otro.", Toast.LENGTH_LONG);
+                            toastEx.show();
+                            TextView textView = (TextView)findViewById(R.id.txtNombre);
+                            textView.requestFocus();
+                        }
                     }
-
-                    // onBackPressed();
 
                 } catch (Exception e) {
                     Toast toastEx = Toast.makeText(getApplicationContext(), ValidacionException.PROBLEMAS_ALTA_TRANSACCION, Toast.LENGTH_SHORT);
@@ -148,17 +167,62 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
                 }
             }
         });
-
-//        Spinner spn = (Spinner) findViewById(R.id.spnCtasAsociadas);
-        //CuentaAdapter adapter = new CuentaAdapter
-        inicializarSpinner();
     }
 
-    private void cargarCampos() {
-        EditText txtNombreTransaccion = (EditText) findViewById(R.id.txtNombre);
-        EditText txtMontoTransaccion = (EditText) findViewById(R.id.txtSaldo);
-        txtNombreTransaccion.setText(this.nombreTransaccion);
-        // txtMontoTransaccion.setText(0);
+    private void cargarCampos() throws  Exception{
+        if (idTransaccion!=null || idTransaccion > 0) {
+            //Recupero los datos de transaccion completos
+            Transaccion transaccion = new Transaccion();
+            String denominacionCuenta = "";
+            sTransacciones = new ServicioTransacciones(); //No estaba inicializado al principio del activity, lo hago aca directamente
+            sTransacciones.crearBase(this.getApplicationContext(),CADENA_SQL);
+            transaccion = sTransacciones.obtenerTransaccionPorId(idTransaccion);
+            try {
+                ArrayList<Cuenta> cuentas = sTransacciones.obtenerCuentasPorTransaccion(this.getApplicationContext(),CADENA_SQL,idTransaccion);
+                denominacionCuenta = cuentas.get(0).getDenominacion();
+            } catch (Exception ex) {
+                throw ex;
+            }
+            //Seteo los valores en los atributos
+            this.nombreTransaccion = transaccion.getNombre();
+            this.tipoTransaccion = transaccion.getTipo();
+            this.favoritoTransaccion  = transaccion.getFavorito();
+            this.montoTransaccion = transaccion.getMonto();
+            this.cuentaTransaccion = denominacionCuenta;
+
+            //Recupero los elementos a trabajar
+            EditText txtNombreTransaccion = (EditText) findViewById(R.id.txtNombre);
+            Spinner spnTipoTransaccion = (Spinner) findViewById(R.id.spnTipoTransaccion);
+            EditText txtMontoTransaccion = (EditText) findViewById(R.id.txtSaldo);
+            CheckBox chkFavortio = (CheckBox) findViewById(R.id.chkFavortio);
+            Spinner spnCtasAsociadas = (Spinner) findViewById(R.id.spnCtasAsociadas);
+
+            //Seteo los elementos del activity
+            txtNombreTransaccion.setText(this.nombreTransaccion);
+            if (this.tipoTransaccion.equals("D")) {
+                spnTipoTransaccion.setSelection(0); // Débito
+            }else {
+                spnTipoTransaccion.setSelection(1); // Crédito
+            }
+
+            txtMontoTransaccion.setText(this.montoTransaccion.toString());
+
+            if (this.favoritoTransaccion == true) {
+                chkFavortio.setChecked(true);
+            } else {
+                chkFavortio.setChecked(false);
+            }
+            //Busco la posición de la cuenta en el spinner
+            Integer counterIndexer = 0;
+            for (String e : listaCuentasAsociadas) {
+                if(e.trim().equals(denominacionCuenta.trim())){
+                    break;
+                }else{
+                    counterIndexer++;
+                }
+            }
+            spnCtasAsociadas.setSelection(counterIndexer); //Seteo la posición correpondiente
+        }
 
     }
 
@@ -192,6 +256,7 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
 //        adapter.notifyDataSetChanged();
     }
 
+    //Llena el Spinner de cuentas (siempre carga todas, tanto para editar como nuevas)
     private void llenarSpinner() {
         ServicioCuentas sCuentas = new ServicioCuentas();
         sCuentas.crearBase(this, CADENA_SQL);
@@ -212,7 +277,6 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
             this.favoritoTransaccion = bundle.getBoolean("favoritoTransaccion");
         }
     }
-
 
     /**
      * Inicializa spinner de tipo de transacciones
