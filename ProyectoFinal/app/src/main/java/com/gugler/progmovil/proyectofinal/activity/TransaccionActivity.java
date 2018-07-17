@@ -88,6 +88,18 @@ public class TransaccionActivity extends BaseActivity {
                 }
             }
         });
+
+        Button btnToolbarCancelar = (Button) findViewById(R.id.btnToolbarCancelar);
+        btnToolbarCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    onBackPressed();
+                } catch (Exception ex) {
+
+                }
+            }
+        });
     }
 
     private void configurarInterface(String modo) {
@@ -157,7 +169,12 @@ public class TransaccionActivity extends BaseActivity {
                 txtTipoTransaccion.setEnabled(false);
 
                 txtImporte.setEnabled(true);
-                txtImporte.setText(this.importe.toString());
+                if (this.importe!=null){
+                    txtImporte.setText(this.importe.toString());
+                }else {
+                    txtImporte.setText("0");
+                }
+
                 txtImporte.setFocusable(true);
 
                 actionBar.setTitle("Transacción");
