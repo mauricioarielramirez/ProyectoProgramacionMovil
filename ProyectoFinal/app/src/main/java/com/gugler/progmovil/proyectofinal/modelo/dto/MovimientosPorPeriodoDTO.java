@@ -1,10 +1,15 @@
 package com.gugler.progmovil.proyectofinal.modelo.dto;
 
+import android.support.annotation.NonNull;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Ariel on 20/4/2018.
  */
 
-public class MovimientosPorPeriodoDTO {
+public class MovimientosPorPeriodoDTO implements Comparable<MovimientosPorPeriodoDTO>  {
     private Long   idMovimiento;
     private Integer periodo;
     private String fecha;
@@ -105,5 +110,18 @@ public class MovimientosPorPeriodoDTO {
         result = 31 * result + monto.hashCode();
         result = 31 * result + saldo.hashCode();
         return result;
+    }
+
+    @Override
+    public int compareTo(@NonNull MovimientosPorPeriodoDTO o){
+        Date fecha1 = new Date();
+        Date fecha2 = new Date();
+        try {
+            fecha1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(this.getFecha());
+            fecha2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(o.getFecha());
+        } catch (Exception ex) {
+            return 0;
+        }
+        return fecha2.compareTo(fecha1);
     }
 }

@@ -70,7 +70,7 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(ConfigurarTransaccionActivity.this);
                 alert.setTitle("Confirmar operación");
-                alert.setMessage("Ha elegido eliminar esta transacción ¿Continuar?");
+                alert.setMessage("Ha elegido eliminar esta transacción. ¿Desea continuar?");
                 alert.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

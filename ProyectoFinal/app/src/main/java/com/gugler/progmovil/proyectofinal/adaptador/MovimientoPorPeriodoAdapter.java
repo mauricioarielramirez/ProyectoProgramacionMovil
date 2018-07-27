@@ -62,7 +62,7 @@ public class MovimientoPorPeriodoAdapter extends BaseAdapter{
         //txvColumnaNroPeriodoRango.setText((item.getPeriodo()).toString());
         txvColumnaFechaRango.setText(item.getFecha());
         //txvColumnaTransaccionRango.setText(item.getTransaccion());
-        txvColumnaMontoRango.setText(item.getMonto());
+        txvColumnaMontoRango.setText(item.getMonto());//
         //txvColumnaSaldoRango.setText(item.getSaldo());
         txvIdMovimiento.setText(item.getIdMovimiento().toString());
 

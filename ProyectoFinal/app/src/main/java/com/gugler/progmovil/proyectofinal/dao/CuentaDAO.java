@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.gugler.progmovil.proyectofinal.exception.ValidacionException;
 import com.gugler.progmovil.proyectofinal.modelo.Cuenta;
 import com.gugler.progmovil.proyectofinal.modelo.Transaccion;
@@ -81,7 +82,6 @@ public class CuentaDAO {
                     cuenta.setDenominacion(cursor.getString(0));
                     cuenta.setDescripcion(cursor.getString(1));
                     cuenta.setSaldo(cursor.getFloat(2));
-                    //cuenta.setTransaccion(obtenerTransacciones(contextoAux, cadenaSql, cursor.getString(0)));
                 }else{
                     break;
                 }
@@ -143,7 +143,14 @@ public class CuentaDAO {
         Cursor cursor = db.rawQuery("SELECT "+CT_DENOMINACION+", "+CT_DESCRIPCION+", "+CT_SALDO+" FROM db_cuenta",null);
         if (cursor.moveToFirst()){
             do{
-                cuentas.add(new Cuenta(cursor.getString(0),cursor.getString(1),cursor.getFloat(2)));
+                try {
+                    Float monto = cursor.getFloat(2);
+
+                    cuentas.add(new Cuenta(cursor.getString(0),cursor.getString(1),monto));
+                } catch (Exception ex ){
+                    System.out.println(ex.getStackTrace().toString());
+                }
+
             }while(cursor.moveToNext());
         }
         cursor.close();
@@ -208,6 +215,20 @@ public class CuentaDAO {
         }
     }
 
+    public Boolean eliminarCuenta (String denominacionCuenta) {
+        Integer res = -1;
+        try{
+            //Elimino de la relación cuenta-transaccion
+            res = db.delete("db_cuenta_transaccion", "cutr_ct_denominacion" + "=?",new String[]{denominacionCuenta.trim()}); //Desvinculación de relación cuenta-transaccion
+            //Elimino de cuentas
+            res = db.delete("db_cuenta", "ct_denominacion" + "=?",new String[]{denominacionCuenta.trim()}); //Eliminación de la tabla de cuentas
+            //Elimino de la tabla de transacciones
+            res = db.delete("db_transaccion","cutr_ct_denominacion =?",new String[]{denominacionCuenta.trim()});
+            return true;
+        }catch (Exception ex) {
+            return false;
+        }
+    }
 }
 
 

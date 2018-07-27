@@ -138,7 +138,7 @@ public class MovimientoDAO {
 
     public ArrayList<Movimiento> listarPorCuenta(String denominacionCuenta) throws ParseException {
         ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
-        Cursor cursor = db.rawQuery("SELECT "+MV_ID+", "+MV_DENOMINACION_CUENTA+", "+MV_NOMBRE_TRANSACCION+", "+MV_MONTO+", "+MV_TIPO+", "+MV_FECHA_HORA+", "+MV_SALDO_ACTUAL+ " FROM db_movimiento where mv_denominacion_cuenta = "+denominacionCuenta ,null);
+        Cursor cursor = db.rawQuery("SELECT "+MV_ID+", "+MV_DENOMINACION_CUENTA+", "+MV_NOMBRE_TRANSACCION+", "+MV_MONTO+", "+MV_TIPO+", "+MV_FECHA_HORA+", "+MV_SALDO_ACTUAL+ " FROM db_movimiento where mv_denominacion_cuenta = "+denominacionCuenta +" order by mv_fecha_hora desc" ,null);
         if (cursor.moveToFirst()){
             do{
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -243,7 +243,7 @@ public class MovimientoDAO {
         fechaDesdeLocal = fechaDesde;
         fechaHastaLocal = fechaHasta;
 
-        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion from db_movimiento where substr(mv_fecha_hora,1,10) between substr('" + formatter.format(fechaDesdeLocal) +"',1,10) and substr('"+ formatter.format(fechaHastaLocal)+"',1,10) and mv_denominacion_cuenta = '"+denominacionCuenta.toString()+"' order by mv_fecha_hora asc" ,null);
+        Cursor cursor = db.rawQuery("SELECT mv_id, mv_monto, mv_tipo, mv_saldo_actual, mv_fecha_hora, mv_denominacion_cuenta, mv_nombre_transaccion from db_movimiento where substr(mv_fecha_hora,1,10) between substr('" + formatter.format(fechaDesdeLocal) +"',1,10) and substr('"+ formatter.format(fechaHastaLocal)+"',1,10) and mv_denominacion_cuenta = '"+denominacionCuenta.toString()+"' order by mv_fecha_hora desc" ,null);
         Date fecha = new Date();
         if (cursor.moveToFirst()) {
             do {
@@ -252,11 +252,13 @@ public class MovimientoDAO {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     fecha = dateFormat.parse(cursor.getString(4));
 
+
                     //fecha = new SimpleDateFormat("dd/MM/yyyy").parse(cursor.getString(4));
                 } catch (ParseException e) {
                     fecha = Calendar.getInstance().getTime(); // O lanzar hacia arriba
                 }
-                movimientos.add(new Movimiento(cursor.getLong(0),cursor.getString(5),cursor.getString(6),cursor.getFloat(1),cursor.getString(2),cursor.getFloat(3),fecha));
+
+                movimientos.add(new Movimiento(cursor.getLong(0),cursor.getString(5),cursor.getString(6),cursor.getFloat(1),cursor.getString(2), cursor.getFloat(3),fecha));
             } while (cursor.moveToNext());
         }
         return movimientos;
@@ -274,11 +276,20 @@ public class MovimientoDAO {
                 } catch (ParseException e) {
                     fecha = Calendar.getInstance().getTime(); // O lanzar hacia arriba
                 }
-                movimiento = new Movimiento(cursor.getLong(0), cursor.getString(5), cursor.getString(6), cursor.getFloat(1), cursor.getString(2), cursor.getFloat(3), fecha);
-                // return movimiento;
+
+                movimiento = new Movimiento(cursor.getLong(0), cursor.getString(5), cursor.getString(6), cursor.getFloat(1), cursor.getString(2),cursor.getFloat(3), fecha);
             } while (cursor.moveToNext());
         }
         return movimiento;
     }
 
+    public Boolean eliminarMovimientosDeCuenta(String denominacionCuenta) {
+        Integer res = -1;
+        try{
+            res = db.delete("db_movimiento", "mv_denominacion_cuenta" + "=?",new String[]{denominacionCuenta}); //Eliminación de la tabla de movimientos
+            return true;
+        }catch (Exception ex) {
+            return false;
+        }
+    }
 }

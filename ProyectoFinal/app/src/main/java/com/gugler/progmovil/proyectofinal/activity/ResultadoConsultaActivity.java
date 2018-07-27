@@ -78,6 +78,7 @@ public class ResultadoConsultaActivity extends BaseActivity {
                 TextView txvIdMovimiento = (TextView) view.findViewById(R.id.txvIdMovimiento);
 
                 MovimientosPorPeriodoDTO movimientoDTO = sMovimientos.devolverMovimientoDTO(Long.parseLong(txvIdMovimiento.getText().toString()));
+
                 String mensaje =
                         "\n" + "◘ Transacción: " + movimientoDTO.getTransaccion() +
                         "\n" + "◘ Importe: $ " + movimientoDTO.getMonto() +
@@ -214,7 +215,7 @@ public class ResultadoConsultaActivity extends BaseActivity {
             adapter = new MovimientoPorPeriodoAdapter(this,movimientoPorPeriodoDTO);
             lstMovimientoPeriodo.setAdapter(adapter);
         } catch (Exception ex) {
-            Toast toast = Toast.makeText(getApplicationContext(),"PUM",Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(),"Error al intentar mostrar",Toast.LENGTH_SHORT);
             toast.show();
         }
         adapter.notifyDataSetChanged();
@@ -307,7 +308,7 @@ public class ResultadoConsultaActivity extends BaseActivity {
             adapter = new MovimientoPorPeriodoAdapter(this,movimientoPorPeriodoDTO);
             lstMovimientoPeriodo.setAdapter(adapter);
         } catch (Exception ex) {
-            Toast toast = Toast.makeText(getApplicationContext(),"PUM",Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(),"Error al intentar mostrar",Toast.LENGTH_SHORT);
             toast.show();
         }
         adapter.notifyDataSetChanged();

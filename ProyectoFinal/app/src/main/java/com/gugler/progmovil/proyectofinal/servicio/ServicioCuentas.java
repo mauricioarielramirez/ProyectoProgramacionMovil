@@ -52,5 +52,9 @@ public class ServicioCuentas extends Servicio {
         return cuentaDao.eliminarCuentaTransaccion(denominacionCuenta,idTransaccion, desvincularTodo);
     }
 
+    public Boolean eliminarCuenta (String denominacionCuenta){
+        return cuentaDao.eliminarCuenta(denominacionCuenta);
+    }
+
 
 }

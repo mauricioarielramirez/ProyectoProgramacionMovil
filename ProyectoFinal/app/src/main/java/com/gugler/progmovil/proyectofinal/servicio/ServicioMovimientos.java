@@ -9,12 +9,12 @@ import com.gugler.progmovil.proyectofinal.modelo.Movimiento;
 import com.gugler.progmovil.proyectofinal.modelo.dto.MovimientosPorPeriodoDTO;
 import com.gugler.progmovil.proyectofinal.modelo.dto.ResumenComparativoDTO;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Ariel on 13/1/2018.
@@ -69,7 +69,8 @@ public class ServicioMovimientos extends Servicio{
 
         for (Movimiento m: listaMovimientos) {
             String fechaString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(m.getFechaHora());
-            movimientosPeriodo.add(new MovimientosPorPeriodoDTO(m.getId(), 1,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
+            movimientosPeriodo.add(new MovimientosPorPeriodoDTO(m.getId(), 1,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(new DecimalFormat("#0.00").format(m.getMonto())).toString() ,"$ "+(new DecimalFormat("#0.00").format(m.getSaldoActual())).toString()));
+
         }
 
         return movimientosPeriodo;
@@ -130,12 +131,13 @@ public class ServicioMovimientos extends Servicio{
         dtoSaldoInicial.setPeriodo1( String.valueOf((movimientosPeriodo1.size()>0 ? movimientosPeriodo1.get(0).getSaldoActual():0)) );
         dtoSaldoInicial.setPeriodo2( String.valueOf((movimientosPeriodo2.size()>0 ? movimientosPeriodo2.get(0).getSaldoActual():0)) );
 
-        dtoSaldoInicial.setDiferencia(String.valueOf( Math.abs((movimientosPeriodo2.size()>0 ? movimientosPeriodo2.get(0).getSaldoActual() :0)-((movimientosPeriodo1.size()>0 ? movimientosPeriodo1.get(0).getSaldoActual() :0)))));
+        dtoSaldoInicial.setDiferencia(new DecimalFormat("#0.00").format( Math.abs((movimientosPeriodo2.size()>0 ? movimientosPeriodo2.get(0).getSaldoActual() :0)-((movimientosPeriodo1.size()>0 ? movimientosPeriodo1.get(0).getSaldoActual() :0)))));
         //(?:true:false)
-        dtoSaldoFinal.setPeriodo1( String.valueOf((movimientosPeriodo1.size()>0 ? movimientosPeriodo1.get(movimientosPeriodo1.size()-1).getSaldoActual().toString():0)) );
-        dtoSaldoFinal.setPeriodo2( String.valueOf((movimientosPeriodo2.size()>0 ? movimientosPeriodo2.get(movimientosPeriodo2.size()-1).getSaldoActual():0)) );
+        dtoSaldoFinal.setPeriodo1(new DecimalFormat("#0.00").format((movimientosPeriodo1.size()>0 ? movimientosPeriodo1.get(movimientosPeriodo1.size()-1).getSaldoActual():0)));
 
-        dtoSaldoFinal.setDiferencia(String.valueOf(Math.abs((movimientosPeriodo2.size()>0 ? (movimientosPeriodo2.get(movimientosPeriodo2.size()-1).getSaldoActual()):0)) - ((movimientosPeriodo1.size()>0 ? (movimientosPeriodo1.get(movimientosPeriodo1.size()-1).getSaldoActual()):0))));
+        dtoSaldoFinal.setPeriodo2(new DecimalFormat("#0.00").format((movimientosPeriodo2.size()>0 ? movimientosPeriodo2.get(movimientosPeriodo2.size()-1).getSaldoActual():0)));
+
+        dtoSaldoFinal.setDiferencia(new DecimalFormat("#0.00").format(Math.abs((movimientosPeriodo2.size()>0 ? (movimientosPeriodo2.get(movimientosPeriodo2.size()-1).getSaldoActual()):0)) - ((movimientosPeriodo1.size()>0 ? (movimientosPeriodo1.get(movimientosPeriodo1.size()-1).getSaldoActual()):0))));
 
         dtoCantidadDebitos.setPeriodo1(debitosPeriodo1.toString());
         dtoCantidadDebitos.setPeriodo2(debitosPeriodo2.toString());
@@ -143,13 +145,18 @@ public class ServicioMovimientos extends Servicio{
         dtoCantidadCreditos.setPeriodo1(creditosPeriodo1.toString());
         dtoCantidadCreditos.setPeriodo2(creditosPeriodo2.toString());
 
-        dtoCredito.setPeriodo1(creditoPeriodo1.toString());
-        dtoCredito.setPeriodo1(creditoPeriodo1.toString());
-        dtoCredito.setPeriodo2(creditoPeriodo2.toString());
-        dtoCredito.setDiferencia(String.valueOf( Math.abs(creditoPeriodo2-creditoPeriodo1) ));
+        dtoCredito.setPeriodo1((new DecimalFormat("#0.00").format(creditoPeriodo1)));
+        //dtoCredito.setPeriodo1(creditoPeriodo1.toString());
 
-        dtoDebito.setPeriodo1(debitoPeriodo1.toString());
-        dtoDebito.setPeriodo2(debitoPeriodo2.toString());
+        dtoCredito.setPeriodo2(new DecimalFormat("#0.00").format(creditoPeriodo2));
+
+        //new DecimalFormat("#0.00").format( Math.abs(creditoPeriodo2-creditoPeriodo1)
+        dtoCredito.setDiferencia(new DecimalFormat("#0.00").format( Math.abs(creditoPeriodo2-creditoPeriodo1)));
+
+        dtoDebito.setPeriodo1(new DecimalFormat("#0.00").format(debitoPeriodo1));
+
+        dtoDebito.setPeriodo2(new DecimalFormat("#0.00").format(debitoPeriodo2));
+
         dtoDebito.setDiferencia(String.valueOf(Math.abs(debitoPeriodo2-debitoPeriodo1)));
 
         Integer diferenciaDebitos = Math.abs(debitosPeriodo2 - debitosPeriodo1);
@@ -172,8 +179,7 @@ public class ServicioMovimientos extends Servicio{
     public ArrayList<MovimientosPorPeriodoDTO> devolverMovimientosPorPeriodos(Date fechaDesdePeriodo1, Date fechaHastaPeriodo1, Date fechaDesdePeriodo2, Date fechaHastaPeriodo2, String denominacionCuenta) throws Exception{
         ArrayList<Movimiento> movimientosPeriodo1 = movimientoDao.listarTodoConFecha(denominacionCuenta, fechaDesdePeriodo1, fechaHastaPeriodo1);
         ArrayList<Movimiento> movimientosPeriodo2 = movimientoDao.listarTodoConFecha(denominacionCuenta, fechaDesdePeriodo2, fechaHastaPeriodo2);
-        Set<MovimientosPorPeriodoDTO> movimientos = new HashSet<MovimientosPorPeriodoDTO>();
-
+        ArrayList<MovimientosPorPeriodoDTO> movimientos = new ArrayList<MovimientosPorPeriodoDTO>();
         String test = "";
 
         for (Movimiento m:movimientosPeriodo1) {
@@ -187,7 +193,9 @@ public class ServicioMovimientos extends Servicio{
             movimientos.add(new MovimientosPorPeriodoDTO(m.getId(), 2,fechaString,m.getTransaccion(),m.getTipo(), "$ "+(m.getMonto()).toString() ,"$ "+(m.getSaldoActual()).toString()));
         }
 
-        return new ArrayList<MovimientosPorPeriodoDTO>(movimientos);
+        Collections.sort(movimientos);
+
+        return movimientos;
     }
 
     public MovimientosPorPeriodoDTO devolverMovimientoDTO(Long idMovimiento) {
@@ -195,7 +203,13 @@ public class ServicioMovimientos extends Servicio{
         String fechaMov = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(movimiento.getFechaHora());
         MovimientosPorPeriodoDTO movimientoDTO = new MovimientosPorPeriodoDTO(
                 movimiento.getId(), 1, fechaMov, movimiento.getTransaccion(),
-                movimiento.getTipo(), movimiento.getMonto().toString(), movimiento.getSaldoActual().toString());
+                movimiento.getTipo(), (new DecimalFormat("#0.00").format(movimiento.getMonto())).toString(), (new DecimalFormat("#0.00").format(movimiento.getSaldoActual())).toString());
         return movimientoDTO;
+        //new DecimalFormat("#0.00").format(movimiento.getMonto())
+        //new DecimalFormat("#0.00").format(movimiento.getSaldoActual())
+    }
+
+    public Boolean eliminarMovimientosDeCuenta(String denominacionCuenta) {
+        return movimientoDao.eliminarMovimientosDeCuenta (denominacionCuenta);
     }
 }

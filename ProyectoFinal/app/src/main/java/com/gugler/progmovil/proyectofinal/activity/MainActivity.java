@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
 //        cuentaDao = new CuentaDAO(this,cadena.toString());
         sCuentas = new ServicioCuentas();
 
-        //Mirar aca http://elbauldeandroid.blogspot.com.ar/2013/10/actionbar-android-en-construccion.html
-
         ActionBar actionBar = getSupportActionBar(); // Permite personalizar el action bar
         actionBar.setTitle("Main activity");
         actionBar.setSubtitle("Bienvenido");
@@ -38,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setIcon(R.drawable.ic_back); //ícono de la izquierda
 
     }
-
-
 
     public void onBtnGuardarClick(View view){
         Cuenta cuenta = new Cuenta();
