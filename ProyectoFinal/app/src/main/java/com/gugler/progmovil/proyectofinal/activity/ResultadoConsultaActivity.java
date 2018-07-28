@@ -188,7 +188,7 @@ public class ResultadoConsultaActivity extends BaseActivity {
         if (cantidadMovimientos == 0) {
             txvElemento5D.setText(" - ");
         } else {
-            txvElemento5D.setText(String.valueOf( (listaMovimientosDTO.get(listaMovimientosDTO.size() - 1)).getSaldo() ));
+            txvElemento5D.setText(String.valueOf( (listaMovimientosDTO.get(0).getSaldo() )));
         }
 
     }
