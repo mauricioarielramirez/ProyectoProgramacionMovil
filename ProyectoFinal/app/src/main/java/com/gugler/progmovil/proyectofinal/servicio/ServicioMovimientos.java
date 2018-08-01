@@ -127,8 +127,8 @@ public class ServicioMovimientos extends Servicio{
             }
         }
 
-        dtoSaldoInicial.setPeriodo1(new DecimalFormat("#0.00").format((movimientosPeriodo1.size()>0 ? movimientosPeriodo1.get(0).getSaldoActual():"0")));
-        dtoSaldoInicial.setPeriodo2(new DecimalFormat("#0.00").format((movimientosPeriodo2.size()>0 ? movimientosPeriodo2.get(0).getSaldoActual():"0")));
+        dtoSaldoInicial.setPeriodo1(new DecimalFormat("#0.00").format((movimientosPeriodo1.size()>0 ? movimientosPeriodo1.get(0).getSaldoActual():0F)));
+        dtoSaldoInicial.setPeriodo2(new DecimalFormat("#0.00").format((movimientosPeriodo2.size()>0 ? movimientosPeriodo2.get(0).getSaldoActual():0F)));
 
         dtoSaldoInicial.setDiferencia(new DecimalFormat("#0.00").format( Math.abs((movimientosPeriodo2.size()>0 ? movimientosPeriodo2.get(0).getSaldoActual() :0)-((movimientosPeriodo1.size()>0 ? movimientosPeriodo1.get(0).getSaldoActual() :0)))));
         //(?:true:false)
