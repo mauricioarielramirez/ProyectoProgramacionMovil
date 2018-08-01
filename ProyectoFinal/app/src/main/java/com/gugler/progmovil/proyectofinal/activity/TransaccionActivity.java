@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -45,6 +46,19 @@ public class TransaccionActivity extends BaseActivity {
         } else {
             configurarInterface(TRANSACCION_NO_EDITABLE);
         }
+
+        Button btnInfo = (Button) findViewById(R.id.btnInfo);
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(TransaccionActivity.this);
+                alertDialog.setMessage("Escriba un nombre para la transacción."+ "\n"+ "Esta transacción no estará disponible permanentemente en el menú Débito/Crédito");
+                alertDialog.setIcon(R.drawable.ic_info_black_24dp);
+                alertDialog.setNeutralButton("Entendido",null);
+                alertDialog.setTitle("Información");
+                alertDialog.show();
+            }
+        });
 
         Button btnGuardar = (Button)findViewById(R.id.btnToolbarGuardar);
         btnGuardar.setOnClickListener(new View.OnClickListener() {

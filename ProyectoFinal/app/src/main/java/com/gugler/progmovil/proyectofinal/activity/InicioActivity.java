@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
-import android.view.Menu;
 import android.view.View;
 
 import com.gugler.progmovil.proyectofinal.servicio.ServicioCuentas;
@@ -62,13 +61,6 @@ public class InicioActivity extends BaseActivity {
         }else{
             return true;
         }
-    }
-
-    /*Botón de ayuda*/
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.help, menu); //En menu.xml se definen
-        return true;
     }
 
     /**
