@@ -14,7 +14,6 @@ import com.gugler.progmovil.proyectofinal.fragment.DatePickerFragment;
 import com.gugler.progmovil.proyectofinal.fragment.OpcionesConsultaDialog;
 import com.gugler.progmovil.proyectofinal.watcher.DateButtonWatcher;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -230,8 +229,10 @@ public class ConfigurarConsultaActivity extends BaseActivity {
                 actionBar = getSupportActionBar();
                 actionBar.setTitle("Consulta");
                 actionBar.setSubtitle("Configuración");
-
+                Button btnOpcionesConsulta = (Button)findViewById(R.id.btnOpcionesConsulta);
+                btnOpcionesConsulta.setVisibility(View.GONE);
                 checkRadioButton1();
+
 
                 break;
             default:
@@ -246,7 +247,7 @@ public class ConfigurarConsultaActivity extends BaseActivity {
         DatePickerFragment picker = new DatePickerFragment();
         r.putInt("campoFecha", view.getId());
         picker.setArguments(r);
-        picker.show(getFragmentManager(), "fechaNacimientoPicker");
+        picker.show(getFragmentManager(), "fechaPicker");
     }
 
     public void onConsultaOpciones(View view) {

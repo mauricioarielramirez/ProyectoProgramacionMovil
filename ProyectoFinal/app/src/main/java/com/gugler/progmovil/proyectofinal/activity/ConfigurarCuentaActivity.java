@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -195,11 +194,12 @@ public class ConfigurarCuentaActivity extends BaseActivity{
         prepararStringSql();
     }
 
-    /*Botón de ayuda*/
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.help, menu); //En menu.xml se definen
-        return true;
+    public void mostrarAyuda() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getApplicationContext()).setMessage("" +
+                "Nombre de cuenta: Ingrese un nombre significativo, por ejemplo: Tarjeta SUBE")
+                .setIcon(R.drawable.ic_info_black_24dp)
+                .setNeutralButton("Entendido",null);
+        alertDialog.show();
     }
 
     public void leerBundle() {

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -267,13 +266,6 @@ public class ConfigurarTransaccionActivity extends BaseActivity {
                 actionBar.setTitle("Configurar transacción");
                 actionBar.setSubtitle("");
         }
-    }
-
-    /*Botón de ayuda*/
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.navigation, menu);
-        return true;
     }
 
     private void inicializarSpinner(){
